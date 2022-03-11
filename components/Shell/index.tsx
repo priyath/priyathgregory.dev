@@ -1,56 +1,61 @@
-import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import CssBaseline from '@mui/material/CssBaseline'
-import Divider from '@mui/material/Divider'
-import Drawer from '@mui/material/Drawer'
-import IconButton from '@mui/material/IconButton'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import MailIcon from '@mui/icons-material/Mail'
-import MenuIcon from '@mui/icons-material/Menu'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Avatar, Grid, Switch } from '@mui/material';
+import { useColorMode } from '../../styles/ColorModeContext';
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
-const ResponsiveDrawer = () => {
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+const Shell = () => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { toggleColorMode } = useColorMode();
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
+
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   const drawer = (
-    <div>
-      <Toolbar />
+    <Box>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography sx={{ pt: 2 }}>Priyath Gregory</Typography>
+        <Avatar
+          alt="Remy Sharp"
+          src="/static/images/avatar/1.jpg"
+          sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}
+        />
+      </Grid>
       <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  )
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Switch
+          onClick={() => toggleColorMode()}
+          sx={{ margin: 'auto' }}
+          {...label}
+          defaultChecked
+        />
+      </Grid>
+    </Box>
+  );
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -61,6 +66,7 @@ const ResponsiveDrawer = () => {
           display: { xs: 'block', md: 'none' },
           width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { md: `${drawerWidth}px` },
+          backgroundImage: 'none',
         }}
       >
         <Toolbar>
@@ -95,6 +101,7 @@ const ResponsiveDrawer = () => {
           sx={{
             display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {
+              backgroundImage: 'none',
               boxSizing: 'border-box',
               width: drawerWidth,
             },
@@ -107,6 +114,7 @@ const ResponsiveDrawer = () => {
           sx={{
             display: { xs: 'none', md: 'block' },
             '& .MuiDrawer-paper': {
+              backgroundImage: 'none',
               boxSizing: 'border-box',
               width: drawerWidth,
             },
@@ -117,7 +125,7 @@ const ResponsiveDrawer = () => {
         </Drawer>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default ResponsiveDrawer
+export default Shell;
