@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { getPaletteConfigs } from './utils';
 
 enum ColorMode {
@@ -39,7 +39,28 @@ export const ColorModeContextProvider = ({
   );
 
   const finalTheme = React.useMemo(() => {
-    return createTheme(getPaletteConfigs(mode));
+    const themeWithOverrides = createTheme({
+      typography: {
+        allVariants: {
+          color: 'rgba(255,255,255)',
+        },
+        body1: {
+          color: 'rgba(255,255,255,0.7)',
+        },
+      },
+      components: {
+        MuiListItemIcon: {
+          styleOverrides: {
+            root: {
+              minWidth: '36px',
+            },
+          },
+        },
+      },
+    });
+    return responsiveFontSizes(
+      createTheme(themeWithOverrides, getPaletteConfigs(mode))
+    );
   }, [mode]);
 
   return (
