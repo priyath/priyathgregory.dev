@@ -5,13 +5,34 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Grid, Switch } from '@mui/material';
+import {
+  Avatar,
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Switch,
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import MenuIcon from '@mui/icons-material/Menu';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useColorMode } from '../../styles/ColorModeContext';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
+
+const sidePanelConfig = [
+  {
+    label: 'About Me',
+    icon: <PersonIcon />,
+  },
+  {
+    label: 'Blog',
+    icon: <LibraryBooksIcon />,
+  },
+];
 
 const Shell = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -32,21 +53,29 @@ const Shell = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography sx={{ pt: 2 }}>Priyath Gregory</Typography>
+        <Typography variant={'h5'} sx={{ pt: 2 }}>
+          Priyath Gregory
+        </Typography>
         <Avatar
           alt="Remy Sharp"
-          src="/static/images/avatar/1.jpg"
+          src="/pic02.png"
           sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}
         />
+        {/*<Typography align={'center'} variant={'body1'} sx={{ p: 2, pt: 0 }}>*/}
+        {/*  Hi, my name is Priyath Gregory and I'm a full-stack software engineer.*/}
+        {/*  Welcome to my personal website!*/}
+        {/*</Typography>*/}
       </Grid>
       <Divider />
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Grid container spacing={0} direction="column">
+        <List>
+          {sidePanelConfig.map((itemConfig, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>{itemConfig.icon}</ListItemIcon>
+              <ListItemText primary={itemConfig.label} />
+            </ListItem>
+          ))}
+        </List>
         <Switch
           onClick={() => toggleColorMode()}
           sx={{ margin: 'auto' }}
