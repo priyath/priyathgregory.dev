@@ -6,9 +6,18 @@ import * as React from 'react';
 import Divider from '@mui/material/Divider';
 import ImageMediaCard from '../ImageMediaCard';
 
+const wrapperStyles = {
+  paddingRight: 4,
+  paddingBottom: 4,
+  margin: 4,
+  maxWidth: 'xl',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+};
+
 const AboutWrapper = () => {
   return (
-    <Grid container spacing={4} sx={{ margin: 5 }}>
+    <Grid container spacing={4} sx={wrapperStyles}>
       <Grid item xs={12} md={8}>
         <Box>
           <Typography variant={'h3'} sx={{ py: 1 }}>
@@ -65,18 +74,18 @@ const AboutWrapper = () => {
         <Box>
           <Typography
             variant={'h4'}
-            sx={{ p: 1, pl: 2, mb: 2, borderLeft: '7px solid #3b61ac' }}
+            sx={{ p: 1, pl: 2, mb: 3, borderLeft: '7px solid #3b61ac' }}
           >
             Latest Blog Posts
           </Typography>
-          <Grid container spacing={4} sx={{ mt: 2 }}>
-            <Grid item xs={12} md={6} lg={4}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} lg={4}>
               <ImageMediaCard />
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} sm={6} lg={4}>
               <ImageMediaCard />
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} sm={6} lg={4}>
               <ImageMediaCard />
             </Grid>
           </Grid>
