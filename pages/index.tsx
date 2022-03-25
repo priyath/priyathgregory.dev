@@ -4,15 +4,21 @@ import AboutWrapper from '../components/About';
 import CssBaseline from '@mui/material/CssBaseline';
 import Shell from '../components/Shell';
 import { Box } from '@mui/material';
+import { getAllFilesFrontMatter } from '../lib/getContent';
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ posts }: any) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Shell />
-      <AboutWrapper />
+      <AboutWrapper posts={posts} />
     </Box>
   );
+};
+
+export const getStaticProps = async () => {
+  const posts = await getAllFilesFrontMatter('blog');
+  return { props: { posts } };
 };
 
 export default Home;

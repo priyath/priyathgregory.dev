@@ -5,6 +5,7 @@ import Image from 'next/image';
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
 import ImageMediaCard from '../ImageMediaCard';
+import { getAllFilesFrontMatter } from '../../lib/getContent';
 
 const wrapperStyles = {
   paddingRight: 4,
@@ -15,7 +16,11 @@ const wrapperStyles = {
   marginRight: 'auto',
 };
 
-const AboutWrapper = () => {
+interface IAboutWrapper {
+  posts: any;
+}
+
+const AboutWrapper = (props: IAboutWrapper) => {
   return (
     <Grid container spacing={4} sx={wrapperStyles}>
       <Grid item xs={12} md={8}>
@@ -40,37 +45,6 @@ const AboutWrapper = () => {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        {/*<Box>*/}
-        {/*  <Typography*/}
-        {/*    variant={'h4'}*/}
-        {/*    sx={{ p: 1, pl: 2, mb: 2, borderLeft: '7px solid #3b61ac' }}*/}
-        {/*  >*/}
-        {/*    What I do*/}
-        {/*  </Typography>*/}
-        {/*  <Typography variant={'body1'}>{ABOUT_ME_WHAT_I_DO}</Typography>*/}
-        {/*  <Grid container spacing={4} sx={{ margin: 5 }}>*/}
-        {/*    <Grid item xs={12} md={4}>*/}
-        {/*      <Box>*/}
-        {/*        <Typography variant={'h6'}>Vanilla Javascript</Typography>*/}
-        {/*      </Box>*/}
-        {/*    </Grid>*/}
-        {/*    <Grid item xs={12} md={4}>*/}
-        {/*      <Box>*/}
-        {/*        {' '}*/}
-        {/*        <Typography variant={'h6'}>React & Redux</Typography>*/}
-        {/*      </Box>*/}
-        {/*    </Grid>*/}
-        {/*    <Grid item xs={12} md={4}>*/}
-        {/*      <Box>*/}
-        {/*        {' '}*/}
-        {/*        <Typography variant={'h6'}>NodeJS</Typography>*/}
-        {/*      </Box>*/}
-        {/*    </Grid>*/}
-        {/*  </Grid>*/}
-        {/*</Box>*/}
-        <Divider sx={{ backgroundColor: 'rgba(107,107,107,0.7)' }} />
-      </Grid>
-      <Grid item xs={12}>
         <Box>
           <Typography
             variant={'h4'}
@@ -79,15 +53,13 @@ const AboutWrapper = () => {
             Latest Blog Posts
           </Typography>
           <Grid container spacing={4}>
-            <Grid item xs={12} sm={6} lg={4}>
-              <ImageMediaCard />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <ImageMediaCard />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={4}>
-              <ImageMediaCard />
-            </Grid>
+            {props.posts.map((item: any) => {
+              return (
+                <Grid item xs={12} sm={6} lg={4}>
+                  <ImageMediaCard />
+                </Grid>
+              );
+            })}
           </Grid>
         </Box>
       </Grid>
