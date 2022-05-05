@@ -4,14 +4,14 @@ import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import Image from 'next/image';
 import * as React from 'react';
 import Divider from '@mui/material/Divider';
-import ImageMediaCard from '../ImageMediaCard';
+import ImageMediaCard, { IBlogPostSummary } from '../ImageMediaCard';
 import { getAllFilesFrontMatter } from '../../lib/getContent';
 
 const wrapperStyles = {
   paddingRight: 4,
   paddingBottom: 4,
   margin: 4,
-  maxWidth: 'xl',
+  maxWidth: '1320px',
   marginLeft: 'auto',
   marginRight: 'auto',
 };
@@ -53,10 +53,11 @@ const AboutWrapper = (props: IAboutWrapper) => {
             Latest Blog Posts
           </Typography>
           <Grid container spacing={4}>
-            {props.posts.map((item: any) => {
+            {props.posts.map((item: IBlogPostSummary, index: number) => {
+              console.log('bloc item: ', item);
               return (
-                <Grid item xs={12} sm={6} lg={4}>
-                  <ImageMediaCard />
+                <Grid key={index} item xs={12} sm={6} lg={4}>
+                  <ImageMediaCard blogPostSummary={item} />
                 </Grid>
               );
             })}
