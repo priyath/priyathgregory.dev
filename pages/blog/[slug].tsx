@@ -5,7 +5,6 @@ import Shell from '../../components/Shell';
 import * as React from 'react';
 import { Box, Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import AboutWrapper from '../../components/About';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 
 export interface IFrontMatter {
@@ -35,10 +34,12 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
         sx={{
           margin: 'auto',
           marginTop: { md: 0, xs: '56px' },
-          textAlign: 'center',
+          maxWidth: '820px',
         }}
       >
         <BlogPostHeader frontMatter={frontMatter} />
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/*@ts-ignore*/}
         <MDXRemote {...mdxSource} components={MDXComponents} />
       </Box>
     </Container>

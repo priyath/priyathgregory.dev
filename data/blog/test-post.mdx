@@ -3,3 +3,56 @@ title: "Javascript Internals: What's Under the Hood?"
 publishedAt: '2021-05-04'
 summary: 'my first test post'
 ---
+
+You really don’t need to know a lot to get up and running with Javascript. In fact, a fully-fledged production-ready
+app could be built without ever understanding the inner workings of the language. This is both a blessing and a curse;
+The language has many adopters, but only a very few masters.
+
+This realization led me on a quest to try and understand how Javascript really works under the hood. The journey is far
+from over, but the fog has started to lift. And it all started with the question, “What exactly is Javascript?”.
+
+So what is Javascript? To put it formally, Javascript is a single-threaded, non-blocking, asynchronous programming
+language.
+
+…
+
+Wait what?
+
+On the surface, this definition (at least for me) was contradictory, confusing, and just lead to more questions.
+How could a single-threaded program, be non-blocking? How could it also be asynchronous?
+
+These are all very valid questions to ask; But bear with me, they also have answers. Answers that lie deep within the
+heart of Javascript, its runtime environment.
+
+## The Javascript Runtime
+The Javascript runtime environment is what makes your code work, it is what allows Javascript to have all the complex terminology in its formal definitions, and from the context of a browser, it is mainly a combination of 4 things:
+
+1. The Javascript engine
+2. Web APIs
+3. The callback queue
+4. The event loop
+5. Let us examine each of these pieces individually.
+
+Let us examine each of these pieces individually.
+
+> The Javascript runtime environment can take different shapes and forms based on context. For example,
+> a browser’s runtime environment (which we will be exploring in detail), is not the same as that of node.js.
+> However, these differences are mostly in implementation; The concepts that we discuss will be applicable to most
+> Javascript runtime environments, independent of context.
+
+```javascript
+function $initHighlight(block, cls) {
+  try {
+    if (cls.search(/\bno\-highlight\b/) != -1)
+      return process(block, true, 0x0F) +
+             ` class="${cls}"`;
+  } catch (e) {
+    /* handle exception */
+  }
+  for (var i = 0 / 2; i < classes.length; i++) {
+    if (checkCondition(classes[i]) === undefined)
+      console.log('undefined');
+  }
+}
+export  $initHighlight;
+```

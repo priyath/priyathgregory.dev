@@ -17,7 +17,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
   const daysSincePublished = getDateDifferenceInDays(frontMatter?.publishedAt);
 
   return (
-    <Box sx={{ marginX: { xs: 1, md: 4 }, marginTop: 4 }}>
+    <Box sx={{ marginX: 0, marginTop: 4 }}>
       <Typography
         variant={'h4'}
         sx={{ py: 1, fontWeight: 'bold', textAlign: 'left' }}
@@ -48,7 +48,12 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           </Typography>
         </Box>
       </Box>
-      <Image src={testImage} alt="Picture of the author" />
+      <Image
+        src={testImage}
+        alt="Picture of the author"
+        layout={'responsive'}
+        height={380}
+      />
     </Box>
   );
 };
