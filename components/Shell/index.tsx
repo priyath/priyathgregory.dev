@@ -21,7 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useColorMode } from '../../styles/ColorModeContext';
 
-const drawerWidth = 300;
+const drawerWidth = 260;
 
 const sidePanelConfig = [
   {
