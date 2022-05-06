@@ -37,7 +37,7 @@ interface ICodeBlock {
 }
 
 const CodeBlock = ({ children }: ICodeBlock) => {
-  if (!children || children.type !== 'code') return null;
+  // if (!children || children.type !== 'code') return null;
 
   const {
     props: { className, children: code = '' },
@@ -52,8 +52,25 @@ const CodeBlock = ({ children }: ICodeBlock) => {
   );
 };
 
+const InlineCodeBlock = (props: any) => {
+  return (
+    <span
+      style={{
+        fontFamily: 'monospace',
+        padding: '0.2em 0.4em',
+        borderRadius: '6px',
+        backgroundColor: 'rgba(110,118,129,0.4)',
+        fontSize: '85%',
+      }}
+    >
+      {props.children}
+    </span>
+  );
+};
+
 const MDXComponents = {
   blockquote: (props: IBlockQuote) => <BlockQuote {...props} />,
+  code: (props: any) => <InlineCodeBlock {...props} />,
   pre: (props: ICodeBlock) => <CodeBlock {...props} />,
 };
 
