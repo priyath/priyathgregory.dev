@@ -8,7 +8,7 @@ import { getAllFilesFrontMatter } from '../lib/getContent';
 
 const Home: NextPage = ({ posts }: any) => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <CssBaseline />
       <Shell />
       <AboutWrapper posts={posts} />

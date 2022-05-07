@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { getPaletteConfigs } from './utils';
+import typographyConfig from './typographyConfig';
 
 enum ColorMode {
   DARK = 'dark',
@@ -41,14 +42,29 @@ export const ColorModeContextProvider = ({
   const finalTheme = React.useMemo(() => {
     const themeWithOverrides = createTheme({
       typography: {
+        fontFamily: ['Roboto', 'sans-serif'].join(','),
         allVariants: {
           color: 'rgba(255,255,255)',
+        },
+        h5: {
+          color: 'rgba(255,255,255,0.7)',
         },
         body1: {
           color: 'rgba(255,255,255,0.7)',
         },
+        body2: {
+          fontSize: '1.125rem',
+          color: 'rgba(255,255,255,0.7)',
+        },
       },
       components: {
+        MuiTypography: {
+          defaultProps: {
+            variantMapping: {
+              h3: 'h1',
+            },
+          },
+        },
         MuiListItemIcon: {
           styleOverrides: {
             root: {

@@ -11,9 +11,14 @@ export default class MyDocument extends Document {
           {/* PWA primary color */}
           {/*<meta name="theme-color" content={theme.palette.primary.main} />*/}
           <link rel="shortcut icon" href="/static/favicon.ico" />
+          {/*<link*/}
+          {/*  rel="stylesheet"*/}
+          {/*  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"*/}
+          {/*/>*/}
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            type="text/css"
+            href="//fonts.googleapis.com/css?family=Merriweather"
           />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}

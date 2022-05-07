@@ -38,7 +38,7 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
             </Typography>
           </Link>
         </NextLink>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           {summary}
         </Typography>
       </CardContent>

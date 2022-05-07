@@ -33,7 +33,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
       >
         <Box>
           <Typography
-            variant={'body2'}
+            variant={'body1'}
             sx={{
               textAlign: 'left',
               ...pseudoSeparator,
@@ -43,17 +43,19 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant={'body2'} sx={{ textAlign: 'left' }}>
+          <Typography variant={'body1'} sx={{ textAlign: 'left' }}>
             {frontMatter?.readingTime?.text}
           </Typography>
         </Box>
       </Box>
-      <Image
-        src={testImage}
-        alt="Picture of the author"
-        layout={'responsive'}
-        height={380}
-      />
+      <Box sx={{ mb: 4 }}>
+        <Image
+          src={testImage}
+          alt="Picture of the author"
+          layout={'responsive'}
+          height={380}
+        />
+      </Box>
     </Box>
   );
 };

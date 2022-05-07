@@ -27,7 +27,16 @@ interface IBlogProps {
 }
 export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
   return (
-    <Container sx={{ display: 'flex' }} fixed>
+    <Container
+      sx={{
+        display: 'flex',
+        px: {
+          md: 8,
+          sm: 4,
+          xs: 3,
+        },
+      }}
+    >
       <CssBaseline />
       <Shell />
       <Box

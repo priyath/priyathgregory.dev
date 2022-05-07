@@ -44,8 +44,20 @@ const CodeBlock = ({ children }: ICodeBlock) => {
   } = children;
 
   return (
-    <Box sx={{ marginY: 4 }}>
-      <SyntaxHighlighter language={extractMDXLanguage(className)} style={dark}>
+    <Box
+      sx={{
+        marginY: 4,
+        width: {
+          sm: '100%',
+          xs: 'calc(100vw - 48px)',
+        },
+      }}
+    >
+      <SyntaxHighlighter
+        wrapLongLines={true}
+        language={extractMDXLanguage(className)}
+        style={dark}
+      >
         {code.trim()}
       </SyntaxHighlighter>
     </Box>
@@ -72,6 +84,11 @@ const MDXComponents = {
   blockquote: (props: IBlockQuote) => <BlockQuote {...props} />,
   code: (props: any) => <InlineCodeBlock {...props} />,
   pre: (props: ICodeBlock) => <CodeBlock {...props} />,
+  p: (props: any) => (
+    <Typography variant={'body2'} gutterBottom>
+      {props.children}
+    </Typography>
+  ),
 };
 
 export default MDXComponents;
