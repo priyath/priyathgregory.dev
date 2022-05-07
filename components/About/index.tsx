@@ -1,11 +1,10 @@
-import { Box, Grid, useTheme } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import Image from 'next/image';
 import * as React from 'react';
-import Divider from '@mui/material/Divider';
-import ImageMediaCard, { IBlogPostSummary } from '../ImageMediaCard';
-import { getAllFilesFrontMatter } from '../../lib/getContent';
+import ImageMediaCard from '../ImageMediaCard';
+import { IFrontMatter } from '../../pages/blog/[slug]';
 
 const outterWrapperStyles = {
   marginY: {
@@ -19,7 +18,7 @@ const outterWrapperStyles = {
 };
 
 interface IAboutWrapper {
-  posts: any;
+  posts: IFrontMatter[];
 }
 
 const AboutWrapper = (props: IAboutWrapper) => {
@@ -81,10 +80,10 @@ const AboutWrapper = (props: IAboutWrapper) => {
             Latest Blog Posts
           </Typography>
           <Grid container spacing={4}>
-            {props.posts.map((item: IBlogPostSummary, index: number) => {
+            {props.posts.map((item: IFrontMatter, index: number) => {
               return (
                 <Grid key={index} item xs={12} sm={6} lg={4}>
-                  <ImageMediaCard blogPostSummary={item} />
+                  <ImageMediaCard frontMatter={item} />
                 </Grid>
               );
             })}

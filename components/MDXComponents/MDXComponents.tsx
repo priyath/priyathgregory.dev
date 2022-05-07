@@ -85,7 +85,7 @@ const MDXComponents = {
   code: (props: any) => <InlineCodeBlock {...props} />,
   pre: (props: ICodeBlock) => <CodeBlock {...props} />,
   p: (props: any) => (
-    <Typography variant={'body2'} gutterBottom>
+    <Typography variant={'body2'} sx={{ marginTop: 4 }}>
       {props.children}
     </Typography>
   ),

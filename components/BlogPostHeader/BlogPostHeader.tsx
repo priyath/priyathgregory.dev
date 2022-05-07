@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Box } from '@mui/system';
-import testImage from '../../data/images/internal.jpeg';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { pseudoSeparator } from './styles';
@@ -50,10 +49,12 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
       </Box>
       <Box sx={{ mb: 4 }}>
         <Image
-          src={testImage}
-          alt="Picture of the author"
-          layout={'responsive'}
-          height={380}
+          width={'100%'}
+          height={55}
+          src={`/${frontMatter?.coverImage}`}
+          alt="hero image"
+          layout="responsive"
+          quality={100}
         />
       </Box>
     </Box>

@@ -19,6 +19,7 @@ export interface IFrontMatter {
   summary: string;
   title: string;
   wordCount: number;
+  coverImage: string;
 }
 
 interface IBlogProps {

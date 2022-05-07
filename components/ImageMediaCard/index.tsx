@@ -7,29 +7,29 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
 import { Link } from '@mui/material';
-
-export interface IBlogPostSummary {
-  publishedAt: string;
-  slug: string;
-  summary: string;
-  title: string;
-}
+import Image from 'next/image';
+import { IFrontMatter } from '../../pages/blog/[slug]';
 
 interface IImageMediaCardProps {
-  blogPostSummary: IBlogPostSummary;
+  frontMatter: IFrontMatter;
 }
 
 const ImageMediaCard = (props: IImageMediaCardProps) => {
-  const { title, slug, summary, publishedAt } = props.blogPostSummary;
+  const { title, slug, summary, coverImage } = props.frontMatter;
 
+  console.log('props: ', props.frontMatter);
   return (
     <Card sx={{ maxWidth: '100%' }}>
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="250"
-        image="/static/images/cards/contemplative-reptile.jpg"
-      />
+      <CardMedia>
+        <Image
+          width={'100%'}
+          height={65}
+          src={`/${coverImage}`}
+          alt="hero image thumbnail"
+          layout="responsive"
+          quality={100}
+        />
+      </CardMedia>
       <CardContent>
         <NextLink key={0} href={`/blog/${slug}`} passHref>
           <Link>
