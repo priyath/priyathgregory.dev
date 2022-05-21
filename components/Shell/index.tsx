@@ -153,7 +153,7 @@ const Shell = () => {
           {sidePanelConfig.map((itemConfig, index) => (
             <NextLink key={index} href={itemConfig.path}>
               <Link sx={{ textDecoration: 'none' }}>
-                <ListItem button>
+                <ListItem button sx={{ pl: 4 }}>
                   <ListItemIcon>{itemConfig.icon}</ListItemIcon>
                   <ListItemText
                     primary={itemConfig.label}
@@ -226,10 +226,6 @@ const Shell = () => {
           >
             <MenuIcon />
           </IconButton>
-
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
         </Toolbar>
       </AppBar>
       <Box
