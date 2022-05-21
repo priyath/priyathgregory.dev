@@ -8,14 +8,22 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
       ? {
           // palette values for light mode
           primary: blue,
+          background: {
+            paper: '#54B689',
+          },
           text: {
-            primary: grey[900],
-            secondary: grey[800],
+            primary: '#292929',
+            secondary: '#4f4f4f',
+          },
+          tertiary: {
+            main: 'rgba(24,24,24,0.05)',
           },
         }
       : {
           // palette values for dark mode
-          primary: blue,
+          primary: {
+            main: '#54B689',
+          },
           tertiary: {
             main: 'rgba(255,255,255,0.05)',
           },
@@ -24,8 +32,8 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
             paper: '#1e2c3a',
           },
           text: {
-            primary: '#fff',
-            secondary: grey[500],
+            primary: 'rgba(255,255,255,0.95)',
+            secondary: 'rgba(255,255,255,0.7)',
           },
         }),
   },

@@ -40,21 +40,22 @@ export const ColorModeContextProvider = ({
   );
 
   const finalTheme = React.useMemo(() => {
-    const themeWithOverrides = createTheme({
+    const themeWithPalette = createTheme(getPaletteConfigs(mode));
+    const themeWithOverrides = createTheme(themeWithPalette, {
       typography: {
         fontFamily: ['Roboto', 'sans-serif'].join(','),
         allVariants: {
-          color: 'rgba(255,255,255)',
+          color: themeWithPalette.palette.text.primary,
         },
         h5: {
-          color: 'rgba(255,255,255,0.7)',
+          color: themeWithPalette.palette.text.primary,
         },
         body1: {
-          color: 'rgba(255,255,255,0.7)',
+          color: themeWithPalette.palette.text.secondary,
         },
         body2: {
           fontSize: '1.125rem',
-          color: 'rgba(255,255,255,0.7)',
+          color: themeWithPalette.palette.text.secondary,
         },
       },
       components: {
@@ -74,9 +75,7 @@ export const ColorModeContextProvider = ({
         },
       },
     });
-    return responsiveFontSizes(
-      createTheme(themeWithOverrides, getPaletteConfigs(mode))
-    );
+    return responsiveFontSizes(createTheme(themeWithOverrides));
   }, [mode]);
 
   return (

@@ -2,6 +2,8 @@ import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../lib/createEmotionCache';
+import GitHubCalendar from 'react-github-calendar';
+import Script from 'next/script';
 
 export default class MyDocument extends Document {
   render() {
@@ -20,6 +22,14 @@ export default class MyDocument extends Document {
             type="text/css"
             href="//fonts.googleapis.com/css?family=Merriweather"
           />
+
+          <script src="https://cdn.rawgit.com/IonicaBizau/github-calendar/gh-pages/dist/github-calendar.min.js"></script>
+
+          <link
+            rel="stylesheet"
+            href="https://cdn.rawgit.com/IonicaBizau/github-calendar/gh-pages/dist/github-calendar.css"
+          />
+
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
         </Head>

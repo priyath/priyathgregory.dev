@@ -17,7 +17,6 @@ interface IImageMediaCardProps {
 const ImageMediaCard = (props: IImageMediaCardProps) => {
   const { title, slug, summary, coverImage } = props.frontMatter;
 
-  console.log('props: ', props.frontMatter);
   return (
     <Card sx={{ maxWidth: '100%' }}>
       <CardMedia>
@@ -38,9 +37,7 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
             </Typography>
           </Link>
         </NextLink>
-        <Typography variant="body1" color="text.secondary">
-          {summary}
-        </Typography>
+        <Typography variant="body1">{summary}</Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Share</Button>
