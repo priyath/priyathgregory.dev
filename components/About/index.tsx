@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import * as React from 'react';
@@ -6,11 +6,12 @@ import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import { useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const outterWrapperStyles = {
   marginY: {
-    md: 4,
-    xs: 8,
+    md: 6,
+    xs: 10,
   },
   marginX: {
     lg: 8,
@@ -24,6 +25,7 @@ interface IAboutWrapper {
 }
 
 const AboutWrapper = (props: IAboutWrapper) => {
+  const router = useRouter();
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -55,14 +57,29 @@ const AboutWrapper = (props: IAboutWrapper) => {
           <Grid container spacing={{ xs: 4, lg: 6 }}>
             <Grid item xs={12} md={8}>
               <Box>
-                <Typography variant={'h3'} sx={{ py: 2, fontWeight: 'bold' }}>
+                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
                   Priyath Gregory
                 </Typography>
                 <Typography variant={'h5'} sx={{ pb: 2 }}>
                   Full-Stack Software Engineer
                 </Typography>
-                <Typography variant={'body1'}>
+                <Typography component={'div'} variant={'body1'}>
                   {ABOUT_ME_DESCRIPTION}
+                  {
+                    <Box
+                      onClick={() => {
+                        router.push('/blog');
+                      }}
+                      sx={{
+                        display: 'inline-block',
+                        color: 'primary.main',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      blog
+                    </Box>
+                  }
+                  .
                 </Typography>
               </Box>
             </Grid>

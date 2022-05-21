@@ -20,6 +20,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useColorMode } from '../../styles/ColorModeContext';
+import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
+import { BsLightbulbFill } from 'react-icons/bs';
 
 const drawerWidth = 260;
 
@@ -27,10 +29,12 @@ const sidePanelConfig = [
   {
     label: 'About Me',
     icon: <PersonIcon />,
+    path: '/',
   },
   {
     label: 'Blog',
     icon: <LibraryBooksIcon />,
+    path: '/blog',
   },
 ];
 
@@ -61,6 +65,49 @@ const Shell = () => {
           src="/pic02.png"
           sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}
         />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingBottom: 2,
+            gap: 1.5,
+          }}
+        >
+          <a
+            href="https://www.github.com/priyath"
+            target={'_blank'}
+            rel="noreferrer"
+          >
+            <Avatar
+              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+            >
+              <FaGithubAlt size={'0.8em'} color={'white'} />
+            </Avatar>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/priyathg"
+            target={'_blank'}
+            rel="noreferrer"
+          >
+            <Avatar
+              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+            >
+              <FaLinkedinIn size={'0.8em'} color={'white'} />
+            </Avatar>
+          </a>
+          <a
+            href="https://medium.com/@priyathgregory"
+            target={'_blank'}
+            rel="noreferrer"
+          >
+            <Avatar
+              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+            >
+              <FaMediumM size={'0.8em'} color={'white'} />
+            </Avatar>
+          </a>
+        </Box>
         {/*<Typography align={'center'} variant={'body1'} sx={{ p: 2, pt: 0 }}>*/}
         {/*  Hi, my name is Priyath Gregory and I'm a full-stack software engineer.*/}
         {/*  Welcome to my personal website!*/}
@@ -70,18 +117,41 @@ const Shell = () => {
       <Grid container spacing={0} direction="column">
         <List>
           {sidePanelConfig.map((itemConfig, index) => (
-            <ListItem button key={index}>
-              <ListItemIcon>{itemConfig.icon}</ListItemIcon>
-              <ListItemText primary={itemConfig.label} />
-            </ListItem>
+            <a key={index} href={itemConfig.path}>
+              <ListItem button>
+                <ListItemIcon>{itemConfig.icon}</ListItemIcon>
+                <ListItemText primary={itemConfig.label} />
+              </ListItem>
+            </a>
           ))}
         </List>
-        <Switch
-          onClick={() => toggleColorMode()}
-          sx={{ margin: 'auto' }}
-          {...label}
-          defaultChecked
-        />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            margin: 'auto',
+          }}
+        >
+          <Switch
+            onClick={() => toggleColorMode()}
+            sx={{ margin: 'auto' }}
+            {...label}
+            defaultChecked
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              gap: 1,
+              alignItems: 'bottom',
+            }}
+          >
+            <BsLightbulbFill color={'#3c755a'} />
+            <Typography variant={'caption'}>Dark Mode</Typography>
+          </Box>
+        </Box>
       </Grid>
     </Box>
   );

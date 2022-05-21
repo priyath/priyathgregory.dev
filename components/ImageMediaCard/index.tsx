@@ -41,7 +41,7 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
       </CardContent>
       <CardActions>
         <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Read More</Button>
       </CardActions>
     </Card>
   );
