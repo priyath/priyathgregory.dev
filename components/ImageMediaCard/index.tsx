@@ -29,7 +29,7 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
           quality={100}
         />
       </CardMedia>
-      <CardContent>
+      <CardContent sx={{ backgroundColor: 'background.card' }}>
         <NextLink key={0} href={`/blog/${slug}`} passHref>
           <Link>
             <Typography gutterBottom variant="h5" component="div">
@@ -39,7 +39,7 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
         </NextLink>
         <Typography variant="body1">{summary}</Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ backgroundColor: 'background.card' }}>
         <Button size="small">Share</Button>
         <Button size="small">Read More</Button>
       </CardActions>

@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from '@mui/material';
+import { Box, Grid, Link, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import * as React from 'react';
@@ -7,6 +7,7 @@ import { IFrontMatter } from '../../pages/blog/[slug]';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 
 const outterWrapperStyles = {
   marginY: {
@@ -66,18 +67,9 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 <Typography component={'div'} variant={'body1'}>
                   {ABOUT_ME_DESCRIPTION}
                   {
-                    <Box
-                      onClick={() => {
-                        router.push('/blog');
-                      }}
-                      sx={{
-                        display: 'inline-block',
-                        color: 'primary.main',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      blog
-                    </Box>
+                    <NextLink href={'/blog'} passHref>
+                      <Link sx={{ textDecoration: 'none' }}>blog</Link>
+                    </NextLink>
                   }
                   .
                 </Typography>
@@ -86,7 +78,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
             <Grid item xs={12} md={4}>
               <Box>
                 <Image
-                  src="/pic02.png"
+                  src="/pic02-bw.png"
                   alt="Picture of the author"
                   width={350}
                   height={350}

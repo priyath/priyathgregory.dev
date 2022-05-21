@@ -63,6 +63,8 @@ export const ColorModeContextProvider = ({
           defaultProps: {
             variantMapping: {
               h3: 'h1',
+              h4: 'h2',
+              h5: 'h3',
             },
           },
         },

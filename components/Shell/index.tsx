@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import {
   Avatar,
   Grid,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -22,6 +23,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useColorMode } from '../../styles/ColorModeContext';
 import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 import { BsLightbulbFill } from 'react-icons/bs';
+import NextLink from 'next/link';
 
 const drawerWidth = 260;
 
@@ -31,11 +33,11 @@ const sidePanelConfig = [
     icon: <PersonIcon />,
     path: '/',
   },
-  {
-    label: 'Blog',
-    icon: <LibraryBooksIcon />,
-    path: '/blog',
-  },
+  // {
+  //   label: 'Blog',
+  //   icon: <LibraryBooksIcon />,
+  //   path: '/blog',
+  // },
 ];
 
 const Shell = () => {
@@ -57,9 +59,13 @@ const Shell = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Typography variant={'h5'} sx={{ pt: 2 }}>
-          Priyath Gregory
-        </Typography>
+        <NextLink href={'/'} passHref>
+          <Link sx={{ textDecoration: 'none' }}>
+            <Typography variant={'h5'} sx={{ pt: 2 }}>
+              Priyath Gregory
+            </Typography>
+          </Link>
+        </NextLink>
         <Avatar
           alt="Remy Sharp"
           src="/pic02.png"
@@ -80,9 +86,17 @@ const Shell = () => {
             rel="noreferrer"
           >
             <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
             >
-              <FaGithubAlt size={'0.8em'} color={'white'} />
+              <Box
+                color={'secondary.main'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <FaGithubAlt size={'0.8em'} />
+              </Box>
             </Avatar>
           </a>
           <a
@@ -91,9 +105,17 @@ const Shell = () => {
             rel="noreferrer"
           >
             <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
             >
-              <FaLinkedinIn size={'0.8em'} color={'white'} />
+              <Box
+                color={'secondary.main'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <FaLinkedinIn size={'0.8em'} />
+              </Box>
             </Avatar>
           </a>
           <a
@@ -102,9 +124,17 @@ const Shell = () => {
             rel="noreferrer"
           >
             <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'primary.main' }}
+              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
             >
-              <FaMediumM size={'0.8em'} color={'white'} />
+              <Box
+                color={'secondary.main'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <FaMediumM size={'0.8em'} />
+              </Box>
             </Avatar>
           </a>
         </Box>
@@ -117,12 +147,14 @@ const Shell = () => {
       <Grid container spacing={0} direction="column">
         <List>
           {sidePanelConfig.map((itemConfig, index) => (
-            <a key={index} href={itemConfig.path}>
-              <ListItem button>
-                <ListItemIcon>{itemConfig.icon}</ListItemIcon>
-                <ListItemText primary={itemConfig.label} />
-              </ListItem>
-            </a>
+            <NextLink key={index} href={itemConfig.path}>
+              <Link sx={{ textDecoration: 'none' }}>
+                <ListItem button>
+                  <ListItemIcon>{itemConfig.icon}</ListItemIcon>
+                  <ListItemText primary={itemConfig.label} />
+                </ListItem>
+              </Link>
+            </NextLink>
           ))}
         </List>
         <Box

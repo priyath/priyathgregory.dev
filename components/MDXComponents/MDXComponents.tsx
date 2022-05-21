@@ -12,13 +12,18 @@ const BlockQuote = (props: IBlockQuote) => {
   return (
     <Box
       sx={{
+        mt: 4,
         marginLeft: 4,
         paddingLeft: 2,
         borderLeft: 'solid #54B689 2px',
         fontStyle: 'italic',
       }}
     >
-      <Typography color={'#54B689'} variant={'h6'} sx={{ fontWeight: 'bold' }}>
+      <Typography
+        color={'#54B689'}
+        variant={'h6'}
+        sx={{ fontWeight: 'bold', marginBottom: 2 }}
+      >
         Note
       </Typography>
       {props.children}
@@ -85,7 +90,12 @@ const MDXComponents = {
   code: (props: any) => <InlineCodeBlock {...props} />,
   pre: (props: ICodeBlock) => <CodeBlock {...props} />,
   p: (props: any) => (
-    <Typography variant={'body2'} sx={{ marginTop: 4 }}>
+    <Typography variant={'body2'} sx={{ marginBottom: 4 }}>
+      {props.children}
+    </Typography>
+  ),
+  h2: (props: any) => (
+    <Typography variant={'h5'} sx={{ marginBottom: 2, fontWeight: 'bold' }}>
       {props.children}
     </Typography>
   ),
