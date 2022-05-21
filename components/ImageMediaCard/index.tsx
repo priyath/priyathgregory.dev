@@ -6,16 +6,17 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
-import { Link } from '@mui/material';
+import { Box, Grid, Link } from '@mui/material';
 import Image from 'next/image';
 import { IFrontMatter } from '../../pages/blog/[slug]';
+import { getPublishedAtString } from '../BlogPostHeader/utils';
 
 interface IImageMediaCardProps {
   frontMatter: IFrontMatter;
 }
 
 const ImageMediaCard = (props: IImageMediaCardProps) => {
-  const { title, slug, summary, coverImage } = props.frontMatter;
+  const { title, slug, summary, coverImage, publishedAt } = props.frontMatter;
 
   return (
     <Card sx={{ maxWidth: '100%' }}>
@@ -29,10 +30,19 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
           quality={100}
         />
       </CardMedia>
-      <CardContent sx={{ backgroundColor: 'background.card' }}>
+      <CardContent sx={{ backgroundColor: 'background.card', pb: 0 }}>
         <NextLink key={0} href={`/blog/${slug}`} passHref>
-          <Link>
-            <Typography gutterBottom variant="h5" component="div">
+          <Link sx={{ textDecoration: 'none' }}>
+            <Typography
+              sx={{
+                '&:hover': {
+                  color: 'primary.main',
+                },
+              }}
+              gutterBottom
+              variant="h5"
+              component="div"
+            >
               {title}
             </Typography>
           </Link>
@@ -40,8 +50,21 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
         <Typography variant="body1">{summary}</Typography>
       </CardContent>
       <CardActions sx={{ backgroundColor: 'background.card' }}>
-        <Button size="small">Share</Button>
-        <Button size="small">Read More</Button>
+        {/*<Button size="small">Share</Button>*/}
+        <Grid container pl={1}>
+          <Grid item xs={12} pb={2}>
+            <Button size="small" sx={{ pl: 0 }}>
+              <NextLink href={`/blog/${slug}`} passHref>
+                <Link sx={{ textDecoration: 'none' }}>Read More</Link>
+              </NextLink>
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant={'caption'}>
+              {getPublishedAtString(publishedAt)}
+            </Typography>
+          </Grid>
+        </Grid>
       </CardActions>
     </Card>
   );

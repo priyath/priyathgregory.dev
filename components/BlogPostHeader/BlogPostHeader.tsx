@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { pseudoSeparator } from './styles';
 import { IFrontMatter } from '../../pages/blog/[slug]';
-import { getDateDifferenceInDays } from '../../utils/utils';
 import { getPublishedAtString } from './utils';
 
 interface IBlogPostHeader {
@@ -13,7 +12,6 @@ interface IBlogPostHeader {
 
 const BlogPostHeader = (props: IBlogPostHeader) => {
   const { frontMatter } = props;
-  const daysSincePublished = getDateDifferenceInDays(frontMatter?.publishedAt);
 
   return (
     <Box sx={{ marginX: 0, marginTop: 4 }}>
@@ -38,7 +36,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
               ...pseudoSeparator,
             }}
           >
-            {getPublishedAtString(daysSincePublished)}
+            {getPublishedAtString(frontMatter?.publishedAt)}
           </Typography>
         </Box>
         <Box>

@@ -61,7 +61,11 @@ const Shell = () => {
       >
         <NextLink href={'/'} passHref>
           <Link sx={{ textDecoration: 'none' }}>
-            <Typography variant={'h5'} sx={{ pt: 2 }}>
+            <Typography
+              variant={'h5'}
+              sx={{ pt: 2, fontWeight: 'bold' }}
+              color={'sidebarTypography.main'}
+            >
               Priyath Gregory
             </Typography>
           </Link>
@@ -151,7 +155,13 @@ const Shell = () => {
               <Link sx={{ textDecoration: 'none' }}>
                 <ListItem button>
                   <ListItemIcon>{itemConfig.icon}</ListItemIcon>
-                  <ListItemText primary={itemConfig.label} />
+                  <ListItemText
+                    primary={itemConfig.label}
+                    primaryTypographyProps={{
+                      fontWeight: 'bold',
+                      color: 'sidebarTypography.main',
+                    }}
+                  />
                 </ListItem>
               </Link>
             </NextLink>
@@ -181,7 +191,13 @@ const Shell = () => {
             }}
           >
             <BsLightbulbFill color={'#3c755a'} />
-            <Typography variant={'caption'}>Dark Mode</Typography>
+            <Typography
+              color={'sidebarTypography.main'}
+              sx={{ fontWeight: 'bold' }}
+              variant={'caption'}
+            >
+              Dark Mode
+            </Typography>
           </Box>
         </Box>
       </Grid>

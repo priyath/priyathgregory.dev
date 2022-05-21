@@ -57,6 +57,9 @@ export const ColorModeContextProvider = ({
           fontSize: '1.125rem',
           color: themeWithPalette.palette.text.secondary,
         },
+        caption: {
+          color: themeWithPalette.palette.text.secondary,
+        },
       },
       components: {
         MuiTypography: {

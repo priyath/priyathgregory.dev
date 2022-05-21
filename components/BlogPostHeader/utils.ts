@@ -1,4 +1,7 @@
-export const getPublishedAtString = (dayCount: number) => {
+import { getDateDifferenceInDays } from '../../utils/utils';
+
+export const getPublishedAtString = (publishedAt: string) => {
+  const dayCount = getDateDifferenceInDays(publishedAt);
   if (dayCount === 0) {
     return 'Published today';
   }
