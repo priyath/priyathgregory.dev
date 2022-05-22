@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Link, List, ListItem, Typography } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/atom-dark';
 import { extractMDXLanguage } from './utils';
+import NextLink from 'next/link';
 
 interface IBlockQuote {
   children: any;
@@ -99,6 +100,18 @@ const MDXComponents = {
       {props.children}
     </Typography>
   ),
+  li: (props: any) => (
+    <ListItem sx={{ display: 'list-item', py: 0, mb: 2 }}>
+      {props.children}
+    </ListItem>
+  ),
+  a: (props: any) => {
+    return (
+      <NextLink href={props.href} passHref>
+        <Link target={'_blank'}>{props.children}</Link>
+      </NextLink>
+    );
+  },
 };
 
 export default MDXComponents;

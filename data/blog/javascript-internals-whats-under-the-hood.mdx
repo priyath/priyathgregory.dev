@@ -41,19 +41,174 @@ Let us examine each of these pieces individually.
 > However, these differences are mostly in implementation; The concepts that we discuss will be applicable to most
 > Javascript runtime environments, independent of context.
 
+## The Javascript Engine
+
+The Javascript engine is the brain of the runtime environment and its main purpose is to convert your human-readable
+scripts into machine-readable code.
+
+It also manages a call stack (think of a LIFO stack data structure) to keep track of the execution of your code,
+and the execution itself is **always** performed on a single thread, synchronously. Additionally, the engine performs
+garbage collection, optimizations, and a whole bunch of other things that deserves its own article.
+
+Any engine worth your time will also contain an implementation of ECMAScript, a scripting-language specification
+created to standardize Javascript. This is what allows the engine to “know” what a `while` loop is, and what
+`Math.round(x)` is supposed to do. If all you need is a bunch of while loops, a few function definitions, and some
+variables (in other words, if what you need is defined in the ECMAScript specification), the Javascript engine is
+quite capable of handling your code on its own.
+
+But Javascript is much more than just a few function definitions. It is a powerful language that is capable of
+doing a lot of things, which brings us to the next piece of the puzzle, the web APIs.
+
+## Web APIs
+
+If you check out the source code of a Javascript engine such as V8, you will realize that many functions that you
+thought were a part of the standard Javascript specification, are simply not there. A case in point is the `setTimeout`
+function. I don't know about you, but for me `setTimeout` is standard Javascript. But if it's not there within the engine,
+where is it?
+
+Enter Web APIs. Web APIs are key browser-specific implementations that extend the Javascript language. For example,
+if you open the Google Chrome console and type in something like:
+
 ```javascript
-function $initHighlight(block, cls) {
-  try {
-    if (cls.search(/\bno\-highlight\b/) != -1)
-      return process(block, true, 0x0F) +
-             ` class="${cls}"`;
-  } catch (e) {
-    /* handle exception */
-  }
-  for (var i = 0 / 2; i < classes.length; i++) {
-    if (checkCondition(classes[i]) === undefined)
-      console.log('undefined');
-  }
-}
-export  $initHighlight;
+function main(){
+  setTimeout(()=>console.log('Hello World!'), 5000);
+};
+main();
 ```
+
+“Hello World” will be printed to the console after 5 seconds as expected. This code works because the Web APIs of
+Google Chrome have their own implementation of `setTimeout` embedded into its Javascript engine, V8. Similarly,
+the DOM is also **not** a part of the Javascript engine. Anything DOM-related: be it, event listeners, accessors, or
+manipulators, are all defined in.. you guessed it, web APIs!
+
+A very logical question to ask at this point is if the Javascript engine does not know of these functions, then how
+would it handle a “web API” function call in my script?
+
+The answer lies in how the browser embeds web APIs to its Javascript engine.
+
+When the Javascript engine is looking to resolve a symbol, it will start in the local scope and go up a chain of scopes.
+At the very end of the chain is the `global` scope. As part of initializing the Javascript engine, any host environment
+can add its own APIs to this `global` scope, thus exposing the function and its corresponding handler to the Javascript
+engine.
+
+To better understand this, let's go back to our example:
+
+```javascript
+function main(){
+  setTimeout(()=>console.log('Hello World!'), 5000);
+};
+main();
+```
+
+What actually happens when this code is copied onto the Google Chrome browser?
+
+1. The V8 engine will start by adding `main()` to the call stack.
+
+2. Then the engine will look for the `setTimeout` function definition in the scope chain.
+(This will be available in the global scope since `setTimeout` is not built into the engine).
+
+3. The V8 engine will push `setTimeout()` onto the call-stack, "call" the web API's `setTimeout` definition, which in turn
+will initiate whatever native implementation the browser has in place for the same, **outside** of Javascript's main thread.
+
+4. At this point, as far as the engine is concerned, its job is done. Therefore, `setTimeout()` will be popped off the
+call-stack, immediately followed by `main()`.
+
+Okay. But that can’t be it, right? There is still a callback to be executed after a 5-second delay. Speaking about
+the callback, what actually happened to it?
+
+To find these answers we need to look at the next piece of the runtime puzzle, the callback queue.
+
+## The Callback Queue
+
+So where did that damned callback go?
+
+Before we get to that, we need to first understand the role of the callback function.
+
+The callback function is essentially a binding between the Javascript engine and an **asynchronous** web API task,
+usually with instructions on what to do after the asynchronous task has completed its duties. **Any piece of code that
+runs outside of the main thread of the engine, will always require an associated callback to communicate back with the
+engine**.
+
+If you haven’t realized it already, this is the fundamental concept behind asynchronous Javascript.
+
+> Anything that executes outside of the Javascript engine’s main thread, is an asynchronous operation.
+
+Okay, that’s all nice and stuff, but seriously where is our callback?
+
+Let's rewind a bit.
+
+After the V8 engine “calls” the `setTimeout` web API binding, some browser-specific native code will be tasked
+with timing the 5-second delay. This is an asynchronous operation that happens outside of the engine's main thread,
+and its implementation details are not important. This same native code will also be responsible for ensuring that
+our "lost" callback function finds its way back home.
+
+So how is this done?
+
+Well, there is a special place in Javascriptland for callbacks that await execution. This is the callback queue and
+it is one of two crucial pieces within the Javascript runtime that makes asynchronous Javascript possible.
+
+The native code knows of its existence and once the asynchronous task has been completed, it will push our callback
+function onto the callback queue.
+
+Our callback function is almost home, but we are not quite there yet. There is still one final piece left in the
+Javascript runtime puzzle.
+
+## The Event Loop
+
+*What the heck is the event loop?*
+
+The event loop is the gel between the Javascript engine and the callback queue, and it does two things.
+
+First, it will periodically check if the Javascript engine’s call-stack is empty. If it is, it will then grab a
+callback from the callback queue and put it onto the call stack, effectively scheduling it for execution.
+
+It really is that simple.
+
+Together, the callback queue and the event loop are what make your asynchronous Javascript code work. The former
+will queue up callback functions of asynchronous operations that are completed, while the latter will schedule
+them for execution on the Javascript’s main thread.
+
+## Full Circle
+
+“*…a single-threaded, non-blocking, asynchronous programming language*.”
+
+I hope this has been a fairly informative read on what actually happens under the hood of Javascript,
+and the above definition makes a bit more sense than what it did, a few minutes ago.
+
+I have tried to keep things very generalized; Just to ensure that you understand that these concepts
+apply not just to your browser’s runtime, but to any Javascript runtime environment that you might come across.
+
+I am also pretty sure that this will open up many new questions that you might not have had before.
+But that is the whole point. Questions should lead to research, which might lead to more confusion,
+but if you persist will eventually lead to answers. And that is how you learn.
+
+So to summarize a whole lot of text into a few bullet points:
+
+- **The Javascript runtime** is what makes your Javascript code work. It can take many different shapes and
+forms (browsers, node.js); But the fundamental concepts of the runtime will remain the same across all environments.
+The runtime environment of a browser consists of the Javascript engine, a bunch of web APIs, a callback queue,
+and the event loop.
+
+- **The Javascript engine** converts your human-readable Javascript code into machine-readable bytecode and always
+executes them on a **single thread**. It also manages a call stack and does a bunch of other things.
+
+- **The web APIs** extend the Javascript language with its own functionalities that are added to the global object
+of the Javascript engine. Some of these functionalities are synchronous, some can be asynchronous.
+
+- **The callback queue** queues up callbacks that are awaiting to be executed by the Javascript engine.
+A callback is usually always associated with some asynchronous operation.
+
+- **The event loop** is the gel between the Javascript engine and the callback queue. Its job is to move callbacks
+from the callback queue onto the engine’s call stack for execution.
+
+- The callback queue and the event loop are at the heart of Javascript’s **asynchronous** (and **non-blocking**!)
+nature.
+
+## Resources
+
+1. If you like watching rather than reading, I highly recommend checking out [*what the heck is the event loop anyway?*](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+by Philip Roberts. Seriously, check it out.
+
+2. [This](https://stackoverflow.com/questions/59316975/the-javascript-v8-engine-and-web-apis) stack overflow post
+discussing the link between the V8 engine and web APIs, and [this](https://stackoverflow.com/questions/59344915/which-part-of-the-javascript-runtime-is-responsible-for-putting-the-callback-int)
+one discussing the callback queue.

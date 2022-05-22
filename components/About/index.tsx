@@ -1,4 +1,4 @@
-import { Box, Grid, Link, Paper } from '@mui/material';
+import { Box, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import * as React from 'react';
@@ -6,7 +6,6 @@ import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 
 const outterWrapperStyles = {
@@ -26,7 +25,6 @@ interface IAboutWrapper {
 }
 
 const AboutWrapper = (props: IAboutWrapper) => {
-  const router = useRouter();
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -66,12 +64,12 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
                 <Typography component={'div'} variant={'body1'}>
                   {ABOUT_ME_DESCRIPTION}
-                  {
-                    <NextLink href={'/blog'} passHref>
-                      <Link sx={{ textDecoration: 'none' }}>blog</Link>
-                    </NextLink>
-                  }
-                  .
+                  {/*{*/}
+                  {/*  <NextLink href={'/blog'} passHref>*/}
+                  {/*    <Link sx={{ textDecoration: 'none' }}>blog</Link>*/}
+                  {/*  </NextLink>*/}
+                  {/*}*/}
+                  {/*.*/}
                 </Typography>
               </Box>
             </Grid>

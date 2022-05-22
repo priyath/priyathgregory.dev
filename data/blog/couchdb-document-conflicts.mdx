@@ -1,0 +1,235 @@
+---
+title: "CouchDB: Document Conflicts"
+publishedAt: '2021-05-22'
+summary: 'An overview of CouchDB architecture, a look at the conflict resolution model during replication, and possible
+pitfalls with document deletions.'
+coverImage: 'couchdb-document-conflicts-cover-image.jpeg'
+---
+
+Three years ago, if someone asked me what couchDB was, I’d probably tell them it was some fancy piece of furniture.
+But that is three years ago, and since then, I have started a career, learnt a few things, and most importantly
+realized that couchDB has nothing to do with furniture.
+
+CouchDB is in fact, a NOSQL database that plays an integral role in my current company’s tech stack. It has also
+been the source of many headaches over the years; And having messed around with it for the better part of three years,
+I have picked up a couple of things about couchDB that might help you avoid a few headaches of your own.
+
+But first, lets first understand three key aspects of couchDB: The document and the revision tree, the changes feed,
+and the conflict resolution model.
+
+## The Document and the Revision Tree
+
+Data in couchDB is represented as individual documents. A document is simply a JSON structure with a set of key value
+pairs, and a unique key for identification. Any update performed on a document will be tracked via a revision number.
+
+A bare-bones couchDB document may look like this:
+
+```json
+{
+    "_id": "my_document",
+    "_rev": "3-a",
+    "name": "Priyath Gregory",
+    "age": 28
+}
+```
+
+CouchDB tracks the revision history of a document via a revision tree. Each document will have its own revision tree,
+with each node corresponding to a previous revision of the document.
+
+For example, `my_document` (updated thrice) may have a revision tree similar to this:
+
+```
+1-a -> 2-a -> 3-a
+```
+
+## The Changes Feed
+
+CouchDB tracks updates to its database via the changes feed. The changes feed is a list of all the changes made to the
+documents in the database, in the order they were made. If you have access to a couchDB instance, you can use the
+`_changes` resource to obtain the changes feed of the corresponding database.
+
+A typical request and response may look like this:
+
+```
+curl -X GET http://127.0.0.1:5984/dbname/_changes
+```
+
+```json
+{
+  "results": [
+    {
+      "seq": 3,
+      "id": "my_document",
+      "changes": [
+        {
+          "rev": "3-a"
+        }
+      ]
+    },
+    {
+      "seq": 4,
+      "id": "my_other_document",
+      "changes": [
+        {
+          "rev": "1-23a"
+        }
+      ]
+    }
+  ],
+  "last_seq": 4
+}
+```
+
+Each entry or sequence in the results array represents a document update of the database. It is important to note that
+the changes feed only lists the sequence corresponding to the latest revision of a document. For example, if we
+perform another update on `my_document` the response would be something like this:
+
+```json
+{
+  "results": [
+    {
+      "seq": 4,
+      "id": "my_other_document",
+      "changes": [
+        {
+          "rev": "1-23a"
+        }
+      ]
+    },
+    {
+      "seq": 5,
+      "id": "my_document",
+      "changes": [
+        {
+          "rev": "4-a"
+        }
+      ]
+    }
+  ],
+  "last_seq": 5
+}
+```
+
+Both sequences 1 and 2 are removed from the result set as they correspond to stale revisions of our updated document.
+
+## Replication and Conflict Resolution
+
+Without a doubt, the standout feature of couchDB is in its ability to synchronize two copies of the same database.
+This is done through an in-built replication protocol that depends on the changes feed, as well as the revision-based
+update model used by couchDB to track document updates.
+
+For example, consider two synchronized databases, A and B. Any document update on A will be synced to B and vice-versa.
+This is fairly straightforward, but what happens if the same document is updated in both A and B at the same time?
+The replication mechanism will ensure that both revisions of the document are copied to databases A and B;
+but clearly, both revisions cannot exist together.
+
+### my_document revision tree:
+
+```
+:
+                  4-a (conflicting update performed in database A)
+                 /
+1-a -> 2-a -> 3-a
+                 \
+                  4-b (conflicting update performed in database B)
+```
+
+Enter couchDB’s conflict resolution model.
+
+Conflicting revisions result in conflicting documents. And it is up-to couchDB’s conflict resolution model to fix this.
+The fix is fairly simple. The conflict is resolved by arbitrarily selecting a winning revision from the two conflicting
+revisions, while marking the other as conflicted. CouchDB does **not** try to merge these conflicting revisions.
+
+A conflict resolved document’s revision tree may look like this:
+
+```
+:
+                  4-a (winning revision)
+                 /
+1-a -> 2-a -> 3-a
+                 \
+                  4-b (conflicted revision)
+```
+
+Now for all intents and purposes, the winning revision will remain as the active version of the document across both
+databases A and B.. **but** what many users do not realize is that the conflicted revision will also “live” within the
+databases in a dormant state.
+
+**And herein lies the root cause for many issues that we have faced with regards to couchDB, the existence
+(or rather, our ignorance to the existence of!) conflicting revisions**.
+
+## Conflicting Revisions and Document Deletion
+
+Deletes in couchDB are soft deletes. What this means is a deleted document in couchDB will still remain in the
+database, just with the a flag (`_deleted`) set to true. Any attempt at retrieval of a deleted document will result
+in a response similar to this:
+
+```json
+{
+    "error": "not_found",
+    "reason": "deleted"
+}
+```
+
+> There’s also a more extreme version of deletion supported by couchDB called the **purge**.
+> Purging a document will remove all traces of it from the database. Purging is generally not recommended since
+> couchDB replication (for that specific document), completely falls apart once a purge is performed.
+
+Things get interesting when we delete (or purge) a document that has conflicting revisions.
+
+Consider the deletion of our document `my_document`, with the latest revision `4-a` and a conflicting revision `4-b`.
+It is logical to assume that post-deletion, the document will be.. well, deleted from the database.
+
+But couchDB is weird, and it does weird things.
+
+What actually happens is, once we delete the document by specifying its latest revision (`4-a` in this case),
+the revision will get deleted as expected.. BUT **the dormant conflicting leaf revision 4-b will immediately revert as
+the active revision of the document**. And for all intents and purposes, `my_document` will still remain active in the
+database with `4-b` as its latest revision.
+
+```
+my_document
+                  4-a (winning revision)
+                 /
+1-a -> 2-a -> 3-a
+                 \
+                  4-b (conflicted revision)
+                          |
+                          \/
+                  4-a (deleted revision)
+                 /
+1-a -> 2-a -> 3-a
+                 \
+                  4-b (winning revision)
+```
+
+The implications of this if not handled properly can be severe. Deleted items in your web application may seemingly
+re-appear with a completely random state from the past.
+
+## Handling Document Conflicts
+
+- First and foremost, try to avoid document conflicts like the plague. If you are running a single instance of couchDB,
+this is a no-issue. CouchDB will reject a conflicting document update with a 409 response. But if you have multiple
+database copies in sync through replication, and if each instance can receive its own document updates, understand
+that you will always be susceptible to document conflicts.
+
+- Make sure to specify all leaf revisions of the revision tree during document deletion. This can be accomplished by
+using `GET /db/documentId?conflicts=true` to obtain a response with the conflicted leaf revisions of the document, and
+then specifying a bulk deletion of the retrieved revisions using the `POST /{db}/_bulk_docs` endpoint.
+
+- There can also be cases where a conflicting revision may actually contain important data. After all, the winning
+revision is an arbitrary selection. If this is the case, you can:
+    * Retrieve all conflicting revisions of the document.
+    * Retrieve the document content corresponding to each conflicting revision.
+    * Perform application-specific merging.
+    * Use the `_bulk_docs` endpoint to update the first revision of the document (with the merged results) while deleting
+    the others.
+
+
+- You can also use an application-specific custom flag to mark deleted documents without performing an actual delete.
+The downside of this approach is you will need application logic as well as a mechanism in place to handle your
+“deleted” documents in a sensible manner.
+
+If you are interested in a more detailed look at what we have discussed here, I suggest you check out the official
+couchDB documentation on [Replication and the Conflict Model](https://docs.couchdb.org/en/3.2.0/replication/conflicts.html).
+
