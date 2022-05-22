@@ -1,7 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { getPaletteConfigs } from './utils';
-import typographyConfig from './typographyConfig';
 
 enum ColorMode {
   DARK = 'dark',

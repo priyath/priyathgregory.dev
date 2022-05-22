@@ -1,12 +1,10 @@
-import { Box, Grid, Link } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
 import * as React from 'react';
 import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
-import { useEffect } from 'react';
 import Image from 'next/image';
-import NextLink from 'next/link';
 
 const outterWrapperStyles = {
   marginY: {
@@ -25,14 +23,14 @@ interface IAboutWrapper {
 }
 
 const AboutWrapper = (props: IAboutWrapper) => {
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    GitHubCalendar('.calendar', 'priyath', {
-      responsive: true,
-      tooltips: true,
-    });
-  }, []);
+  // useEffect(() => {
+  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   // @ts-ignore
+  //   GitHubCalendar('.calendar', 'priyath', {
+  //     responsive: true,
+  //     tooltips: true,
+  //   });
+  // }, []);
 
   return (
     <>

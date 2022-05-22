@@ -154,7 +154,7 @@ const Shell = () => {
       <Grid container spacing={0} direction="column">
         <List>
           {sidePanelConfig.map((itemConfig, index) => (
-            <NextLink key={index} href={itemConfig.path}>
+            <NextLink key={index} href={itemConfig.path} passHref>
               <Link sx={{ textDecoration: 'none' }}>
                 <ListItem button sx={{ pl: 4 }}>
                   <ListItemIcon>{itemConfig.icon}</ListItemIcon>
