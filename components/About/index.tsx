@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { ABOUT_ME_DESCRIPTION } from '../../pages/strings';
+import { ABOUT_ME_DESCRIPTION } from '../../utils/strings';
 import * as React from 'react';
 import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
