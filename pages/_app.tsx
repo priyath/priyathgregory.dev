@@ -18,6 +18,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <title>Priyath Gregory</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ColorModeContextProvider>
