@@ -30,7 +30,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
       >
         <Box>
           <Typography
-            variant={'body1'}
+            variant={'caption'}
             sx={{
               textAlign: 'left',
               ...pseudoSeparator,
@@ -40,7 +40,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           </Typography>
         </Box>
         <Box>
-          <Typography variant={'body1'} sx={{ textAlign: 'left' }}>
+          <Typography variant={'caption'} sx={{ textAlign: 'left' }}>
             {frontMatter?.readingTime?.text}
           </Typography>
         </Box>

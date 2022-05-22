@@ -59,6 +59,7 @@ export const ColorModeContextProvider = ({
         },
         caption: {
           color: themeWithPalette.palette.text.secondary,
+          fontSize: '0.8rem',
         },
       },
       components: {
