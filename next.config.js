@@ -1,6 +1,5 @@
-import next_transpile_modules from 'next-transpile-modules';
-
-const withTM = next_transpile_modules([
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withTM = require('next-transpile-modules')([
   '@mui/material',
   '@mui/system',
   'react-syntax-highlighter',
