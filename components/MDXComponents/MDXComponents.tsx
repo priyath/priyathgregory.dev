@@ -75,10 +75,11 @@ const InlineCodeBlock = (props: any) => {
     <span
       style={{
         fontFamily: 'monospace',
-        padding: '0.2em 0.4em',
-        borderRadius: '6px',
-        backgroundColor: 'rgba(110,118,129,0.4)',
-        fontSize: '85%',
+        padding: '0px 3px',
+        paddingBottom: '2px',
+        borderRadius: '4px',
+        backgroundColor: 'rgba(206,206,206,0.4)',
+        fontSize: '97%',
       }}
     >
       {props.children}
