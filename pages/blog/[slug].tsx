@@ -6,6 +6,7 @@ import * as React from 'react';
 import { Box, Container } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
+import { NextSeo } from 'next-seo';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -28,31 +29,37 @@ interface IBlogProps {
 }
 export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        px: {
-          md: 8,
-          sm: 4,
-          xs: 3,
-        },
-      }}
-    >
-      <CssBaseline />
-      <Shell />
-      <Box
+    <>
+      <NextSeo
+        title={`${frontMatter.title} | Priyath Gregory`}
+        description={`${frontMatter.summary}`}
+      />
+      <Container
         sx={{
-          margin: 'auto',
-          marginTop: { md: 0, xs: '56px' },
-          maxWidth: '820px',
+          display: 'flex',
+          px: {
+            md: 8,
+            sm: 4,
+            xs: 3,
+          },
         }}
       >
-        <BlogPostHeader frontMatter={frontMatter} />
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/*@ts-ignore*/}
-        <MDXRemote {...mdxSource} components={MDXComponents} />
-      </Box>
-    </Container>
+        <CssBaseline />
+        <Shell />
+        <Box
+          sx={{
+            margin: 'auto',
+            marginTop: { md: 0, xs: '56px' },
+            maxWidth: '820px',
+          }}
+        >
+          <BlogPostHeader frontMatter={frontMatter} />
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*@ts-ignore*/}
+          <MDXRemote {...mdxSource} components={MDXComponents} />
+        </Box>
+      </Container>
+    </>
   );
 }
 
