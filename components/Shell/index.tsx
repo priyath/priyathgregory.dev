@@ -19,11 +19,11 @@ import {
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useColorMode } from '../../styles/ColorModeContext';
 import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 import { BsLightbulbFill } from 'react-icons/bs';
 import NextLink from 'next/link';
+import Image from 'next/image';
 
 const drawerWidth = 260;
 
@@ -70,11 +70,14 @@ const Shell = () => {
             </Typography>
           </Link>
         </NextLink>
-        <Avatar
-          alt="Remy Sharp"
-          src="/pic02.png"
-          sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}
-        />
+        <Avatar sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}>
+          <Image
+            src="/pic02.png"
+            alt="Picture of the author"
+            width={150}
+            height={150}
+          />
+        </Avatar>
         <Box
           sx={{
             display: 'flex',

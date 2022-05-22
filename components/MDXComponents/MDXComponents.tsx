@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Link, List, ListItem, Typography } from '@mui/material';
+import { Box, Divider, Link, List, ListItem, Typography } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/atom-dark';
 import { extractMDXLanguage } from './utils';
@@ -113,6 +113,11 @@ const MDXComponents = {
       </NextLink>
     );
   },
+  hr: (props: any) => (
+    <Divider
+      sx={{ my: 6, color: 'primary.main', width: '20%', marginX: 'auto' }}
+    />
+  ),
 };
 
 export default MDXComponents;
