@@ -52,7 +52,7 @@ const CodeBlock = ({ children }: ICodeBlock) => {
   return (
     <Box
       sx={{
-        marginY: 4,
+        marginY: { xs: 3, md: 4 },
         width: {
           sm: '100%',
           xs: 'calc(100vw - 48px)',
@@ -92,12 +92,15 @@ const MDXComponents = {
   code: (props: any) => <InlineCodeBlock {...props} />,
   pre: (props: ICodeBlock) => <CodeBlock {...props} />,
   p: (props: any) => (
-    <Typography variant={'body2'} sx={{ marginBottom: 4 }}>
+    <Typography variant={'body2'} sx={{ marginBottom: { xs: 3, md: 4 } }}>
       {props.children}
     </Typography>
   ),
   h2: (props: any) => (
-    <Typography variant={'h5'} sx={{ marginBottom: 2, fontWeight: 'bold' }}>
+    <Typography
+      variant={'h5'}
+      sx={{ marginTop: { xs: 4, md: 6 }, marginBottom: 2, fontWeight: 'bold' }}
+    >
       {props.children}
     </Typography>
   ),
@@ -115,7 +118,12 @@ const MDXComponents = {
   },
   hr: () => (
     <Divider
-      sx={{ my: 6, color: 'primary.main', width: '20%', marginX: 'auto' }}
+      sx={{
+        my: { xs: 4, md: 6 },
+        color: 'primary.main',
+        width: '20%',
+        marginX: 'auto',
+      }}
     />
   ),
 };

@@ -21,6 +21,7 @@ export interface IFrontMatter {
   title: string;
   wordCount: number;
   coverImage: string;
+  shareUrl: string;
 }
 
 interface IBlogProps {
@@ -33,6 +34,20 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
       <NextSeo
         title={`${frontMatter.title} | Priyath Gregory`}
         description={`${frontMatter.summary}`}
+        openGraph={{
+          title: `${frontMatter.title} | Priyath Gregory`,
+          description: `${frontMatter.summary}`,
+          url: frontMatter.shareUrl,
+          type: 'article',
+          images: [
+            {
+              url: `/${frontMatter.coverImage}`,
+              width: 850,
+              height: 650,
+              alt: `${frontMatter.title} cover image`,
+            },
+          ],
+        }}
       />
       <Container
         sx={{
