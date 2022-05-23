@@ -80,13 +80,21 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-              <Box>
+            <Grid item xs={12} md={4}>
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
                 <Image
-                  src="/pic02-bw.png"
+                  src="/side03.png"
                   alt="Picture of the author"
-                  width={300}
-                  height={300}
+                  width={320}
+                  height={320}
+                />
+              </Box>
+              <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Image
+                  src="/side03.png"
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
                 />
               </Box>
             </Grid>
