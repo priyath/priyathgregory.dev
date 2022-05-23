@@ -29,9 +29,16 @@ export const ColorModeContextProvider = ({
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) =>
-          prevMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT
-        );
+        setMode((prevMode) => {
+          document.documentElement.setAttribute(
+            'data-theme',
+            prevMode === ColorMode.LIGHT ? 'dark' : 'light'
+          );
+          localStorage.setItem('theme', 'dark');
+          return prevMode === ColorMode.LIGHT
+            ? ColorMode.DARK
+            : ColorMode.LIGHT;
+        });
       },
       mode,
     }),
