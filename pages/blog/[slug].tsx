@@ -41,7 +41,7 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           type: 'article',
           images: [
             {
-              url: 'https://via.placeholder.com',
+              url: 'https://miro.medium.com/max/1400/1*phPBi2X5MqbMEPj5a_oHQw.jpeg',
               width: 850,
               height: 650,
               alt: 'Photo of text',
