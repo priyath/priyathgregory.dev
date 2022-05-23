@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Divider, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../utils/strings';
 import * as React from 'react';
@@ -16,7 +16,7 @@ const outterWrapperStyles = {
     lg: 8,
     xs: 4,
   },
-  maxWidth: '1320px',
+  maxWidth: '1200px',
 };
 
 interface IAboutWrapper {
@@ -41,16 +41,10 @@ const AboutWrapper = (props: IAboutWrapper) => {
           item
           xs={12}
           sx={{
-            paddingBottom: {
-              lg: 6,
-              xs: 4,
-            },
             marginBottom: {
               lg: 6,
               xs: 4,
             },
-            borderBottom: '1px solid',
-            borderBottomColor: 'tertiary.main',
           }}
         >
           <Grid container spacing={{ xs: 4, lg: 6 }}>
@@ -64,7 +58,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
                 <Typography
                   sx={{
-                    width: { xs: '100%', md: '80%', lg: '100%' },
+                    width: { xs: '100%' },
                     marginX: 'auto',
                   }}
                   component={'div'}
@@ -89,8 +83,8 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 <Image
                   src="/side03.png"
                   alt="Picture of the author"
-                  width={320}
-                  height={320}
+                  width={300}
+                  height={300}
                 />
               </Box>
               <Box sx={{ display: { xs: 'block', md: 'none' } }}>
@@ -102,26 +96,60 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 />
               </Box>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{
-                overflowX: 'auto',
-                display: {
-                  xs: 'none',
-                  sm: 'block',
-                },
-              }}
-            >
-              <Box
-                className="calendar"
-                sx={{ width: { xs: '100%', lg: '80%' } }}
-              >
-                Loading data...
-              </Box>
-            </Grid>
           </Grid>
         </Grid>
+        {/*<Divider*/}
+        {/*  sx={{*/}
+        {/*    marginBottom: {*/}
+        {/*      lg: 6,*/}
+        {/*      xs: 4,*/}
+        {/*    },*/}
+        {/*    color: 'primary.main',*/}
+        {/*    width: '100%',*/}
+        {/*    marginX: 'auto',*/}
+        {/*  }}*/}
+        {/*/>*/}
+        <Grid
+          item
+          xs={12}
+          sx={{
+            overflowX: 'auto',
+            display: {
+              xs: 'none',
+              sm: 'block',
+            },
+            marginBottom: {
+              lg: 8,
+              xs: 6,
+            },
+          }}
+        >
+          <Typography
+            variant={'h5'}
+            sx={{
+              color: 'primary.main',
+              textAlign: 'center',
+              mb: { xs: 2, lg: 3 },
+              fontFamily: 'monospace',
+            }}
+          >
+            Github Contributions Calendar
+          </Typography>
+          <Box className="calendar" sx={{ width: { xs: '100%', lg: '80%' } }}>
+            Loading data...
+          </Box>
+        </Grid>
+        <Divider
+          sx={{
+            marginBottom: {
+              lg: 6,
+              xs: 4,
+            },
+            color: 'primary.main',
+            width: '100%',
+            marginX: 'auto',
+          }}
+        />
         <Grid item xs={12}>
           <Box>
             <Typography
