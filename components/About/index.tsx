@@ -81,7 +81,11 @@ const AboutWrapper = (props: IAboutWrapper) => {
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <Box
+                sx={{
+                  display: { xs: 'none', md: 'block', textAlign: 'right' },
+                }}
+              >
                 <Image
                   src="/side03.png"
                   alt="Picture of the author"
