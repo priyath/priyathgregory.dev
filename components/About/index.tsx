@@ -5,6 +5,7 @@ import * as React from 'react';
 import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 const outterWrapperStyles = {
   marginY: {
@@ -23,14 +24,15 @@ interface IAboutWrapper {
 }
 
 const AboutWrapper = (props: IAboutWrapper) => {
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   GitHubCalendar('.calendar', 'priyath', {
-  //     responsive: true,
-  //     tooltips: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    GitHubCalendar('.calendar', 'priyath', {
+      responsive: true,
+      tooltips: true,
+      global_stats: true,
+    });
+  }, []);
 
   return (
     <>
@@ -52,7 +54,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
           }}
         >
           <Grid container spacing={{ xs: 4, lg: 6 }}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={8} sx={{ textAlign: 'left' }}>
               <Box>
                 <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
                   Priyath Gregory
@@ -60,7 +62,14 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 <Typography variant={'h5'} sx={{ pb: 2 }}>
                   Full-Stack Software Engineer
                 </Typography>
-                <Typography component={'div'} variant={'body1'}>
+                <Typography
+                  sx={{
+                    width: { xs: '100%', md: '80%', lg: '100%' },
+                    marginX: 'auto',
+                  }}
+                  component={'div'}
+                  variant={'body1'}
+                >
                   {ABOUT_ME_DESCRIPTION}
                   {/*{*/}
                   {/*  <NextLink href={'/blog'} passHref>*/}
@@ -72,30 +81,45 @@ const AboutWrapper = (props: IAboutWrapper) => {
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Box>
+              <Box
+                sx={{
+                  display: { xs: 'none', md: 'block', textAlign: 'right' },
+                }}
+              >
                 <Image
-                  src="/pic02-bw.png"
+                  src="/side03.png"
                   alt="Picture of the author"
-                  width={350}
-                  height={350}
+                  width={320}
+                  height={320}
+                />
+              </Box>
+              <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                <Image
+                  src="/side03.png"
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
                 />
               </Box>
             </Grid>
-            {/*<Grid*/}
-            {/*  item*/}
-            {/*  xs={12}*/}
-            {/*  sx={{*/}
-            {/*    overflowX: 'auto',*/}
-            {/*    display: {*/}
-            {/*      xs: 'none',*/}
-            {/*      sm: 'block',*/}
-            {/*    },*/}
-            {/*  }}*/}
-            {/*>*/}
-            {/*  <div className="calendar" style={{ width: '80%' }}>*/}
-            {/*    Loading data...*/}
-            {/*  </div>*/}
-            {/*</Grid>*/}
+            <Grid
+              item
+              xs={12}
+              sx={{
+                overflowX: 'auto',
+                display: {
+                  xs: 'none',
+                  sm: 'block',
+                },
+              }}
+            >
+              <Box
+                className="calendar"
+                sx={{ width: { xs: '100%', lg: '80%' } }}
+              >
+                Loading data...
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12}>
