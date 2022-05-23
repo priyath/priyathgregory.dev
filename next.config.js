@@ -7,4 +7,7 @@ const withTM = require('next-transpile-modules')([
 
 module.exports = withTM({
   reactStrictMode: true,
+  env: {
+    GOOGLE_ANALYTICS_ID: '',
+  },
 });
