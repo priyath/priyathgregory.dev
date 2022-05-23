@@ -21,7 +21,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <>
       <Script
-        src="https://cdn.rawgit.com/IonicaBizau/github-calendar/gh-pages/dist/github-calendar.min.js"
+        src="/static/github-calendar.min.js"
         strategy="beforeInteractive"
       />
       <DefaultSeo {...DefaultSeoConfig} />
