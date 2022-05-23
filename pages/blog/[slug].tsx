@@ -41,10 +41,10 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           type: 'article',
           images: [
             {
-              url: 'https://miro.medium.com/max/1400/1*phPBi2X5MqbMEPj5a_oHQw.jpeg',
+              url: `/${frontMatter.coverImage}`,
               width: 850,
               height: 650,
-              alt: 'Photo of text',
+              alt: `${frontMatter.title} cover image`,
             },
           ],
         }}
