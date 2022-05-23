@@ -23,6 +23,8 @@ export default function MyApp(props: MyAppProps) {
         <ColorModeContextProvider>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
           <Component {...pageProps} />
         </ColorModeContextProvider>
       </CacheProvider>
