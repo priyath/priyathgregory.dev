@@ -213,11 +213,9 @@ re-appear with a completely random state from the past.
 this is a no-issue. CouchDB will reject a conflicting document update with a 409 response. But if you have multiple
 database copies in sync through replication, and if each instance can receive its own document updates, understand
 that you will always be susceptible to document conflicts.
-
 - Make sure to specify all leaf revisions of the revision tree during document deletion. This can be accomplished by
 using `GET /db/documentId?conflicts=true` to obtain a response with the conflicted leaf revisions of the document, and
 then specifying a bulk deletion of the retrieved revisions using the `POST /{db}/_bulk_docs` endpoint.
-
 - There can also be cases where a conflicting revision may actually contain important data. After all, the winning
 revision is an arbitrary selection. If this is the case, you can:
     * Retrieve all conflicting revisions of the document.
@@ -225,8 +223,6 @@ revision is an arbitrary selection. If this is the case, you can:
     * Perform application-specific merging.
     * Use the `_bulk_docs` endpoint to update the first revision of the document (with the merged results) while deleting
     the others.
-
-
 - You can also use an application-specific custom flag to mark deleted documents without performing an actual delete.
 The downside of this approach is you will need application logic as well as a mechanism in place to handle your
 “deleted” documents in a sensible manner.
