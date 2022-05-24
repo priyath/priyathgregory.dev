@@ -42,7 +42,7 @@ const sidePanelConfig = [
 
 const Shell = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode, mode } = useColorMode();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -198,7 +198,7 @@ const Shell = () => {
             onClick={() => toggleColorMode()}
             sx={{ margin: 'auto' }}
             {...label}
-            defaultChecked
+            checked={mode === 'dark'}
           />
           <Box
             sx={{
