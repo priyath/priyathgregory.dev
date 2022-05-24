@@ -1,131 +1,20 @@
-import * as React from 'react';
-import { Box, Divider, Link, ListItem, Typography } from '@mui/material';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import dark from 'react-syntax-highlighter/dist/esm/styles/prism/atom-dark';
-import { extractMDXLanguage } from './utils';
-import NextLink from 'next/link';
-
-interface IBlockQuote {
-  children: any;
-}
-
-const BlockQuote = (props: IBlockQuote) => {
-  return (
-    <Box
-      sx={{
-        mt: 4,
-        marginLeft: 4,
-        paddingLeft: 2,
-        borderLeft: 'solid #54B689 2px',
-        fontStyle: 'italic',
-      }}
-    >
-      <Typography
-        color={'#54B689'}
-        variant={'h6'}
-        sx={{ fontWeight: 'bold', marginBottom: 2 }}
-      >
-        Note
-      </Typography>
-      {props.children}
-    </Box>
-  );
-};
-
-interface ICodeBlock {
-  children: {
-    type: string;
-    props: {
-      className: string;
-      children: string;
-    };
-  };
-}
-
-const CodeBlock = ({ children }: ICodeBlock) => {
-  // if (!children || children.type !== 'code') return null;
-
-  const {
-    props: { className, children: code = '' },
-  } = children;
-
-  return (
-    <Box
-      sx={{
-        marginY: { xs: 3, md: 4 },
-        width: {
-          sm: '100%',
-          xs: 'calc(100vw - 48px)',
-        },
-      }}
-    >
-      <SyntaxHighlighter
-        wrapLongLines={true}
-        language={extractMDXLanguage(className)}
-        style={dark}
-      >
-        {code.trim()}
-      </SyntaxHighlighter>
-    </Box>
-  );
-};
-
-const InlineCodeBlock = (props: any) => {
-  return (
-    <span
-      style={{
-        fontFamily: 'monospace',
-        padding: '0px 3px',
-        paddingBottom: '2px',
-        borderRadius: '4px',
-        backgroundColor: 'rgba(206,206,206,0.4)',
-        fontSize: '97%',
-      }}
-    >
-      {props.children}
-    </span>
-  );
-};
+import CodeBlock from './CodeBlock';
+import InlineCodeBlock from './InlineCodeBlock';
+import BlockQuote from './BlockQuote';
+import BlogAnchor from './BlogAnchor';
+import BlogDivider from './BlogDivider';
+import BlogList from './BlogList';
+import BlogTypography from './BlogTypography';
 
 const MDXComponents = {
-  blockquote: (props: IBlockQuote) => <BlockQuote {...props} />,
-  code: (props: any) => <InlineCodeBlock {...props} />,
-  pre: (props: ICodeBlock) => <CodeBlock {...props} />,
-  p: (props: any) => (
-    <Typography variant={'body2'} sx={{ marginBottom: { xs: 3, md: 4 } }}>
-      {props.children}
-    </Typography>
-  ),
-  h2: (props: any) => (
-    <Typography
-      variant={'h5'}
-      sx={{ marginTop: { xs: 4, md: 6 }, marginBottom: 2, fontWeight: 'bold' }}
-    >
-      {props.children}
-    </Typography>
-  ),
-  li: (props: any) => (
-    <ListItem sx={{ display: 'list-item', py: 0, mb: 2 }}>
-      {props.children}
-    </ListItem>
-  ),
-  a: (props: any) => {
-    return (
-      <NextLink href={props.href} passHref>
-        <Link target={'_blank'}>{props.children}</Link>
-      </NextLink>
-    );
-  },
-  hr: () => (
-    <Divider
-      sx={{
-        my: { xs: 4, md: 6 },
-        color: 'primary.main',
-        width: '20%',
-        marginX: 'auto',
-      }}
-    />
-  ),
+  blockquote: BlockQuote,
+  code: InlineCodeBlock,
+  pre: CodeBlock,
+  p: BlogTypography.BlogParagraph,
+  h2: BlogTypography.BlogH2,
+  li: BlogList.BlogListItem,
+  a: BlogAnchor,
+  hr: BlogDivider,
 };
 
 export default MDXComponents;

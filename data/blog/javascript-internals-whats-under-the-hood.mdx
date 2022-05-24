@@ -105,13 +105,10 @@ main();
 What actually happens when this code is copied onto the Google Chrome browser?
 
 1. The V8 engine will start by adding `main()` to the call stack.
-
 2. Then the engine will look for the `setTimeout` function definition in the scope chain.
 (This will be available in the global scope since `setTimeout` is not built into the engine).
-
 3. The V8 engine will push `setTimeout()` onto the call-stack, "call" the web API's `setTimeout` definition, which in turn
 will initiate whatever native implementation the browser has in place for the same, **outside** of Javascript's main thread.
-
 4. At this point, as far as the engine is concerned, its job is done. Therefore, `setTimeout()` will be popped off the
 call-stack, immediately followed by `main()`.
 
@@ -190,19 +187,14 @@ So to summarize a whole lot of text into a few bullet points:
 forms (browsers, node.js); But the fundamental concepts of the runtime will remain the same across all environments.
 The runtime environment of a browser consists of the Javascript engine, a bunch of web APIs, a callback queue,
 and the event loop.
-
 - **The Javascript engine** converts your human-readable Javascript code into machine-readable bytecode and always
 executes them on a **single thread**. It also manages a call stack and does a bunch of other things.
-
 - **The web APIs** extend the Javascript language with its own functionalities that are added to the global object
 of the Javascript engine. Some of these functionalities are synchronous, some can be asynchronous.
-
 - **The callback queue** queues up callbacks that are awaiting to be executed by the Javascript engine.
 A callback is usually always associated with some asynchronous operation.
-
 - **The event loop** is the gel between the Javascript engine and the callback queue. Its job is to move callbacks
 from the callback queue onto the engine’s call stack for execution.
-
 - The callback queue and the event loop are at the heart of Javascript’s **asynchronous** (and **non-blocking**!)
 nature.
 
@@ -210,7 +202,6 @@ nature.
 
 1. If you like watching rather than reading, I highly recommend checking out [*what the heck is the event loop anyway?*](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 by Philip Roberts. Seriously, check it out.
-
 2. [This](https://stackoverflow.com/questions/59316975/the-javascript-v8-engine-and-web-apis) stack overflow post
 discussing the link between the V8 engine and web APIs, and [this](https://stackoverflow.com/questions/59344915/which-part-of-the-javascript-runtime-is-responsible-for-putting-the-callback-int)
 one discussing the callback queue.
