@@ -70,14 +70,30 @@ const Shell = () => {
             </Typography>
           </Link>
         </NextLink>
-        <Avatar sx={{ width: 150, height: 150, margin: 'auto', my: 2 }}>
+        <Avatar
+          sx={{
+            width: 150,
+            height: 150,
+            margin: 'auto',
+            my: 2,
+            backgroundColor: 'text.brand',
+          }}
+        >
           <Image
-            src="/pic02.png"
+            src="/avatar.png"
             alt="Picture of the author"
-            width={150}
+            width={110}
             height={150}
           />
         </Avatar>
+        {/*<Typography*/}
+        {/*  color={'text.brand'}*/}
+        {/*  variant={'caption'}*/}
+        {/*  sx={{ mb: 2, textAlign: 'center' }}*/}
+        {/*>*/}
+        {/*  Hi, welcome to my personal website - a digital journal of sorts,*/}
+        {/*  documenting my journey as a Software Engineer.*/}
+        {/*</Typography>*/}
         <Box
           sx={{
             display: 'flex',
