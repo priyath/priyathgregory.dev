@@ -3,10 +3,11 @@ import { getFileBySlug, getFiles } from '../../lib/getContent';
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import { Box, Container } from '@mui/material';
+import { Box, Container, Divider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
+import Comment from '../../components/Comment';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -72,6 +73,29 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/*@ts-ignore*/}
           <MDXRemote {...mdxSource} components={MDXComponents} />
+          <Divider
+            sx={{
+              marginBottom: {
+                lg: 8,
+                xs: 6,
+              },
+              color: 'primary.main',
+              width: '100%',
+              marginX: 'auto',
+            }}
+          />
+          <Comment />
+          <Divider
+            sx={{
+              marginBottom: {
+                lg: 8,
+                xs: 6,
+              },
+              color: 'primary.main',
+              width: '100%',
+              marginX: 'auto',
+            }}
+          />
         </Box>
       </Container>
     </>
