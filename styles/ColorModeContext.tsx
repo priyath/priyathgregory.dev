@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
 import getTheme from './theme';
 
@@ -26,18 +26,24 @@ export const ColorModeContextProvider = ({
   children,
 }: IColorModeContextProvider) => {
   const [mode, setMode] = React.useState<ColorMode>(ColorMode.DARK);
+
+  useEffect(() => {
+    // update color mode from local storage
+    setMode(
+      (localStorage.getItem('pg-dev-portfolio-color-mode') as ColorMode) ||
+        ColorMode.DARK
+    );
+  }, []);
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => {
-          document.documentElement.setAttribute(
-            'data-theme',
-            prevMode === ColorMode.LIGHT ? 'dark' : 'light'
-          );
-          localStorage.setItem('theme', 'dark');
-          return prevMode === ColorMode.LIGHT
-            ? ColorMode.DARK
-            : ColorMode.LIGHT;
+          const newMode =
+            prevMode === ColorMode.LIGHT ? ColorMode.DARK : ColorMode.LIGHT;
+          document.documentElement.setAttribute('data-theme', newMode);
+          localStorage.setItem('pg-dev-portfolio-color-mode', newMode);
+          return newMode;
         });
       },
       mode,
