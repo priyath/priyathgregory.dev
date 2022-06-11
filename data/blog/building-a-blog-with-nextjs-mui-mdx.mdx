@@ -1,14 +1,18 @@
 ---
-title: "Building a Blog With NextJS, Material UI (MUI 5) and MDX"
+title: "Building a Blog With NextJS, Material UI (MUI 5) and MDX - Part 01"
 publishedAt: '2022-05-24'
 summary: 'Setting up a personal blog with NextJS, Material UI (MUI 5) and MDX.'
 coverImage: 'blog-with-nextjs-mui5-mdx.jpg'
-shareUrl: 'https://priyathgregory.dev/blog/couchdb-document-conflicts'
+shareUrl: 'https://priyathgregory.dev/blog/building-a-blog-with-nextjs-mui-mdx-part-01'
 ---
 
-I finally got around to publishing my personal website/blog developed using NextJS, Material UI and MDX. This article aims to provide an overview of the technical stack that I used, and how it was all put together to make a functional website that you could possibly use as inspiration for your personal projects.
+I finally got around to publishing my [personal website/blog](https://github.com/priyath/priyathgregory.dev) built using NextJS, Material UI and MDX. This article is the first of a two-part series, where I aim to provide an overview of the technical stack that I used, and how it was all put together to make a functional website that you could possibly use as inspiration for your personal projects.
 
-The source code for my website is available for viewing on [github](https://github.com/priyath/priyathgregory.dev).
+The first article will walk-through the initial set up and the base framework to create a functional blog using NextJS and Material UI. The second article will cover the integration of MDX to create, manage and render blog content.
+
+All source code explained in this tutorial is available on [github](https://github.com/priyath/priyathgregory.dev) as a reusable boilerplate.
+
+Let's get started!
 
 ## The Technical Stack
 
@@ -37,7 +41,7 @@ A few things to note,
 3. `@emotion/server` is required for server side rendering with Emotion to extract css from html to strings.
 4. `@emotion/babel-plugin` is used for the optimisation and minification of Emotion styles.
 
-First, let us set up a basic `theme.ts` file for Material UI in the styles folder.
+With the dependencies out of the way, let us set up a basic `theme.ts` file for Material UI in the `styles` folder.
 
 ```typescript
 import { createTheme } from '@mui/material/styles';
@@ -61,7 +65,7 @@ const theme = createTheme({
 export default theme;
 ```
 
-Now we need to do some one-time NextJS specific customisations to get everything working nicely together.
+Now we need to do some one-time NextJS specific customisations to get the Material UI - NextJS combo working nicely together.
 
 ### _document
 
@@ -218,10 +222,330 @@ export default function createEmotionCache() {
 Before we continue, run `yarn dev` to make sure your NextJS application initializes without any issues.
 
 ## Creating a Home Page
-The home page layout for your blog will always come down to personal preference. For the purpose of this tutorial, we will
-create a simple list view for your blog posts.
+The home page layout for a blog will always come down to personal preference. For the purpose of this tutorial, we will
+create a simple list view for the blog posts.
 
+Start by creating a `components/types.ts` file with the following types.
 
+```typescript
+export interface IBlogPost {
+  title: string;
+  slug: string;
+  publishedDate: string;
+}
+```
+
+Then create the following file `components/BlogPostSummary/index.tsx`, where `components` and `BlogPostSummary` are directories to be created, starting from the project root. This will contain a simple summary for an individual blog post, to be rendered on the home page.
+
+```typescript
+import { IBlogPost } from '../types';
+import NextLink from 'next/link';
+import { Box, Link, Typography } from '@mui/material';
+
+interface BlogPostSummaryProps {
+  post: IBlogPost,
+  key: number,
+}
+
+const BlogPostSummary = (props: BlogPostSummaryProps) => {
+
+  const { post, key } = props;
+
+  return (
+    <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <NextLink href={`/blog/${post.slug}`} passHref>
+        <Link sx={{ textDecoration: 'none' }}>
+          <Typography variant={'body1'}>{post.title}</Typography>
+        </Link>
+      </NextLink>
+      <Typography variant={'caption'}>{post.publishedDate}</Typography>
+    </Box>
+  )
+}
+
+export default BlogPostSummary;
+```
+
+The component code is quite self explanatory; We take in props that represent an individual blog post and render it inside a flex container. The post title is wrapped within the [NextLink](https://nextjs.org/docs/api-reference/next/link) component, which links it to the actual blog post page (which we are yet to build).
+
+> NextLink is a Link component exported by next/link which handles client-side transitions in NextJS.
+
+Let's add some dummy post content to support our development work until we integrate `MDX`. Create the following file starting at the project root `data/dummyData.ts` with the following content.
+
+```typescript
+export const posts = [
+  {
+    title: 'My First Blog Post',
+    slug: 'first-post',
+    publishedDate: '02-06-2022',
+  },
+  {
+    title: 'My Second Blog Post',
+    slug: 'second-post',
+    publishedDate: '01-05-2022',
+  },
+];
+```
+
+Now lets fix the home page to display a summary list of all our blog posts. Go to `pages/index.tsx` (which is our home page), and replace its content with the following code.
+
+```typescript:Home pages/index.tsx:collapsed
+import type { NextPage } from 'next';
+import { Box, CssBaseline, Grid, Typography } from '@mui/material';
+import BlogPostSummary from '../components/BlogPostSummary';
+import { IBlogPost } from '../components/types';
+import { posts } from '../data/dummyData';
+
+interface HomeProps {
+  posts: IBlogPost[];
+}
+
+const Home: NextPage<HomeProps> = (props) => {
+
+  const { posts } = props;
+
+  return (
+    <Box>
+      <CssBaseline />
+      <Grid container sx={{ textAlign: 'center' }}>
+        <Grid item xs={12} mb={4}>
+          <Box>
+            <Typography variant={'h2'}>Welcome to my blog</Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container sx={{ width: '50%', margin: 'auto', textAlign: 'left' }}>
+            <Grid item xs={12}>
+              <Typography variant={'h4'} py={4}>Latest Posts</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              {
+                posts.map((post, index) => {
+                  return (
+                    <BlogPostSummary post={post} key={index}/>
+                  );
+                })
+              }
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+export const getStaticProps = async () => {
+  return { props: { posts } };
+};
+
+export default Home;
+```
+
+The Home page code is again pretty self explanatory; It receives an array of posts via props, and each post is then rendered on to the home page using the `BlogPostSummary` component which we just developed.
+
+However, anyone new to NextJS might be curious about the `getStaticProps` function at the very bottom of the component. [getStaticProps](https://nextjs.org/docs/basic-features/data-fetching/get-static-props) is an asynchronous function that is executed on the server, when the page is requested by the client. The data returned by this function is used by NextJS to pre-render the page on the server. It should be noted that, although it sits in a client side component, `getStaticProps` always runs on the server and never on the client.
+
+For now, we have hard-coded an array of posts to be returned from the `getStaticProps` function. Once we complete the `mdx` integration, this content will be dynamically extracted from our blog post files.
+
+## Creating The Post Page
+
+Now that we have the home page set up with a list of blog posts, the next step is to create a page for a single blog post.
+
+### Blog Post Header
+
+First add the following type interface that represents a post's front matter to `components/types.ts`. Front matter is simply meta data related to an individual blog post.
+
+```typescript
+export interface IFrontMatter {
+  publishedAt: string;
+  readingTime: {
+    minutes: number;
+    text: string;
+    time: number;
+    words: number;
+  };
+  slug: string;
+  summary: string;
+  title: string;
+  wordCount: number;
+  coverImage: string;
+  shareUrl: string;
+}
+```
+
+Then create the blog post header component at `components/BlogPostHeader/index.tsx`. This component will have the responsibility of rendering the blog title, some meta information related to the post, and the hero image for the blog post.
+
+```typescript:BlogPostHeader:collapsed
+import Image from 'next/image';
+import { Box } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { IFrontMatter } from '../types';
+
+interface IBlogPostHeader {
+  frontMatter: IFrontMatter;
+}
+
+const BlogPostHeader = (props: IBlogPostHeader) => {
+  const { frontMatter } = props;
+
+  return (
+    <Box sx={{ marginX: 0, marginTop: 4 }}>
+      <Typography
+        variant={'h4'}
+        sx={{ py: 1, fontWeight: 'bold', textAlign: 'left' }}
+      >
+        {frontMatter?.title}
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            sm: 'row',
+          },
+          justifyContent: 'space-between',
+          mb: 2,
+          gap: 2,
+        }}
+      >
+        <Box>
+          <Typography
+            variant={'caption'}
+            sx={{
+              textAlign: 'left',
+            }}
+          >
+            {frontMatter?.publishedAt}
+          </Typography>
+          <Typography variant={'caption'} sx={{ textAlign: 'left' }}>
+            {frontMatter?.readingTime?.text}
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ mb: 4 }}>
+        <Image
+          width={'100%'}
+          height={55}
+          src={`/${frontMatter?.coverImage}`}
+          alt="hero image"
+          layout="responsive"
+          quality={100}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export default BlogPostHeader;
+```
+### Blog Post Page
+
+With the header component ready, lets create the page that will render any given blog post. Create the following file starting from the root of the project directory, `pages/blog/[slug].tsx`.
+
+Two things to take note here:
+
+1. The pages directory typically contains React components exported from a file, which maps to a URL route based on its file name. For example a component exported from `pages/blog/index.tsx`, will be rendered when accessing the url `<host>/blog`.
+
+2. Using a square-bracket naming convention (`[slug].tsx`) provides support for [dynamic routes](https://nextjs.org/docs/routing/dynamic-routes), which is required for this page, as each blog post will have its own unique URL based on its slug.
+
+The `[slug].tsx` file will have the following code in it.
+
+```typescript:[slug].tsx:collapsed
+import * as React from 'react';
+import { Box, Container, Divider } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import BlogPostHeader from '../../components/BlogPostHeader';
+import { IFrontMatter } from '../../components/types';
+
+interface IBlogProps {
+  frontMatter: IFrontMatter;
+}
+export default function Blog({ frontMatter }: IBlogProps) {
+  return (
+    <>
+      <Container
+        sx={{
+          display: 'flex',
+          px: {
+            md: 8,
+            sm: 4,
+            xs: 3,
+          },
+        }}
+      >
+        <CssBaseline />
+        <Box
+          sx={{
+            margin: 'auto',
+            marginTop: { md: 0, xs: '56px' },
+            maxWidth: '820px',
+          }}
+        >
+          <BlogPostHeader frontMatter={frontMatter} />
+          <Divider
+            sx={{
+              marginBottom: {
+                lg: 8,
+                xs: 6,
+              },
+              color: 'primary.main',
+              width: '100%',
+              marginX: 'auto',
+            }}
+          />
+          {/* TBA: blog content goes here */}
+        </Box>
+      </Container>
+    </>
+  );
+}
+
+```
+
+The `[slug].tsx` component is again quite simple to understand. Whenever a user accesses the path `/blog/*`, the `[slug].tsx` component will be rendered, which would (eventually!) render the entire blog post.
+
+Of course, for the moment we only have the `BlogPostHeader` component within the render method. Even then, there are no post specific props being consumed, and there definitely is no visible content when the page is rendered.
+
+The missing props problem can be addressed by adding in a `getStaticProps` function with a hard-coded return object to the same file; However when `getStaticProps` is used for a page with dynamic routes, it should always be accompanied with a [getStaticPaths](https://nextjs.org/docs/basic-features/data-fetching/get-static-paths) method. The latter's responsibility is to evaluate all possible dynamic routes for the page, while the former is responsible to provide the correct props for a given dynamic route.
+
+With this information, lets first add a `getStaticPaths` method like so:
+
+```typescript
+import { posts } from '../../data/dummyData';
+...
+
+export async function getStaticPaths() {
+
+  return {
+    paths: posts.map((post) => ({
+      params: {
+        slug: post.slug,
+      },
+    })),
+    fallback: false,
+  };
+}
+```
+
+The above code is fairly straight-forward. `getStaticPaths` evaluates all possible paths for the dynamic page (in this case it is based on the list of available posts), and returns an object with this information. When a dynamic route is being called, `getStaticProps` will receive the appropriate path information from this generated object.
+
+The job of `getStaticProps` essentially remains the same, albeit slightly more complicated; Now it needs to "know" which set of props to return based on the current active path.
+
+```typescript
+export async function getStaticProps({ params }: any) {
+  const frontMatter = posts.find(post => post.slug === params.slug);
+  return {
+    props: {
+      frontMatter,
+    }
+  };
+}
+```
+
+As you can see, `getStaticProps` receives the same `params` attribute generated by `getStaticPaths` for the current path, identified by the `slug` attribute. This information is then used to retrieve the correct `frontMatter` for the post, which is fed to the `[slug]` component during render.
+
+With this, most of the base framework of our blog is now complete. We have a UI library integrated with NextJS, a dynamic framework configured to render a list of blog posts, and a functional dynamic page to view an individual blog post. In part 02 of this article series, we will look at integrating MDX, so that we have actual content for our blog, written in markdown and rendered seamlessly via React components.
 
 
 
