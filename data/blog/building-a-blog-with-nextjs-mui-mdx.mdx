@@ -1,0 +1,229 @@
+---
+title: "Building a Blog With NextJS, Material UI (MUI 5) and MDX"
+publishedAt: '2022-05-24'
+summary: 'Setting up a personal blog with NextJS, Material UI (MUI 5) and MDX.'
+coverImage: 'blog-with-nextjs-mui5-mdx.jpg'
+shareUrl: 'https://priyathgregory.dev/blog/couchdb-document-conflicts'
+---
+
+I finally got around to publishing my personal website/blog developed using NextJS, Material UI and MDX. This article aims to provide an overview of the technical stack that I used, and how it was all put together to make a functional website that you could possibly use as inspiration for your personal projects.
+
+The source code for my website is available for viewing on [github](https://github.com/priyath/priyathgregory.dev).
+
+## The Technical Stack
+
+1. Client Framework - SEO is an important aspect for a website. A normal react application is rendered on the client, and as a result is not very SEO friendly. Because of this I decided to use [NextJS](), a web framework that supports server-side-rendering for client applications.
+2. Component Library - [Material UI]() was selected as the component library of choice, for its maturity, extensive documentation and room for customization if needed. Also familiarity with the library from some previous projects helped as well.
+3. Blog Content - [MDX]() supports markdown content and does one better by allowing component integration into plain old markdown. This allows for highly customisable content, And to make things even better, NextJS already has very decent integration patterns with MDX.
+4. Comment System - [Giscus]() is an open source comment system that uses github discussions for its backend. It allows visitors to leave comments and reactions via Github.
+5. Deployment - [Vercel]() was used for deployment which is almost a no-brainer due to its seamless integration with NextJS and the hobby pricing tier - which is free for non-commercial sites.
+
+## Setting up NextJS with Material UI
+Start by setting up a NextJS project using the `next-app` command like so:
+
+```bash
+yarn create next-app --typescript
+```
+
+Next let us install the required Material UI dependencies for the app.
+
+```bash
+yarn add @mui/material @mui/icons-material @emotion/cache @emotion/react @emotion/server @emotion/styled -D @emotion/babel-plugin
+```
+A few things to note,
+
+1. Emotion is the default and recommended styling engine used by Material UI and I see no valid reason to [replace](https://mui.com/material-ui/guides/interoperability) it with anything else. Further to this, Material UI's component styling pattern is via either the common `styled` API or the `sx` prop, and hence the selected styling engine will anyway be hidden "under the hood".
+2. `@emotion/cache` allows for low level customisation of how styles get inserted by Emotion.
+3. `@emotion/server` is required for server side rendering with Emotion to extract css from html to strings.
+4. `@emotion/babel-plugin` is used for the optimisation and minification of Emotion styles.
+
+First, let us set up a basic `theme.ts` file for Material UI in the styles folder.
+
+```typescript
+import { createTheme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
+
+// Create a theme instance.
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#556cd6',
+    },
+    secondary: {
+      main: '#19857b',
+    },
+    error: {
+      main: red.A400,
+    },
+  },
+});
+
+export default theme;
+```
+
+Now we need to do some one-time NextJS specific customisations to get everything working nicely together.
+
+### _document
+
+The `_document` is a [special file](https://nextjs.org/docs/advanced-features/custom-document) in NextJS that determines the overall html structure of the application. A Custom `_document` file may be required for libraries like CSS-in-JS to support server-side rendering.
+
+As this is the case for us, lets go ahead and create a file named `_document.tsx` and save it under the `pages` folder. Update the file with the following code (derived from [Material UI's NextJS integration example](https://github.com/mui/material-ui/blob/master/examples/nextjs/pages/_document.js)), which essentially configures Emotion with NextJS and ensures our styling is applied as expected during server-side rendering.
+
+```typescript:_document_.tsx:collapsed
+import * as React from 'react';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import createEmotionServer from '@emotion/server/create-instance';
+import createEmotionCache from '../lib/createEmotionCache';
+
+export default class MyDocument extends Document {
+  render() {
+    return (
+      <Html lang="en">
+        <Head>
+          {/* PWA primary color */}
+          {/*<meta name="theme-color" content={theme.palette.primary.main} />*/}
+          <link rel="shortcut icon" href="/static/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+
+          {/* Inject MUI styles first to match with the prepend: true configuration. */}
+          {(this.props as any).emotionStyleTags}
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+// `getInitialProps` belongs to `_document` (instead of `_app`),
+// it's compatible with static-site generation (SSG).
+MyDocument.getInitialProps = async (ctx) => {
+  // Resolution order
+  //
+  // On the server:
+  // 1. app.getInitialProps
+  // 2. page.getInitialProps
+  // 3. document.getInitialProps
+  // 4. app.render
+  // 5. page.render
+  // 6. document.render
+  //
+  // On the server with error:
+  // 1. document.getInitialProps
+  // 2. app.render
+  // 3. page.render
+  // 4. document.render
+  //
+  // On the client
+  // 1. app.getInitialProps
+  // 2. page.getInitialProps
+  // 3. app.render
+  // 4. page.render
+
+  const originalRenderPage = ctx.renderPage;
+
+  // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+  // However, be aware that it can have global side effects.
+  const cache = createEmotionCache();
+  const { extractCriticalToChunks } = createEmotionServer(cache);
+
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App: any) =>
+        function EnhanceApp(props) {
+          return <App emotionCache={cache} {...props} />;
+        },
+    });
+
+  const initialProps = await Document.getInitialProps(ctx);
+  // This is important. It prevents emotion to render invalid HTML.
+  // See https://github.com/mui/material-ui/issues/26561#issuecomment-855286153
+  const emotionStyles = extractCriticalToChunks(initialProps.html);
+  const emotionStyleTags = emotionStyles.styles.map((style) => (
+    <style
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      key={style.key}
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: style.css }}
+    />
+  ));
+
+  return {
+    ...initialProps,
+    emotionStyleTags,
+  };
+};
+```
+
+### _app.tsx
+
+`_app.tsx` is a [special component](https://nextjs.org/docs/advanced-features/custom-app) in NextJS that is used to initialize every page. Let's go ahead and update the current `_app.tsx` file under `pages` with the [following](https://github.com/mui/material-ui/blob/master/examples/nextjs/pages/_app.js) content to complete the setup of Emotion with support for server-side rendering.
+
+This updated code simply wraps each rendered page component with a `CacheProvider` and MUI's `ThemeProvider` to support the integration of Emotion and Material UI respectively.
+
+```typescript:_app.tsx:collapsed
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { CacheProvider, EmotionCache} from '@emotion/react';
+import theme from '../styles/theme';
+import createEmotionCache from '../lib/createEmotionCache';
+
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+
+export default function MyApp(props: { Component: any; emotionCache?: EmotionCache | undefined; pageProps: any; }) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  return (
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
+  );
+}
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  emotionCache: PropTypes.object,
+  pageProps: PropTypes.object.isRequired,
+};
+```
+
+Finally, create a `lib` directory at root level and create `createEmotionCache.ts` with the following content.
+
+```typescript
+import createCache from '@emotion/cache';
+
+// prepend: true moves MUI styles to the top of the <head> so they're loaded first.
+// It allows developers to easily override MUI styles with other styling solutions, like CSS modules.
+export default function createEmotionCache() {
+  return createCache({ key: 'css', prepend: true });
+}
+```
+
+Before we continue, run `yarn dev` to make sure your NextJS application initializes without any issues.
+
+## Creating a Home Page
+The home page layout for your blog will always come down to personal preference. For the purpose of this tutorial, we will
+create a simple list view for your blog posts.
+
+
+
+
+
+
+
