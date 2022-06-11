@@ -32,7 +32,9 @@ export const getFileBySlug = async (type: string, slug: string) => {
 export const getAllFilesFrontMatter = async (type: string) => {
   const files = fs.readdirSync(path.join(root, 'data', type));
 
-  return files.reduce((allPosts: any[], postSlug: string) => {
+  console.log('files: ', files);
+
+  const blogContent = files.reduce((allPosts: any[], postSlug: string) => {
     const source = fs.readFileSync(
       path.join(root, 'data', type, postSlug),
       'utf8'
@@ -47,4 +49,10 @@ export const getAllFilesFrontMatter = async (type: string) => {
       ...allPosts,
     ];
   }, []);
+
+  return blogContent.sort((contentA, contentB) => {
+    const dateA = new Date(contentA.date).getTime();
+    const dateB = new Date(contentB.date).getTime();
+    return dateA > dateB ? 1 : -1;
+  });
 };
