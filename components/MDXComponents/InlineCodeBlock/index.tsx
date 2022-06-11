@@ -9,7 +9,7 @@ const InlineCodeBlock = (props: any) => {
         paddingBottom: '2px',
         borderRadius: '4px',
         backgroundColor: 'rgba(199,199,199,0.15)',
-        fontSize: '97%',
+        fontSize: '90%',
       }}
     >
       {props.children}

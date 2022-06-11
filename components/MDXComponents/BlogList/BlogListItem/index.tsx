@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { ListItem } from '@mui/material';
+import { ListItem, Typography } from '@mui/material';
 
 const BlogListItem = (props: any) => {
-  console.log('list item: ', props);
   return (
     <ListItem
       sx={{
@@ -17,7 +16,12 @@ const BlogListItem = (props: any) => {
         },
       }}
     >
-      {props.children}
+      <Typography
+        variant={'body2'}
+        sx={{ marginBottom: { xs: 2, md: 2 }, lineHeight: 1.6 }}
+      >
+        {props.children}
+      </Typography>
     </ListItem>
   );
 };
