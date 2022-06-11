@@ -8,8 +8,8 @@ const InlineCodeBlock = (props: any) => {
         padding: '0px 3px',
         paddingBottom: '2px',
         borderRadius: '4px',
-        backgroundColor: 'rgba(206,206,206,0.4)',
-        fontSize: '97%',
+        backgroundColor: 'rgba(199,199,199,0.15)',
+        fontSize: '90%',
       }}
     >
       {props.children}
