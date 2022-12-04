@@ -1,0 +1,289 @@
+---
+title: "Building a Blog With NextJS, Material UI (MUI 5) and MDX - Part 02"
+publishedAt: '2022-12-02'
+summary: 'Setting up a personal blog with NextJS, Material UI (MUI 5) and MDX.'
+coverImage: 'blog-with-nextjs-mui5-mdx-part-01.jpg'
+shareUrl: 'https://priyathgregory.dev/blog/building-a-blog-with-nextjs-mui-mdx-part-02'
+---
+
+In the [first article](priyathgregory.dev) of this two-part series we discussed setting up the base framework for a blog using NextJS and Material UI. We integrated a UI library with NextJS, developed a dynamic framework configured to render a list of blog posts, and a functional dynamic page to view an individual blog post. Now lets see how we can seamlessly manage its content by integrating MDX.
+
+> With MDX we can extend standard markdown content by writing JSX directly in our markdown files. It is a powerful way to add dynamic behavior to our web pages by leveraging standard JSX components.
+
+## Adding blog post content
+
+Lets start by creating two new files in the `data` directory named `my-first-blog-post.mdx` and `my-second-blog-post.mdx` respectively. This will be the content for our first few blog posts. Update the files with some metadata like so:
+
+```
+---
+title: "My first blog post"
+publishedAt: '2022-11-02'
+summary: 'Setting up a personal blog with NextJS, Material UI (MUI 5) and MDX.'
+shareUrl: 'https://<your-domain>/blog/my-first-blog-post'
+---
+
+This is my first blog post to be rendered via MDX in my NextJS blog.
+```
+
+```
+---
+title: "My second blog post"
+publishedAt: '2022-11-04'
+summary: 'Setting up a personal blog with NextJS, Material UI (MUI 5) and MDX.'
+shareUrl: 'https://<your-domain>/blog/my-second-blog-post'
+---
+
+This is my second blog post to be rendered via MDX in my NextJS blog.
+```
+
+Now we need to make sure that these `mdx` files are used to render our blog post list instead of content from the previous `dummyData.ts` file. To do that, modify the `getStaticProps` function in `pages/index.tsx` with the following code. If you recall, `index.tsx` is basically the home page of our blog and `getStaticProps` is a server side function NextJS uses to inject props to the rendered component. In this case, we want to inject our dynamically generated post list as props to the home page.
+
+```typescript
+export const getStaticProps = async () => {
+  const posts = await getAllFilesFrontMatter('blog');
+  return { props: { posts } };
+};
+```
+
+Then create a `getContent.ts` file in the `lib` directory and export the `getAllFilesFrontMatter` function to parse the `mdx` files from our data directory. The `gray-matter` import is a dependency that allows us to parse the content of our blog post files (including the metadata!) into a standard Javascript object. These functions together will dynamically derive and inject the list of posts as props to our home page.
+
+```typescript:pages/index.tsx
+import fs from 'fs';
+import matter from 'gray-matter';
+import path from 'path';
+
+const root = process.cwd();
+
+/**
+   Parse specified <type> subdirectory inside the data folder and return list of parsed blog post content
+**/
+export const getAllFilesFrontMatter = async (type: string) => {
+  // read the file names from the /data/blog folder where our blog files will reside
+  const files = fs.readdirSync(path.join(root, 'data', type));
+
+  // read each file and parse its content through gray-matter
+  const blogContent = files.reduce((allPosts: any[], postSlug: string) => {
+    const source = fs.readFileSync(
+      path.join(root, 'data', type, postSlug),
+      'utf8'
+    );
+    const { data } = matter(source);
+
+    return [
+      {
+        ...data,
+        slug: postSlug.replace('.mdx', ''),
+      },
+      ...allPosts,
+    ];
+  }, []);
+
+  // sort the content (desc) by published date and return the list of blog posts
+  return blogContent.sort((contentA, contentB) => {
+    const dateA = new Date(contentA.publishedAt).getTime();
+    const dateB = new Date(contentB.publishedAt).getTime();
+    return dateA < dateB ? 1 : -1;
+  });
+};
+```
+
+If you run your app locally, the home page should now have the new post files we just created rendered as a list of blog posts instead of the previously hard-coded dummy content.
+
+## Fixing post links
+However, if you click on a title it can be seen that the link to the actual post is now broken. This is a result of the new dynamic content we have added and should be fixed by updating both `getStaticPaths` and `getStaticProps` accordingly in the view `[slug].tsx`.
+
+### getStaticPaths
+
+If you recall, `getStaticPaths` evaluates all possible dynamic routes for the page, which was previously dependent on dummy data hard-coded in `dummyData.ts`. Since we are no longer relying on this file, this logic has to be updated to derive that data from the newly added MDX files. Head over to the `/blog/[slug].tsx` file and update the `getStaticPaths` function with the following code.
+
+> It should be noted that the `*.mdx` file name will implicitly contribute to the url slug corresponding to its post page. For example, `/data/blog/my-first-blog-post.mdx` will be available under `<your-domain>/blog/my-first-blog-post`.
+
+```
+export async function getStaticPaths() {
+  const posts = await getFiles('blog');
+
+  return {
+    paths: posts.map((p) => ({
+      params: {
+        slug: p.replace(/\.mdx/, ''),
+      },
+    })),
+    fallback: false,
+  };
+}
+```
+
+Also export the following `getFiles` function from the `/lib/getContent.ts` file.
+
+```
+export const getFiles = async (type: string) => {
+  return fs.readdirSync(path.join(root, 'data', type));
+};
+```
+
+`getStaticPaths` is now generating all possible dynamic routes for an individual blog post page based on the content files in the `/data/blog` directory.
+
+### getStaticProps
+
+However, we still need to update `getStaticProps` to return the correct blog post content as props to the rendered page like so:
+
+```
+export async function getStaticProps({ params }: any) {
+  const post = await getFileBySlug('blog', params.slug);
+
+  return { props: post };
+}
+```
+
+Also export the following `getFileBySlug` function from the `/lib/getContent.ts` file which will use the url slug to identify and return the correct post content for the current path. The TODO item in the function below will soon be replaced with a utility to serialise the blog content using MDX. But for now, lets leave it as it is.
+
+```
+// use slug to extract post content from the correct blog file
+export const getFileBySlug = async (type: string, slug: string) => {
+  const source = slug
+    ? fs.readFileSync(path.join(root, 'data', type, `${slug}.mdx`), 'utf8')
+    : fs.readFileSync(path.join(root, 'data', `${type}.mdx`), 'utf8');
+
+  // parse the file content using gray-matter
+  const { data, content } = matter(source);
+
+  //TODO: Serialise the content using MDX. For now, we will simply use an empty object for the mdx source.
+  const mdxSource = {};
+
+  return {
+    mdxSource,
+    frontMatter: {
+      wordCount: content.split(/\s+/gu).length,
+      slug: slug || null,
+      ...data,
+    },
+  };
+};
+```
+
+With this, `getStaticProps` should now work nicely with our new dynamic content files and return a props object with an `mdxSource` and `frontMatter` corresponding to the currently loaded url slug. Ofcourse, the `mdxSource` is still not generated, but this will be taken care of in the next step.
+
+## MDX Integration
+
+Lets start by installing `next-mdx-remote` to integrate MDX. `next-mdx-remote` is a NextJS wrapper for MDX that introduces a far more developer friendly and NextJS friendly pattern to load MDX content. More information on this is available [here](https://github.com/hashicorp/next-mdx-remote#background--theory).
+
+We can now update the TODO item in the `getFilesBySlug` function (which is used by `getStaticProps`) defined previously to serialise a post's content using MDX like so.
+
+```
+...
+import { serialize } from 'next-mdx-remote/serialize';
+...
+export const getFileBySlug = async (type: string, slug: string) => {
+...
+  const mdxSource = await serialize(content);
+...
+}
+```
+
+Next, head over to `[slug].tsx` file and add in the following lines of code to render the serialised MDX source when rendering the blog post page. Make sure to update the component props and types as well to reflect this new integration.
+
+```
+...
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+
+interface IBlogProps {
+  mdxSource: MDXRemoteSerializeResult;
+  frontMatter: IFrontMatter;
+}
+
+const Blog = ({ mdxSource, frontMatter }: IBlogProps) => {
+...
+  ...
+    {/* TBA: blog content goes here */}
+    <MDXRemote {...mdxSource} components={undefined} />
+    </Box>
+  ...
+...
+}
+```
+
+If you refresh you application and open an individual blog post, the new content should be visible on your browser. This essentially means that our dynamic `*.mdx` post written in markdown is now parsed and rendered via MDX whenever the post page is accessed. However, to truly appreciate the power of MDX and what it brings to the table, we should explore how to extend our markdown files with JSX.
+
+## MDX Components
+The true power of MDX lies in its ability to use JSX components in mdx files. This can be done in an implicit manner by overriding existing markdown tags or by explicitly defining and accessing JSX components within your markdown files.
+
+### Overriding existing markdown tags
+Start by creating an `MDXComponents` directory within `/components`. Then lets create a Header component in `/components/MDXComponents/H2/index.tsx` like so:
+
+```
+import { Typography } from '@mui/material';
+import * as React from 'react';
+
+const BlogH2 = (props: any) => {
+  return (
+    <Typography
+      variant={'h5'}
+      sx={{
+        marginTop: { xs: 4, md: 6 },
+        marginBottom: 2,
+        fontWeight: 'bold',
+        color: 'red',
+      }}
+    >
+      {props.children}
+    </Typography>
+  );
+};
+
+export default BlogH2;
+```
+
+Finally we can export our new MDX components from `/components/MDXComponents/MDXComponents.tsx`. Here, we can define the markdown tag that should correspond to our custom component. For this example, we have overriden the `h2` tag with our custom `BlogH2` component.
+
+```
+import BlogH2 from './H2';
+
+const MDXComponents = {
+  h2: BlogH2
+};
+
+export default MDXComponents;
+```
+
+However, right now this configuration has no effect on the actual MDX integration. To make our new components available to MDX head over to `pages/blog/[slug].tsx` and include `MDXComponents` as a prop to the `MDXRemote` component.
+
+```
+<MDXRemote {...mdxSource} components={MDXComponents} />
+```
+
+With these changes in place, if you add a level 2 header item to a blog post, it will be rendered through our custom `BlogH2` component.
+
+In this case we have simply overridden an existing markdown tag. But we can also define completely new JSX components and reference them in the markdown file directly. An example of this is shown below.
+
+### Custom JSX components in markdown
+Create a custom mdx component in `/components/MDXComponents/CustomComponent/index.tsx`.
+
+```
+import { Box } from '@mui/material';
+
+const CustomComponent = () => {
+  return <Box>
+    This is a custom component
+  </Box>
+}
+
+export default CustomComponent;
+```
+
+Update the export configuration in `/components/MDXComponents/MDXComponents.tsx` by defining a new `CustomComponent` attribute.
+
+```
+import BlogH2 from './H2';
+import CustomComponent from './CustomComponent';
+
+const MDXComponents = {
+  h2: BlogH2,
+  CustomComponent,
+};
+
+export default MDXComponents;
+```
+
+Your new custom component can now be simply used in your mdx files like using standard JSX syntax like so: `<CustomComponent/>`.
+
+

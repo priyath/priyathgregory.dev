@@ -51,8 +51,8 @@ export const getAllFilesFrontMatter = async (type: string) => {
   }, []);
 
   return blogContent.sort((contentA, contentB) => {
-    const dateA = new Date(contentA.date).getTime();
-    const dateB = new Date(contentB.date).getTime();
-    return dateA > dateB ? 1 : -1;
+    const dateA = new Date(contentA.publishedAt).getTime();
+    const dateB = new Date(contentB.publishedAt).getTime();
+    return dateA < dateB ? 1 : -1;
   });
 };
