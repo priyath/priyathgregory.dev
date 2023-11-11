@@ -1,6 +1,6 @@
 const typographyConfig = {
   typography: {
-    fontFamily: ['Roboto', 'sans-serif'].join(','),
+    fontFamily: ['Nunito Sans', 'sans-serif'].join(','),
   },
   allVariants: {
     color: 'rgba(255,255,255)',

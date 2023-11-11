@@ -10,7 +10,6 @@ const Home: NextPage = ({ posts }: any) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <CssBaseline />
-      <Shell />
       <AboutWrapper posts={posts} />
     </Box>
   );

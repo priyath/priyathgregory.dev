@@ -29,18 +29,19 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
         backgroundImage: 'none',
         display: 'flex',
         flexDirection: 'column',
+        boxShadow: 0
       }}
     >
-      <CardMedia>
-        <Image
-          width={'100%'}
-          height={65}
-          src={`/${coverImage}`}
-          alt="hero image thumbnail"
-          layout="responsive"
-          quality={100}
-        />
-      </CardMedia>
+      {/*<CardMedia>*/}
+      {/*  <Image*/}
+      {/*    width={'100%'}*/}
+      {/*    height={65}*/}
+      {/*    src={`/${coverImage}`}*/}
+      {/*    alt="hero image thumbnail"*/}
+      {/*    layout="responsive"*/}
+      {/*    quality={100}*/}
+      {/*  />*/}
+      {/*</CardMedia>*/}
       <CardContent sx={{ backgroundColor: 'background.card', pb: 0 }}>
         <NextLink key={0} href={`/blog/${slug}`} passHref>
           <Link sx={{ textDecoration: 'none' }}>
@@ -67,13 +68,18 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
           <Grid item xs={12} pb={2}>
             <Button size="small" sx={{ pl: 0 }}>
               <NextLink href={`/blog/${slug}`} passHref>
-                <Link sx={{ textDecoration: 'none' }}>Read More</Link>
+                <Link sx={{ textDecoration: 'none' }}>Read more</Link>
               </NextLink>
             </Button>
           </Grid>
           <Grid item xs={12}>
             <Typography variant={'caption'}>
               {getPublishedAtString(publishedAt, 'short')}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant={'caption'}>
+              #GCP
             </Typography>
           </Grid>
         </Grid>

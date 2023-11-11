@@ -1,16 +1,18 @@
-import { createTheme, PaletteMode, responsiveFontSizes } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { getPaletteConfigs } from './utils';
+import { PaletteMode } from '@mui/material'
 
 const getTheme = (mode: PaletteMode) => {
   const themeWithPalette = createTheme(getPaletteConfigs(mode));
   const themeWithOverrides = createTheme(themeWithPalette, {
     typography: {
-      fontFamily: ['Roboto', 'sans-serif'].join(','),
       allVariants: {
         color: themeWithPalette.palette.text.primary,
       },
       h5: {
+        fontWeight: 'bold',
         color: themeWithPalette.palette.text.primary,
+        paddingBottom: '0.8rem',
       },
       body1: {
         color: themeWithPalette.palette.text.secondary,

@@ -10,6 +10,7 @@ import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { pageView } from '../lib/google-analytics';
+import '../styles/globals.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -35,10 +36,6 @@ export default function MyApp(props: MyAppProps) {
 
   return (
     <>
-      <Script
-        src={'/static/github-calendar.min.js'}
-        strategy={'beforeInteractive'}
-      />
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
         strategy={'afterInteractive'}

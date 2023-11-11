@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
 import getTheme from './theme';
+import CssBaseline from '@mui/material/CssBaseline'
 
 enum ColorMode {
   DARK = 'dark',
@@ -52,12 +53,15 @@ export const ColorModeContextProvider = ({
   );
 
   const finalTheme = React.useMemo(() => {
-    return getTheme(mode);
+    return getTheme(ColorMode.LIGHT);
   }, [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={finalTheme}>{children}</ThemeProvider>
+      <ThemeProvider theme={finalTheme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 };

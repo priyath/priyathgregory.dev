@@ -1,20 +1,25 @@
 import { PaletteMode } from '@mui/material';
 
 export const getPaletteConfigs = (mode: PaletteMode) => ({
+  typography: {
+    allVariants: {
+      fontFamily: ['Nunito Sans', 'sans-serif'].join(','),
+    },
+  },
   palette: {
     mode,
     ...(mode === 'light'
       ? {
           // palette values for light mode
           primary: {
-            main: '#54B689',
+            main: '#4f4f4f',
           },
           secondary: {
             main: '#54B689',
           },
           background: {
             paper: '#54B689',
-            card: '#f8f8f8',
+            card: '#fff',
             icon: '#fff',
           },
           text: {
