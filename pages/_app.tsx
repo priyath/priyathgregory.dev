@@ -6,7 +6,6 @@ import createEmotionCache from '../lib/createEmotionCache';
 import { ColorModeContextProvider } from '../styles/ColorModeContext';
 import { DefaultSeo } from 'next-seo';
 import DefaultSeoConfig from '../next-seo.config';
-import '../styles/GithubCalendar.css';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';

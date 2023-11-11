@@ -253,38 +253,38 @@ const Shell = () => {
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
+        {/*<Drawer*/}
+        {/*  variant="temporary"*/}
+        {/*  open={mobileOpen}*/}
+        {/*  onClose={handleDrawerToggle}*/}
+        {/*  ModalProps={{*/}
+        {/*    keepMounted: true, // Better open performance on mobile.*/}
+        {/*  }}*/}
+        {/*  sx={{*/}
+        {/*    display: { xs: 'block', md: 'none' },*/}
+        {/*    '& .MuiDrawer-paper': {*/}
+        {/*      backgroundImage: 'none',*/}
+        {/*      boxSizing: 'border-box',*/}
+        {/*      width: drawerWidth,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  {drawer}*/}
+        {/*</Drawer>*/}
+        {/*<Drawer*/}
+        {/*  variant="permanent"*/}
+        {/*  sx={{*/}
+        {/*    display: { xs: 'none', md: 'block' },*/}
+        {/*    '& .MuiDrawer-paper': {*/}
+        {/*      backgroundImage: 'none',*/}
+        {/*      boxSizing: 'border-box',*/}
+        {/*      width: drawerWidth,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*  open*/}
+        {/*>*/}
+        {/*  {drawer}*/}
+        {/*</Drawer>*/}
       </Box>
     </Box>
   );

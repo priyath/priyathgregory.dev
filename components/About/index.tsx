@@ -25,13 +25,6 @@ interface IAboutWrapper {
 
 const AboutWrapper = (props: IAboutWrapper) => {
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    GitHubCalendar('.calendar', 'priyath', {
-      responsive: true,
-      tooltips: true,
-      global_stats: true,
-    });
   }, []);
 
   return (
@@ -124,20 +117,6 @@ const AboutWrapper = (props: IAboutWrapper) => {
             },
           }}
         >
-          <Typography
-            variant={'h5'}
-            sx={{
-              color: 'primary.main',
-              textAlign: 'center',
-              mb: { xs: 2, lg: 3 },
-              fontFamily: 'monospace',
-            }}
-          >
-            Github Contributions Calendar
-          </Typography>
-          <Box className="calendar" sx={{ width: { xs: '100%', lg: '80%' } }}>
-            Loading data...
-          </Box>
         </Grid>
         <Divider
           sx={{
