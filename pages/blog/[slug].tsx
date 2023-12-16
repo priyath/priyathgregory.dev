@@ -3,11 +3,13 @@ import { getFileBySlug, getFiles } from '../../lib/getContent';
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import { Box, Container, Divider } from '@mui/material';
+import { Box, Container, Divider, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
 import Comment from '../../components/Comment';
+import Typography from '@mui/material/Typography';
+import NextLink from 'next/link';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -29,6 +31,17 @@ interface IBlogProps {
   mdxSource: MDXRemoteSerializeResult;
   frontMatter: IFrontMatter;
 }
+
+const outterWrapperStyles = {
+  marginY: {
+    xs: 6,
+  },
+  marginX: {
+    lg: 8,
+    xs: 4,
+  },
+};
+
 export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
   return (
     <>
@@ -50,16 +63,7 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           ],
         }}
       />
-      <Container
-        sx={{
-          display: 'flex',
-          px: {
-            md: 8,
-            sm: 4,
-            xs: 3,
-          },
-        }}
-      >
+      <React.Fragment>
         <CssBaseline />
         <Shell />
         <Box
@@ -97,7 +101,7 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
             }}
           />
         </Box>
-      </Container>
+      </React.Fragment>
     </>
   );
 }

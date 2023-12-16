@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
-import { Box, Grid, Link } from '@mui/material';
+import { Box, Divider, Grid, Link } from '@mui/material';
 import Image from 'next/image';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import { getPublishedAtString } from '../BlogPostHeader/utils';
@@ -29,19 +29,9 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
         backgroundImage: 'none',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: 0
+        boxShadow: 0,
       }}
     >
-      {/*<CardMedia>*/}
-      {/*  <Image*/}
-      {/*    width={'100%'}*/}
-      {/*    height={65}*/}
-      {/*    src={`/${coverImage}`}*/}
-      {/*    alt="hero image thumbnail"*/}
-      {/*    layout="responsive"*/}
-      {/*    quality={100}*/}
-      {/*  />*/}
-      {/*</CardMedia>*/}
       <CardContent sx={{ backgroundColor: 'background.card', pb: 0 }}>
         <NextLink key={0} href={`/blog/${slug}`} passHref>
           <Link sx={{ textDecoration: 'none' }}>
@@ -52,36 +42,27 @@ const ImageMediaCard = (props: IImageMediaCardProps) => {
                 },
               }}
               gutterBottom
-              variant="h5"
+              variant="h6"
               component="div"
             >
               {title}
             </Typography>
           </Link>
         </NextLink>
-        <Typography variant="body1">{summary}</Typography>
+        {/*<Typography variant="body1">{summary}</Typography>*/}
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <CardActions sx={{ backgroundColor: 'background.card' }}>
         {/*<Button size="small">Share</Button>*/}
         <Grid container pl={1}>
-          <Grid item xs={12} pb={2}>
-            <Button size="small" sx={{ pl: 0 }}>
-              <NextLink href={`/blog/${slug}`} passHref>
-                <Link sx={{ textDecoration: 'none' }}>Read more</Link>
-              </NextLink>
-            </Button>
-          </Grid>
           <Grid item xs={12}>
             <Typography variant={'caption'}>
               {getPublishedAtString(publishedAt, 'short')}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant={'caption'}>
-              #GCP
-            </Typography>
-          </Grid>
+          {/*<Grid item xs={12}>*/}
+          {/*  <Typography variant={'caption'}>#GCP</Typography>*/}
+          {/*</Grid>*/}
         </Grid>
       </CardActions>
     </Card>

@@ -21,6 +21,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
             paper: '#54B689',
             card: '#fff',
             icon: '#fff',
+            hover: 'rgba(79, 79, 79, 0.04)',
           },
           text: {
             primary: '#292929',
@@ -51,7 +52,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
           background: {
             default: '#131a23',
             paper: '#1e2c3a',
-            card: '#1e2c3a',
+            card: '#131a23',
             icon: '#54B689',
           },
           text: {

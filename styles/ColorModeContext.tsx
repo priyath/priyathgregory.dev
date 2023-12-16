@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
 import getTheme from './theme';
-import CssBaseline from '@mui/material/CssBaseline'
+import CssBaseline from '@mui/material/CssBaseline';
 
 enum ColorMode {
   DARK = 'dark',
@@ -16,7 +16,7 @@ interface IColorModeContext {
 export const ColorModeContext = React.createContext<IColorModeContext>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleColorMode: () => {},
-  mode: ColorMode.LIGHT,
+  mode: ColorMode.DARK,
 });
 
 interface IColorModeContextProvider {
@@ -53,7 +53,7 @@ export const ColorModeContextProvider = ({
   );
 
   const finalTheme = React.useMemo(() => {
-    return getTheme(ColorMode.LIGHT);
+    return getTheme(ColorMode.DARK);
   }, [mode]);
 
   return (

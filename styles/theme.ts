@@ -1,6 +1,6 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import { getPaletteConfigs } from './utils';
-import { PaletteMode } from '@mui/material'
+import { PaletteMode } from '@mui/material';
 
 const getTheme = (mode: PaletteMode) => {
   const themeWithPalette = createTheme(getPaletteConfigs(mode));
@@ -8,6 +8,10 @@ const getTheme = (mode: PaletteMode) => {
     typography: {
       allVariants: {
         color: themeWithPalette.palette.text.primary,
+      },
+      h7: {
+        color: themeWithPalette.palette.text.secondary,
+        paddingBottom: '0.8rem',
       },
       h5: {
         fontWeight: 'bold',

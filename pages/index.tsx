@@ -1,17 +1,21 @@
 import type { NextPage } from 'next';
 import * as React from 'react';
-import AboutWrapper from '../components/About';
+import HomeWrapper from '../components/Home';
 import CssBaseline from '@mui/material/CssBaseline';
-import Shell from '../components/Shell';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import { getAllFilesFrontMatter } from '../lib/getContent';
+import Shell from '../components/Shell';
+import Toolbar from '@mui/material/Toolbar';
 
 const Home: NextPage = ({ posts }: any) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <React.Fragment>
       <CssBaseline />
-      <AboutWrapper posts={posts} />
-    </Box>
+      <Shell />
+      <Container>
+        <HomeWrapper posts={posts} />
+      </Container>
+    </React.Fragment>
   );
 };
 
