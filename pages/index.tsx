@@ -3,15 +3,29 @@ import * as React from 'react';
 import AboutWrapper from '../components/About';
 import CssBaseline from '@mui/material/CssBaseline';
 import Shell from '../components/Shell';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { getAllFilesFrontMatter } from '../lib/getContent';
+import Typography from '@mui/material/Typography';
 
 const Home: NextPage = ({ posts }: any) => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        maxWidth: '1200px',
+        margin: 'auto',
+      }}
+    >
       <CssBaseline />
-      <Shell />
-      <AboutWrapper posts={posts} />
+      <Grid container spacing={10}>
+        <Grid item xs={12}>
+          <Shell />
+        </Grid>
+        <Grid item xs={12}>
+          <AboutWrapper posts={posts} />
+        </Grid>
+      </Grid>
     </Box>
   );
 };

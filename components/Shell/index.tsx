@@ -9,13 +9,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {
   Avatar,
+  Button,
+  Container,
   Grid,
   Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Switch,
+  Tooltip,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,8 +29,11 @@ import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 import { BsLightbulbFill } from 'react-icons/bs';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import AdbIcon from '@mui/icons-material/Adb';
 
 const drawerWidth = 260;
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const sidePanelConfig = [
   {
@@ -43,249 +51,154 @@ const sidePanelConfig = [
 const Shell = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { toggleColorMode, mode } = useColorMode();
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-  const drawer = (
-    <Box>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <NextLink href={'/'} passHref>
-          <Link sx={{ textDecoration: 'none' }}>
-            <Typography
-              variant={'h5'}
-              sx={{ pt: 2, fontWeight: 'bold' }}
-              color={'sidebarTypography.main'}
-            >
-              Priyath Gregory
-            </Typography>
-          </Link>
-        </NextLink>
-        <Avatar
-          sx={{
-            width: 150,
-            height: 150,
-            margin: 'auto',
-            my: 2,
-            backgroundColor: 'text.brand',
-          }}
-        >
-          <Image
-            src="/avatar.png"
-            alt="Picture of the author"
-            width={110}
-            height={150}
-          />
-        </Avatar>
-        {/*<Typography*/}
-        {/*  color={'text.brand'}*/}
-        {/*  variant={'caption'}*/}
-        {/*  sx={{ mb: 2, textAlign: 'center' }}*/}
-        {/*>*/}
-        {/*  Hi, welcome to my personal website - a digital journal of sorts,*/}
-        {/*  documenting my journey as a Software Engineer.*/}
-        {/*</Typography>*/}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingBottom: 2,
-            gap: 1.5,
-          }}
-        >
-          <a
-            href="https://www.github.com/priyath"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaGithubAlt size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/priyathg"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaLinkedinIn size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-          <a
-            href="https://medium.com/@priyathgregory"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaMediumM size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-        </Box>
-        {/*<Typography align={'center'} variant={'body1'} sx={{ p: 2, pt: 0 }}>*/}
-        {/*  Hi, my name is Priyath Gregory and I'm a full-stack software engineer.*/}
-        {/*  Welcome to my personal website!*/}
-        {/*</Typography>*/}
-      </Grid>
-      <Divider />
-      <Grid container spacing={0} direction="column">
-        <List>
-          {sidePanelConfig.map((itemConfig, index) => (
-            <NextLink key={index} href={itemConfig.path} passHref>
-              <Link sx={{ textDecoration: 'none' }}>
-                <ListItem button sx={{ pl: 4 }}>
-                  <ListItemIcon>{itemConfig.icon}</ListItemIcon>
-                  <ListItemText
-                    primary={itemConfig.label}
-                    primaryTypographyProps={{
-                      fontWeight: 'bold',
-                      color: 'sidebarTypography.main',
-                    }}
-                  />
-                </ListItem>
-              </Link>
-            </NextLink>
-          ))}
-        </List>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            margin: 'auto',
-          }}
-        >
-          <Switch
-            onClick={() => toggleColorMode()}
-            sx={{ margin: 'auto' }}
-            {...label}
-            checked={mode === 'dark'}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              gap: 1,
-              alignItems: 'bottom',
-            }}
-          >
-            <BsLightbulbFill color={'#3c755a'} />
-            <Typography
-              color={'sidebarTypography.main'}
-              sx={{ fontWeight: 'bold' }}
-              variant={'caption'}
-            >
-              Dark Mode
-            </Typography>
-          </Box>
-        </Box>
-      </Grid>
-    </Box>
-  );
-
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          backgroundImage: 'none',
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
+      <AppBar position="static">
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              LOGO
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              LOGO
+            </Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
     </Box>
   );
 };

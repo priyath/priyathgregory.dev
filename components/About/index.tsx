@@ -8,14 +8,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 
 const outterWrapperStyles = {
-  marginY: {
-    md: 6,
-    xs: 10,
-  },
-  marginX: {
-    lg: 8,
-    xs: 4,
-  },
+  margin: 'auto',
   maxWidth: '1200px',
 };
 
@@ -109,36 +102,36 @@ const AboutWrapper = (props: IAboutWrapper) => {
         {/*    marginX: 'auto',*/}
         {/*  }}*/}
         {/*/>*/}
-        <Grid
-          item
-          xs={12}
-          sx={{
-            overflowX: 'auto',
-            display: {
-              xs: 'none',
-              sm: 'block',
-            },
-            marginBottom: {
-              lg: 8,
-              xs: 6,
-            },
-          }}
-        >
-          <Typography
-            variant={'h5'}
-            sx={{
-              color: 'primary.main',
-              textAlign: 'center',
-              mb: { xs: 2, lg: 3 },
-              fontFamily: 'monospace',
-            }}
-          >
-            Github Contributions Calendar
-          </Typography>
-          <Box className="calendar" sx={{ width: { xs: '100%', lg: '80%' } }}>
-            Loading data...
-          </Box>
-        </Grid>
+        {/*<Grid*/}
+        {/*  item*/}
+        {/*  xs={12}*/}
+        {/*  sx={{*/}
+        {/*    overflowX: 'auto',*/}
+        {/*    display: {*/}
+        {/*      xs: 'none',*/}
+        {/*      sm: 'block',*/}
+        {/*    },*/}
+        {/*    marginBottom: {*/}
+        {/*      lg: 8,*/}
+        {/*      xs: 6,*/}
+        {/*    },*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <Typography*/}
+        {/*    variant={'h5'}*/}
+        {/*    sx={{*/}
+        {/*      color: 'primary.main',*/}
+        {/*      textAlign: 'center',*/}
+        {/*      mb: { xs: 2, lg: 3 },*/}
+        {/*      fontFamily: 'monospace',*/}
+        {/*    }}*/}
+        {/*  >*/}
+        {/*    Github Contributions Calendar*/}
+        {/*  </Typography>*/}
+        {/*  <Box className="calendar" sx={{ width: { xs: '100%', lg: '80%' } }}>*/}
+        {/*    Loading data...*/}
+        {/*  </Box>*/}
+        {/*</Grid>*/}
         <Divider
           sx={{
             marginBottom: {
