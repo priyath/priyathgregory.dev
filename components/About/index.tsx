@@ -1,4 +1,4 @@
-import { Box, Divider, Grid } from '@mui/material';
+import { Box, Divider, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../utils/strings';
 import * as React from 'react';
@@ -6,6 +6,8 @@ import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import Image from 'next/image';
 import { useEffect } from 'react';
+import Button from '@mui/material/Button';
+import NextLink from 'next/link';
 
 const outterWrapperStyles = {
   margin: 'auto',
@@ -40,7 +42,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
             },
           }}
         >
-          <Grid container spacing={{ xs: 4, lg: 6 }}>
+          <Grid container>
             <Grid item xs={12} md={8} sx={{ textAlign: 'left' }}>
               <Box>
                 <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
@@ -145,19 +147,36 @@ const AboutWrapper = (props: IAboutWrapper) => {
         />
         <Grid item xs={12}>
           <Box>
-            <Typography
-              variant={'h4'}
-              sx={{
-                p: 0,
-                pl: 2,
-                mb: { xs: 4, lg: 6 },
-                borderLeft: '7px solid #54B689',
-                fontWeight: 'bold',
-                lineHeight: '54px',
-              }}
-            >
-              Latest Blog Posts
-            </Typography>
+            <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
+              <Grid item xs={8}>
+                <Typography
+                  variant={'h4'}
+                  sx={{
+                    p: 0,
+                    pl: 2,
+                    borderLeft: '5px solid #54B689',
+                    fontWeight: 'bold',
+                    lineHeight: '54px',
+                  }}
+                >
+                  Latest Blog Posts
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                sx={{ display: 'flex', justifyContent: 'flex-end' }}
+              >
+                <Button
+                  size="medium"
+                  sx={{ margin: 0.5, paddingX: 2, paddingY: 1 }}
+                >
+                  <NextLink href={`/blog`} passHref>
+                    <Link sx={{ textDecoration: 'none' }}>View All</Link>
+                  </NextLink>
+                </Button>
+              </Grid>
+            </Grid>
             <Grid container spacing={4}>
               {props.posts.map((item: IFrontMatter, index: number) => {
                 return (

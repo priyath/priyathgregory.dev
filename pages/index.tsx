@@ -13,12 +13,20 @@ const Home: NextPage = ({ posts }: any) => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        maxWidth: '1200px',
-        margin: 'auto',
+        maxWidth: 'lg',
+        paddingX: {
+          xs: 0,
+          lg: 4,
+        },
+        margin: {
+          lg: 'auto',
+          md: '0 10%',
+          xs: '0 5%',
+        },
       }}
     >
       <CssBaseline />
-      <Grid container spacing={10}>
+      <Grid container>
         <Grid item xs={12}>
           <Shell />
         </Grid>
