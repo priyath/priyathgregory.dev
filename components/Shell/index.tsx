@@ -4,18 +4,9 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {
-  Avatar,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Link,
-  Switch,
-} from '@mui/material';
+import { Button, Container, Divider, Grid, Link, Switch } from '@mui/material';
 import { useColorMode } from '../../styles/ColorModeContext';
 import NextLink from 'next/link';
-import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 
 const pages = [
   { label: 'Home', path: '/' },
@@ -104,7 +95,6 @@ const Shell = () => {
                   {pages.map((page, index) => (
                     <Button
                       key={index}
-                      onClick={() => {}}
                       sx={{
                         my: { xs: 0, md: 2 },
                         color: 'text.secondary',
