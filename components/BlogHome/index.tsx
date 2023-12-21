@@ -53,18 +53,20 @@ const BlogHome = (props: IBlogHome) => {
                       <Grid item xs={12} mb={0}>
                         <NextLink key={0} href={`/blog/${item.slug}`} passHref>
                           <Link
-                            color={'text.primary'}
                             sx={{
                               textDecoration: 'none',
-                              '&:hover': {
-                                color: 'primary.main',
-                              },
                             }}
+                            color={'text.primary'}
                           >
                             <Typography
                               gutterBottom
                               variant="h6"
                               component="div"
+                              sx={{
+                                '&:hover': {
+                                  color: 'primary.main',
+                                },
+                              }}
                             >
                               {item.title}
                             </Typography>

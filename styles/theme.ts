@@ -13,7 +13,7 @@ const getTheme = (mode: PaletteMode) => {
         color: themeWithPalette.palette.text.primary,
       },
       h6: {
-        fontSize: '1.35rem',
+        fontSize: '1.25rem',
         color: themeWithPalette.palette.text.primary,
       },
       body1: {
