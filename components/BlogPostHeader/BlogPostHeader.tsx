@@ -22,7 +22,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
   const { frontMatter } = props;
 
   return (
-    <Box sx={{ marginX: 0, marginTop: 4 }}>
+    <Box sx={{ marginX: 0, marginTop: 0 }}>
       <Typography
         variant={'h4'}
         sx={{ py: 1, fontWeight: 'bold', textAlign: 'left' }}

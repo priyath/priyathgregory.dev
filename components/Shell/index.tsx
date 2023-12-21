@@ -2,290 +2,158 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {
   Avatar,
+  Button,
+  Container,
+  Divider,
   Grid,
   Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Switch,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import MenuIcon from '@mui/icons-material/Menu';
 import { useColorMode } from '../../styles/ColorModeContext';
-import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
-import { BsLightbulbFill } from 'react-icons/bs';
 import NextLink from 'next/link';
-import Image from 'next/image';
+import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 
-const drawerWidth = 260;
-
-const sidePanelConfig = [
-  {
-    label: 'About Me',
-    icon: <PersonIcon />,
-    path: '/',
-  },
-  // {
-  //   label: 'Blog',
-  //   icon: <LibraryBooksIcon />,
-  //   path: '/blog',
-  // },
+const pages = [
+  { label: 'Home', path: '/' },
+  { label: 'Blog', path: '/blog' },
+  { label: 'Github', path: 'https://github.com/priyath', newTab: true },
 ];
 
 const Shell = () => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   const { toggleColorMode, mode } = useColorMode();
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-  const drawer = (
-    <Box>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <NextLink href={'/'} passHref>
-          <Link sx={{ textDecoration: 'none' }}>
-            <Typography
-              variant={'h5'}
-              sx={{ pt: 2, fontWeight: 'bold' }}
-              color={'sidebarTypography.main'}
-            >
-              Priyath Gregory
-            </Typography>
-          </Link>
-        </NextLink>
-        <Avatar
-          sx={{
-            width: 150,
-            height: 150,
-            margin: 'auto',
-            my: 2,
-            backgroundColor: 'text.brand',
-          }}
-        >
-          <Image
-            src="/avatar.png"
-            alt="Picture of the author"
-            width={110}
-            height={150}
-          />
-        </Avatar>
-        {/*<Typography*/}
-        {/*  color={'text.brand'}*/}
-        {/*  variant={'caption'}*/}
-        {/*  sx={{ mb: 2, textAlign: 'center' }}*/}
-        {/*>*/}
-        {/*  Hi, welcome to my personal website - a digital journal of sorts,*/}
-        {/*  documenting my journey as a Software Engineer.*/}
-        {/*</Typography>*/}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingBottom: 2,
-            gap: 1.5,
-          }}
-        >
-          <a
-            href="https://www.github.com/priyath"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaGithubAlt size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/priyathg"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaLinkedinIn size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-          <a
-            href="https://medium.com/@priyathgregory"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            <Avatar
-              sx={{ width: 32, height: 32, backgroundColor: 'background.icon' }}
-            >
-              <Box
-                color={'secondary.main'}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <FaMediumM size={'0.8em'} />
-              </Box>
-            </Avatar>
-          </a>
-        </Box>
-        {/*<Typography align={'center'} variant={'body1'} sx={{ p: 2, pt: 0 }}>*/}
-        {/*  Hi, my name is Priyath Gregory and I'm a full-stack software engineer.*/}
-        {/*  Welcome to my personal website!*/}
-        {/*</Typography>*/}
-      </Grid>
-      <Divider />
-      <Grid container spacing={0} direction="column">
-        <List>
-          {sidePanelConfig.map((itemConfig, index) => (
-            <NextLink key={index} href={itemConfig.path} passHref>
-              <Link sx={{ textDecoration: 'none' }}>
-                <ListItem button sx={{ pl: 4 }}>
-                  <ListItemIcon>{itemConfig.icon}</ListItemIcon>
-                  <ListItemText
-                    primary={itemConfig.label}
-                    primaryTypographyProps={{
-                      fontWeight: 'bold',
-                      color: 'sidebarTypography.main',
-                    }}
-                  />
-                </ListItem>
-              </Link>
-            </NextLink>
-          ))}
-        </List>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            margin: 'auto',
-          }}
-        >
-          <Switch
-            onClick={() => toggleColorMode()}
-            sx={{ margin: 'auto' }}
-            {...label}
-            checked={mode === 'dark'}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              gap: 1,
-              alignItems: 'bottom',
-            }}
-          >
-            <BsLightbulbFill color={'#3c755a'} />
-            <Typography
-              color={'sidebarTypography.main'}
-              sx={{ fontWeight: 'bold' }}
-              variant={'caption'}
-            >
-              Dark Mode
-            </Typography>
-          </Box>
-        </Box>
-      </Grid>
-    </Box>
-  );
-
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ padding: 0, pb: { xs: 2, md: 8 } }}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="static"
         sx={{
-          display: { xs: 'block', md: 'none' },
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-          backgroundImage: 'none',
+          background: 'transparent',
+          boxShadow: 'none',
+          color: 'transparent',
         }}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+        <Container disableGutters={true} maxWidth="xl">
+          <Toolbar
+            disableGutters
+            sx={{ pt: 4, display: { xs: 'none', md: 'flex' } }}
           >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
+            <Grid container>
+              <Grid item xs={12} md={8}>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    flexGrow: 1,
+                    mr: 2,
+                    display: { xs: 'flex' },
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '.3rem',
+                    textDecoration: 'none',
+                    justifyContent: {
+                      xs: 'center',
+                      md: 'left',
+                    },
+                  }}
+                >
+                  <NextLink href={`/`} passHref>
+                    <Link color={'text.primary'} underline="none">
+                      PriyathGregory.Dev
+                    </Link>
+                  </NextLink>
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={4}
+                sx={{
+                  display: { xs: 'none', md: 'flex' },
+                  justifyContent: {
+                    sx: 'center',
+                    md: 'right',
+                  },
+                }}
+              >
+                <Switch
+                  onClick={() => toggleColorMode()}
+                  {...label}
+                  checked={mode === 'dark'}
+                />
+              </Grid>
+            </Grid>
+          </Toolbar>
+          <Toolbar disableGutters>
+            <Grid container>
+              <Grid item xs={8}>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: 'flex' },
+                    margin: 'auto',
+                    width: '100%',
+                  }}
+                >
+                  {pages.map((page, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => {}}
+                      sx={{
+                        my: { xs: 0, md: 2 },
+                        color: 'text.secondary',
+                        display: 'block',
+                        textTransform: 'none',
+                        fontSize: 'body2.fontSize',
+                      }}
+                    >
+                      <NextLink href={page.path} passHref>
+                        <Link
+                          color={'text.primary'}
+                          underline="none"
+                          target={page.newTab ? '_blank' : undefined}
+                        >
+                          {page.label}
+                        </Link>
+                      </NextLink>
+                    </Button>
+                  ))}
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={4}
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  justifyContent: {
+                    xs: 'right',
+                  },
+                }}
+              >
+                <Switch
+                  onClick={() => toggleColorMode()}
+                  {...label}
+                  checked={mode === 'dark'}
+                />
+              </Grid>
+            </Grid>
+          </Toolbar>
+          <Divider
+            sx={{
+              display: { md: 'none' },
+              color: 'primary.main',
+              width: '100%',
+              marginX: 'auto',
+            }}
+          />
+        </Container>
       </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
-              backgroundImage: 'none',
-              boxSizing: 'border-box',
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
     </Box>
   );
 };
