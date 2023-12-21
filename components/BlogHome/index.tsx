@@ -1,34 +1,29 @@
-import {
-  Box,
-  Chip,
-  Divider,
-  Grid,
-  Link,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
+import { Box, Divider, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { IFrontMatter } from '../../pages/blog/[slug]';
-import Button from '@mui/material/Button';
 import NextLink from 'next/link';
+import BlogSidePanel from './BlogSidePanel';
 
 const outterWrapperStyles = {
   margin: 'auto',
   maxWidth: '1200px',
 };
 
-interface IBlogHome {
+export interface IBlogHome {
   posts: IFrontMatter[];
+  tags?: string[];
+  tag?: string;
+  category?: string;
+  categories: { [key: string]: { count: number; label: string } };
 }
 const BlogHome = (props: IBlogHome) => {
-  const { posts } = props;
-  console.log(posts);
+  const { posts, tag, tags, categories, category } = props;
+
   return (
     <>
       <Grid container sx={outterWrapperStyles}>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <Box>
             <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
               <Grid item xs={8}>
@@ -42,7 +37,11 @@ const BlogHome = (props: IBlogHome) => {
                     lineHeight: '54px',
                   }}
                 >
-                  All Posts
+                  {tag
+                    ? `${tag}`
+                    : category
+                    ? `${categories[category].label}`
+                    : 'All Posts'}
                 </Typography>
               </Grid>
             </Grid>
@@ -52,17 +51,24 @@ const BlogHome = (props: IBlogHome) => {
                   <Grid item xs={12} key={index}>
                     <Grid container>
                       <Grid item xs={12} mb={0}>
-                        <Typography
-                          sx={{
-                            '&:hover': {
-                              color: 'primary.main',
-                            },
-                          }}
-                          gutterBottom
-                          variant="h6"
-                          component="div"
-                        >
-                          {item.title}
+                        <Typography gutterBottom variant="h6" component="div">
+                          <NextLink
+                            key={0}
+                            href={`/blog/${item.slug}`}
+                            passHref
+                          >
+                            <Link
+                              color={'text.primary'}
+                              sx={{
+                                textDecoration: 'none',
+                                '&:hover': {
+                                  color: 'primary.main',
+                                },
+                              }}
+                            >
+                              {item.title}
+                            </Link>
+                          </NextLink>
                         </Typography>
                       </Grid>
                       {/*<Grid item xs={1} sx={{ textAlign: 'right' }}></Grid>*/}
@@ -94,26 +100,38 @@ const BlogHome = (props: IBlogHome) => {
                             >
                               #
                             </Typography>
-                            {['javascript', 'nosql', 'databases'].map(
-                              (item) => {
-                                return (
-                                  <Typography
-                                    fontFamily={'monospace'}
-                                    sx={{
-                                      '&:hover': {
-                                        color: 'primary.main',
-                                      },
-                                      pr: 1,
-                                    }}
-                                    gutterBottom
-                                    variant="caption"
-                                    component="div"
+                            {(item.tags || []).map((tagStr, index) => {
+                              return (
+                                <Typography
+                                  key={index}
+                                  fontFamily={'monospace'}
+                                  sx={{
+                                    pr: 1,
+                                  }}
+                                  gutterBottom
+                                  variant="caption"
+                                  component="div"
+                                >
+                                  <NextLink
+                                    key={0}
+                                    href={`/tags/${tagStr}`}
+                                    passHref
                                   >
-                                    {item}
-                                  </Typography>
-                                );
-                              }
-                            )}
+                                    <Link
+                                      color={'text.primary'}
+                                      sx={{
+                                        textDecoration: 'none',
+                                        '&:hover': {
+                                          color: 'primary.main',
+                                        },
+                                      }}
+                                    >
+                                      {tagStr}
+                                    </Link>
+                                  </NextLink>
+                                </Typography>
+                              );
+                            })}
                           </Grid>
                           <Divider
                             sx={{
@@ -145,152 +163,15 @@ const BlogHome = (props: IBlogHome) => {
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs={1}></Grid>
-        <Grid item xs={3}>
-          <Grid container>
-            <Grid item xs={12} mb={3}>
-              <Box>
-                <Typography
-                  variant={'h6'}
-                  sx={{
-                    color: 'text.secondary',
-                    lineHeight: '54px',
-                  }}
-                >
-                  Categories
-                </Typography>
-              </Box>
-              <Divider
-                sx={{
-                  color: 'primary.main',
-                  width: '100%',
-                  marginX: 'auto',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <List sx={{ paddingTop: 0 }}>
-                {['Javascript', 'NOSQL', 'GCP', 'Snippets'].map(
-                  (item, index) => {
-                    return (
-                      <Grid container key={index}>
-                        <Grid item xs={10}>
-                          <ListItem
-                            key={index}
-                            sx={{
-                              padding: 0.2,
-                              paddingBottom: 0,
-                              paddingLeft: 0,
-                              paddingTop: 0,
-                            }}
-                          >
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        </Grid>
-                        <Grid
-                          item
-                          xs={2}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                        >
-                          <Typography variant={'body1'}>2</Typography>
-                        </Grid>
-                      </Grid>
-                    );
-                  }
-                )}
-              </List>
-            </Grid>
-            <Grid item xs={12} mb={3}>
-              <Box>
-                <Typography
-                  variant={'h6'}
-                  sx={{
-                    color: 'text.secondary',
-                    lineHeight: '54px',
-                  }}
-                >
-                  Popular Topics
-                </Typography>
-              </Box>
-              <Divider
-                sx={{
-                  color: 'primary.main',
-                  width: '100%',
-                  marginX: 'auto',
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} mb={2}>
-              {[
-                'GCP',
-                'Javascript',
-                'GCP',
-                'Javascript',
-                'GCP',
-                'Javascript',
-                'GCP',
-                'Javascript',
-                'GCP',
-                'Javascript',
-                'GCP',
-                'Javascript',
-              ].map((item, index) => {
-                return (
-                  <Chip
-                    key={index}
-                    label={item}
-                    sx={{ margin: 0.2, marginY: 0.3, borderRadius: 2 }}
-                  />
-                );
-              })}
-            </Grid>
-            {/*<Grid item xs={12} mb={3}>*/}
-            {/*  <Box>*/}
-            {/*    <Typography*/}
-            {/*      variant={'h6'}*/}
-            {/*      sx={{*/}
-            {/*        color: 'text.secondary',*/}
-            {/*        lineHeight: '54px',*/}
-            {/*      }}*/}
-            {/*    >*/}
-            {/*      Featured Posts*/}
-            {/*    </Typography>*/}
-            {/*  </Box>*/}
-            {/*  <Divider*/}
-            {/*    sx={{*/}
-            {/*      color: 'primary.main',*/}
-            {/*      width: '100%',*/}
-            {/*      marginX: 'auto',*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</Grid>*/}
-            {/*<Grid item xs={12}>*/}
-            {/*  <List sx={{ paddingTop: 0 }}>*/}
-            {/*    {[*/}
-            {/*      "Javascript Internals: What's Under the Hood?",*/}
-            {/*      'CouchDB: Document Conflicts',*/}
-            {/*    ].map((item, index) => {*/}
-            {/*      return (*/}
-            {/*        <ListItem*/}
-            {/*          key={index}*/}
-            {/*          sx={{*/}
-            {/*            padding: 0.2,*/}
-            {/*            paddingBottom: 0,*/}
-            {/*            paddingLeft: 0,*/}
-            {/*            paddingTop: 0,*/}
-            {/*          }}*/}
-            {/*        >*/}
-            {/*          <ListItemText primary={item} />*/}
-            {/*        </ListItem>*/}
-            {/*      );*/}
-            {/*    })}*/}
-            {/*  </List>*/}
-            {/*</Grid>*/}
-          </Grid>
+        <Grid item xs={1} sx={{ display: { xs: 'none', md: 'block' } }}></Grid>
+        <Grid item xs={12} md={3}>
+          <BlogSidePanel
+            posts={posts}
+            tags={tags}
+            relatedTags={[tag as string]}
+            categories={categories}
+            category={category}
+          />
         </Grid>
       </Grid>
     </>

@@ -1,8 +1,8 @@
+import { getAllFilesFrontMatter, getAllTags } from '../../lib/getContent';
 import Shell from '../../components/Shell';
 import * as React from 'react';
 import { Box, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { getAllFilesFrontMatter } from '../../lib/getContent';
 import BlogHome from '../../components/BlogHome';
 
 export interface IFrontMatter {
@@ -19,9 +19,16 @@ export interface IFrontMatter {
   wordCount: number;
   coverImage: string;
   shareUrl: string;
+  tags: string[];
 }
 
-export default function BlogPage({ posts, tags, categories }: any) {
+export default function Category({
+  posts,
+  tag,
+  tags,
+  category,
+  categories,
+}: any) {
   return (
     <>
       <Box
@@ -46,7 +53,13 @@ export default function BlogPage({ posts, tags, categories }: any) {
             <Shell />
           </Grid>
           <Grid item xs={12}>
-            <BlogHome posts={posts} tags={tags} categories={categories} />
+            <BlogHome
+              posts={posts}
+              tag={tag}
+              category={category}
+              tags={tags}
+              categories={categories}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -54,7 +67,25 @@ export default function BlogPage({ posts, tags, categories }: any) {
   );
 }
 
-export const getStaticProps = async () => {
-  const { posts, tags, categories } = await getAllFilesFrontMatter('blog');
-  return { props: { posts, tags, categories } };
-};
+export async function getStaticPaths() {
+  const { categories } = await getAllFilesFrontMatter('blog');
+
+  return {
+    paths: Object.keys(categories || {}).map((category) => ({
+      params: {
+        category: category,
+      },
+    })),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }: any) {
+  const { posts, tags, categories } = await getAllFilesFrontMatter(
+    'blog',
+    undefined,
+    params.category
+  );
+
+  return { props: { posts, category: params.category, tags, categories } };
+}

@@ -1,23 +1,18 @@
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { getFileBySlug, getFiles } from '../../lib/getContent';
+import {
+  getAllFilesFrontMatter,
+  getFileBySlug,
+  getFiles,
+} from '../../lib/getContent';
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
+import { Box, Divider, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
 import Comment from '../../components/Comment';
-import AboutWrapper from '../../components/About';
-import Typography from '@mui/material/Typography';
+import BlogSidePanel from '../../components/BlogHome/BlogSidePanel';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -33,13 +28,28 @@ export interface IFrontMatter {
   wordCount: number;
   coverImage: string;
   shareUrl: string;
+  tags: string[];
+  category: {
+    key: string;
+    label: string;
+  };
 }
 
 interface IBlogProps {
-  mdxSource: MDXRemoteSerializeResult;
-  frontMatter: IFrontMatter;
+  post: {
+    mdxSource: MDXRemoteSerializeResult;
+    frontMatter: IFrontMatter;
+  };
+  posts: any;
+  tags?: string[];
+  tag?: string;
+  category?: string;
+  categories: { [key: string]: { count: number; label: string } };
 }
-export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
+export default function Blog(props: IBlogProps) {
+  const { post, posts, tags, tag, categories, category } = props;
+  const { mdxSource, frontMatter } = post;
+
   return (
     <>
       <NextSeo
@@ -81,7 +91,7 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           <Grid item xs={12}>
             <Shell />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Box
               sx={{
                 margin: 'auto',
@@ -119,65 +129,14 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
             </Box>
           </Grid>
           <Grid item xs={1}></Grid>
-          <Grid item xs={3}>
-            <Grid container>
-              <Grid item xs={12} mb={3}>
-                <Box>
-                  <Typography
-                    variant={'h6'}
-                    sx={{
-                      color: 'text.secondary',
-                      lineHeight: '54px',
-                    }}
-                  >
-                    Categories
-                  </Typography>
-                </Box>
-                <Divider
-                  sx={{
-                    color: 'primary.main',
-                    width: '100%',
-                    marginX: 'auto',
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <List sx={{ paddingTop: 0 }}>
-                  {['Javascript', 'NOSQL', 'GCP', 'Snippets'].map(
-                    (item, index) => {
-                      return (
-                        <Grid container>
-                          <Grid item xs={10}>
-                            <ListItem
-                              key={index}
-                              sx={{
-                                padding: 0.2,
-                                paddingBottom: 0,
-                                paddingLeft: 0,
-                                paddingTop: 0,
-                              }}
-                            >
-                              <ListItemText primary={item} />
-                            </ListItem>
-                          </Grid>
-                          <Grid
-                            item
-                            xs={2}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}
-                          >
-                            <Typography variant={'body1'}>2</Typography>
-                          </Grid>
-                        </Grid>
-                      );
-                    }
-                  )}
-                </List>
-              </Grid>
-            </Grid>
+          <Grid item xs={12} md={3}>
+            <BlogSidePanel
+              posts={posts}
+              tags={tags}
+              relatedTags={post.frontMatter.tags}
+              categories={categories}
+              category={post.frontMatter.category.key}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -200,6 +159,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const post = await getFileBySlug('blog', params.slug);
+  const { posts, tags, categories } = await getAllFilesFrontMatter('blog');
 
-  return { props: post };
+  return { props: { post, posts, tags, categories } };
 }

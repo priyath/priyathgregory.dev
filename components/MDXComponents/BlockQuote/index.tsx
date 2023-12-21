@@ -10,7 +10,7 @@ const BlockQuote = (props: IBlockQuote) => {
     <Box
       sx={{
         mt: 4,
-        marginLeft: 4,
+        marginLeft: { xs: 0, md: 4 },
         paddingLeft: 2,
         borderLeft: 'solid #54B689 2px',
         fontStyle: 'italic',

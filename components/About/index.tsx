@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Link } from '@mui/material';
+import { Avatar, Box, Divider, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ABOUT_ME_DESCRIPTION } from '../../utils/strings';
 import * as React from 'react';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
+import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 
 const outterWrapperStyles = {
   margin: 'auto',
@@ -44,7 +45,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
         >
           <Grid container>
             <Grid item xs={12} md={8} sx={{ textAlign: 'left' }}>
-              <Box>
+              <Box mb={2}>
                 <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
                   Priyath Gregory
                 </Typography>
@@ -67,6 +68,85 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   {/*}*/}
                   {/*.*/}
                 </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'left',
+                  paddingBottom: 2,
+                  gap: 1.5,
+                }}
+              >
+                <a
+                  href="https://www.github.com/priyath"
+                  target={'_blank'}
+                  rel="noreferrer"
+                >
+                  <Avatar
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      backgroundColor: 'background.icon',
+                    }}
+                  >
+                    <Box
+                      color={'secondary.main'}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FaGithubAlt size={'0.8em'} />
+                    </Box>
+                  </Avatar>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/priyathg"
+                  target={'_blank'}
+                  rel="noreferrer"
+                >
+                  <Avatar
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      backgroundColor: 'background.icon',
+                    }}
+                  >
+                    <Box
+                      color={'secondary.main'}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FaLinkedinIn size={'0.8em'} />
+                    </Box>
+                  </Avatar>
+                </a>
+                <a
+                  href="https://medium.com/@priyathgregory"
+                  target={'_blank'}
+                  rel="noreferrer"
+                >
+                  <Avatar
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      backgroundColor: 'background.icon',
+                    }}
+                  >
+                    <Box
+                      color={'secondary.main'}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FaMediumM size={'0.8em'} />
+                    </Box>
+                  </Avatar>
+                </a>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>

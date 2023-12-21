@@ -3,6 +3,7 @@ import matter from 'gray-matter';
 import path from 'path';
 import readingTime from 'reading-time';
 import { serialize } from 'next-mdx-remote/serialize';
+import _ from 'lodash';
 
 const root = process.cwd();
 
@@ -29,30 +30,84 @@ export const getFileBySlug = async (type: string, slug: string) => {
   };
 };
 
-export const getAllFilesFrontMatter = async (type: string) => {
-  const files = fs.readdirSync(path.join(root, 'data', type));
+export const getAllTags = async () => {
+  const files = fs.readdirSync(path.join(root, 'data', 'blog'));
 
-  console.log('files: ', files);
+  // Use Set to store unique tags
+  const uniqueTags = new Set<string>();
 
-  const blogContent = files.reduce((allPosts: any[], postSlug: string) => {
+  files.forEach((postSlug: string) => {
     const source = fs.readFileSync(
-      path.join(root, 'data', type, postSlug),
+      path.join(root, 'data', 'blog', postSlug),
       'utf8'
     );
     const { data } = matter(source);
 
-    return [
-      {
-        ...data,
-        slug: postSlug.replace('.mdx', ''),
-      },
-      ...allPosts,
-    ];
-  }, []);
+    // Add tags to the set
+    const tags = data.tags || [];
+    tags.forEach((tag: string) => uniqueTags.add(tag));
+  });
 
-  return blogContent.sort((contentA, contentB) => {
+  // Convert the set back to an array
+  return Array.from(uniqueTags);
+};
+
+export const getAllFilesFrontMatter = async (
+  type: string,
+  tag?: string,
+  categoryKey?: string
+) => {
+  const files = fs.readdirSync(path.join(root, 'data', type));
+  const uniqueTags = new Set<string>();
+  const categories: { [key: string]: { count: number; label: string } } = {};
+
+  const blogContent = files
+    .reduce((allPosts: any[], postSlug: string) => {
+      const source = fs.readFileSync(
+        path.join(root, 'data', type, postSlug),
+        'utf8'
+      );
+      const { data } = matter(source);
+
+      const tags = data.tags || [];
+      tags.forEach((tag: string) => uniqueTags.add(tag));
+
+      if (data.category.key in categories) {
+        categories[data.category.key].count += 1;
+      } else {
+        categories[data.category.key] = {
+          count: 1,
+          label: data.category.label,
+        };
+      }
+
+      return [
+        {
+          ...data,
+          slug: postSlug.replace('.mdx', ''),
+        },
+        ...allPosts,
+      ];
+    }, [])
+    .filter((data) => {
+      if (tag) {
+        return data.tags.includes(tag);
+      }
+      if (categoryKey) {
+        return _.get(data, 'category.key') === categoryKey;
+      }
+      return data;
+    });
+
+  const posts = blogContent.sort((contentA, contentB) => {
     const dateA = new Date(contentA.publishedAt).getTime();
     const dateB = new Date(contentB.publishedAt).getTime();
     return dateA < dateB ? 1 : -1;
   });
+
+  return {
+    posts,
+    tags: Array.from(uniqueTags),
+    categories,
+  };
 };
