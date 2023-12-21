@@ -84,7 +84,7 @@ const BlogHome = (props: IBlogHome) => {
                       {/*<Grid item xs={1} sx={{ textAlign: 'right' }}></Grid>*/}
                       <Grid item xs={12} sx={{ textAlign: 'left' }} mb={0}>
                         <Grid container>
-                          <Grid item xs={3}>
+                          <Grid item xs={12}>
                             <Typography
                               fontFamily={'monospace'}
                               sx={{
