@@ -45,7 +45,14 @@ const BlogHome = (props: IBlogHome) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
+            <Grid
+              container
+              sx={{
+                mb: { xs: 4, lg: 6 },
+                flexDirection: 'column',
+                gap: '2rem',
+              }}
+            >
               {props.posts.map((item: IFrontMatter, index: number) => {
                 return (
                   <Grid item xs={12} key={index}>
@@ -59,9 +66,10 @@ const BlogHome = (props: IBlogHome) => {
                             color={'text.primary'}
                           >
                             <Typography
-                              gutterBottom
-                              variant="h6"
+                              mb={0.5}
+                              variant="h4"
                               component="div"
+                              fontWeight={700}
                               sx={{
                                 '&:hover': {
                                   color: 'primary.main',
@@ -74,9 +82,9 @@ const BlogHome = (props: IBlogHome) => {
                         </NextLink>
                       </Grid>
                       {/*<Grid item xs={1} sx={{ textAlign: 'right' }}></Grid>*/}
-                      <Grid item xs={12} sx={{ textAlign: 'left' }} mb={2}>
+                      <Grid item xs={12} sx={{ textAlign: 'left' }} mb={0}>
                         <Grid container>
-                          <Grid item xs={2}>
+                          <Grid item xs={3}>
                             <Typography
                               fontFamily={'monospace'}
                               sx={{
@@ -89,63 +97,63 @@ const BlogHome = (props: IBlogHome) => {
                               {item.publishedAt}
                             </Typography>
                           </Grid>
-                          <Grid item xs={4} sx={{ display: 'flex' }}>
-                            <Typography
-                              fontFamily={'monospace'}
-                              sx={{
-                                color: 'primary.main',
-                                pr: 1,
-                              }}
-                              gutterBottom
-                              variant="caption"
-                              component="div"
-                            >
-                              #
-                            </Typography>
-                            {(item.tags || []).map((tagStr, index) => {
-                              return (
-                                <Typography
-                                  key={index}
-                                  fontFamily={'monospace'}
-                                  sx={{
-                                    pr: 1,
-                                  }}
-                                  gutterBottom
-                                  variant="caption"
-                                  component="div"
-                                >
-                                  <NextLink
-                                    key={0}
-                                    href={`/tags/${tagStr}`}
-                                    passHref
-                                  >
-                                    <Link
-                                      color={'text.primary'}
-                                      sx={{
-                                        textDecoration: 'none',
-                                        '&:hover': {
-                                          color: 'primary.main',
-                                        },
-                                      }}
-                                    >
-                                      {tagStr}
-                                    </Link>
-                                  </NextLink>
-                                </Typography>
-                              );
-                            })}
-                          </Grid>
-                          <Divider
-                            sx={{
-                              color: 'primary.main',
-                              width: '100%',
-                              marginX: 'auto',
-                            }}
-                          />
+                          {/*<Grid item xs={4}>*/}
+                          {/*  <Typography*/}
+                          {/*    fontFamily={'monospace'}*/}
+                          {/*    sx={{*/}
+                          {/*      color: 'primary.main',*/}
+                          {/*      pr: 1,*/}
+                          {/*    }}*/}
+                          {/*    gutterBottom*/}
+                          {/*    variant="caption"*/}
+                          {/*    component="div"*/}
+                          {/*  >*/}
+                          {/*    #*/}
+                          {/*  </Typography>*/}
+                          {/*  {(item.tags || []).map((tagStr, index) => {*/}
+                          {/*    return (*/}
+                          {/*      <Typography*/}
+                          {/*        key={index}*/}
+                          {/*        fontFamily={'monospace'}*/}
+                          {/*        sx={{*/}
+                          {/*          pr: 1,*/}
+                          {/*        }}*/}
+                          {/*        gutterBottom*/}
+                          {/*        variant="caption"*/}
+                          {/*        component="div"*/}
+                          {/*      >*/}
+                          {/*        <NextLink*/}
+                          {/*          key={0}*/}
+                          {/*          href={`/tags/${tagStr}`}*/}
+                          {/*          passHref*/}
+                          {/*        >*/}
+                          {/*          <Link*/}
+                          {/*            color={'text.primary'}*/}
+                          {/*            sx={{*/}
+                          {/*              textDecoration: 'none',*/}
+                          {/*              '&:hover': {*/}
+                          {/*                color: 'primary.main',*/}
+                          {/*              },*/}
+                          {/*            }}*/}
+                          {/*          >*/}
+                          {/*            {tagStr}*/}
+                          {/*          </Link>*/}
+                          {/*        </NextLink>*/}
+                          {/*      </Typography>*/}
+                          {/*    );*/}
+                          {/*  })}*/}
+                          {/*</Grid>*/}
+                          {/*<Divider*/}
+                          {/*  sx={{*/}
+                          {/*    color: 'primary.main',*/}
+                          {/*    width: '100%',*/}
+                          {/*    marginX: 'auto',*/}
+                          {/*  }}*/}
+                          {/*/>*/}
                         </Grid>
                       </Grid>
                       <Grid item xs={12} mb={5}>
-                        <Typography variant="body1">{item.summary}</Typography>
+                        <Typography variant="body2">{item.summary}</Typography>
                       </Grid>
                     </Grid>
                     {/*<Divider*/}
