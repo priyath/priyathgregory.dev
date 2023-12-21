@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Shell from '../components/Shell';
 import { Box, Grid } from '@mui/material';
 import { getAllFilesFrontMatter } from '../lib/getContent';
-import Typography from '@mui/material/Typography';
 
 const Home: NextPage = ({ posts }: any) => {
   return (

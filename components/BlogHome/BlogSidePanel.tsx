@@ -5,9 +5,7 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText,
   Link,
-  Theme,
   Avatar,
 } from '@mui/material';
 
@@ -26,7 +24,7 @@ interface IBlogSidePanel {
 }
 
 const BlogSidePanel = (props: IBlogSidePanel) => {
-  const { posts, tags, relatedTags, categories, category } = props;
+  const { tags, relatedTags, categories, category } = props;
 
   return (
     <Grid container>

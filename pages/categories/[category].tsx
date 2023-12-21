@@ -1,4 +1,4 @@
-import { getAllFilesFrontMatter, getAllTags } from '../../lib/getContent';
+import { getAllFilesFrontMatter } from '../../lib/getContent';
 import Shell from '../../components/Shell';
 import * as React from 'react';
 import { Box, Grid } from '@mui/material';
