@@ -51,25 +51,25 @@ const BlogHome = (props: IBlogHome) => {
                   <Grid item xs={12} key={index}>
                     <Grid container>
                       <Grid item xs={12} mb={0}>
-                        <Typography gutterBottom variant="h6" component="div">
-                          <NextLink
-                            key={0}
-                            href={`/blog/${item.slug}`}
-                            passHref
+                        <NextLink key={0} href={`/blog/${item.slug}`} passHref>
+                          <Link
+                            color={'text.primary'}
+                            sx={{
+                              textDecoration: 'none',
+                              '&:hover': {
+                                color: 'primary.main',
+                              },
+                            }}
                           >
-                            <Link
-                              color={'text.primary'}
-                              sx={{
-                                textDecoration: 'none',
-                                '&:hover': {
-                                  color: 'primary.main',
-                                },
-                              }}
+                            <Typography
+                              gutterBottom
+                              variant="h6"
+                              component="div"
                             >
                               {item.title}
-                            </Link>
-                          </NextLink>
-                        </Typography>
+                            </Typography>
+                          </Link>
+                        </NextLink>
                       </Grid>
                       {/*<Grid item xs={1} sx={{ textAlign: 'right' }}></Grid>*/}
                       <Grid item xs={12} sx={{ textAlign: 'left' }} mb={2}>
