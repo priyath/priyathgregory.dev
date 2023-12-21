@@ -33,13 +33,13 @@ const BlogSidePanel = (props: IBlogSidePanel) => {
           <Grid item xs={12} mb={2}>
             <Box>
               <Typography
-                variant={'h6'}
+                variant={'body2'}
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   lineHeight: '54px',
                 }}
               >
-                Categories
+                CATEGORIES
               </Typography>
             </Box>
             <Divider
@@ -82,7 +82,7 @@ const BlogSidePanel = (props: IBlogSidePanel) => {
                                     }
                                   : {}),
                               }}
-                              variant={'body1'}
+                              variant={'body2'}
                             >
                               {categoryDetails.label}
                             </Typography>
@@ -128,13 +128,13 @@ const BlogSidePanel = (props: IBlogSidePanel) => {
           <Grid item xs={12} mb={2}>
             <Box>
               <Typography
-                variant={'h6'}
+                variant={'body2'}
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   lineHeight: '54px',
                 }}
               >
-                Tags
+                TAGS
               </Typography>
             </Box>
             <Divider
@@ -179,13 +179,13 @@ const BlogSidePanel = (props: IBlogSidePanel) => {
           <Grid item xs={12} mb={2}>
             <Box>
               <Typography
-                variant={'h6'}
+                variant={'body2'}
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.primary',
                   lineHeight: '54px',
                 }}
               >
-                Connect
+                CONNECT
               </Typography>
             </Box>
             <Divider

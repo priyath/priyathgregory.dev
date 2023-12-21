@@ -12,6 +12,10 @@ const getTheme = (mode: PaletteMode) => {
       h5: {
         color: themeWithPalette.palette.text.primary,
       },
+      h6: {
+        fontSize: '1.25rem',
+        color: themeWithPalette.palette.text.primary,
+      },
       body1: {
         color: themeWithPalette.palette.text.secondary,
       },
