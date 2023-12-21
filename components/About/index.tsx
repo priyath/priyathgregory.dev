@@ -145,7 +145,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
             marginX: 'auto',
           }}
         />
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ mb: { xs: 4, lg: 6 } }}>
           <Box>
             <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
               <Grid item xs={8}>

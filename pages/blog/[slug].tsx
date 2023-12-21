@@ -3,12 +3,21 @@ import { getFileBySlug, getFiles } from '../../lib/getContent';
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import { Box, Container, Divider, Grid } from '@mui/material';
+import {
+  Box,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
 import Comment from '../../components/Comment';
 import AboutWrapper from '../../components/About';
+import Typography from '@mui/material/Typography';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -72,7 +81,7 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
           <Grid item xs={12}>
             <Shell />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <Box
               sx={{
                 margin: 'auto',
@@ -108,6 +117,67 @@ export default function Blog({ mdxSource, frontMatter }: IBlogProps) {
                 }}
               />
             </Box>
+          </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={3}>
+            <Grid container>
+              <Grid item xs={12} mb={3}>
+                <Box>
+                  <Typography
+                    variant={'h6'}
+                    sx={{
+                      color: 'text.secondary',
+                      lineHeight: '54px',
+                    }}
+                  >
+                    Categories
+                  </Typography>
+                </Box>
+                <Divider
+                  sx={{
+                    color: 'primary.main',
+                    width: '100%',
+                    marginX: 'auto',
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <List sx={{ paddingTop: 0 }}>
+                  {['Javascript', 'NOSQL', 'GCP', 'Snippets'].map(
+                    (item, index) => {
+                      return (
+                        <Grid container>
+                          <Grid item xs={10}>
+                            <ListItem
+                              key={index}
+                              sx={{
+                                padding: 0.2,
+                                paddingBottom: 0,
+                                paddingLeft: 0,
+                                paddingTop: 0,
+                              }}
+                            >
+                              <ListItemText primary={item} />
+                            </ListItem>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={2}
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <Typography variant={'body1'}>2</Typography>
+                          </Grid>
+                        </Grid>
+                      );
+                    }
+                  )}
+                </List>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
