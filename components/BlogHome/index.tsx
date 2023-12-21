@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, Link } from '@mui/material';
+import { Box, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { IFrontMatter } from '../../pages/blog/[slug]';
