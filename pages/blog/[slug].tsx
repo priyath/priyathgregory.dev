@@ -95,7 +95,6 @@ export default function Blog(props: IBlogProps) {
             <Box
               sx={{
                 margin: 'auto',
-                marginTop: { md: 0, xs: '56px' },
                 maxWidth: '820px',
               }}
             >
