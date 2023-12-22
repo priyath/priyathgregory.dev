@@ -24,7 +24,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
   return (
     <Box sx={{ marginX: 0, marginTop: 0 }}>
       <Typography
-        variant={'h4'}
+        variant={'h3'}
         sx={{ py: 1, fontWeight: 'bold', textAlign: 'left' }}
       >
         {frontMatter?.title}
