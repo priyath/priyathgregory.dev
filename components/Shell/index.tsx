@@ -20,7 +20,7 @@ const Shell = () => {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   return (
-    <Box sx={{ padding: 0, pb: { xs: 8 } }}>
+    <Box sx={{ padding: 0, pb: { xs: 4 } }}>
       <CssBaseline />
       <AppBar
         position="static"
