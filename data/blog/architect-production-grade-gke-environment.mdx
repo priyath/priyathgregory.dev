@@ -36,9 +36,10 @@ The GKE cluster itself can be configured using various configuration details, mo
 1. **Ensure the cluster is private** - A private cluster will assign internal IP addresses to pods and nodes within the cluster (whereas a public cluster will assign public IP addresses). This will isolate the cluster's workloads from public networks.
 2. **Disable control plane access via public endpoints** - The control plane hosts components that manage the Kubernetes cluster. Disabling control plane access via public endpoints will locks down external access to the cluster control plane. This may result in certain accessibility complexities, but is a worthwhile compromise to enhance cluster security.
 3. **Enable workload identity** - Workload Identity allows workloads within a GKE cluster to impersonate Identity and Access Management (IAM) service accounts to access Google Cloud services, without the need for service account keys etc. to be exposed within the cluster.
+4. **Enable Cloud Monitoring & GKE usage metering** - GKE seamlessly integrates with Google Cloud observability tools to monitor application health and provide detailed cluster usage insights, vital metrics for a robust production-ready cluster configuration.
 
 ## Load Balancer
-The load balancer will be the primary entry point that accepts and routes external traffic in to the GKE cluster. In GKE external load balancers will be automatically configured  once the cluster is configured with either an **Ingress Controller** or the **Gateway API**.
+The load balancer will be the primary entry point that accepts and routes external traffic in to the GKE cluster. In GKE, external load balancers will be automatically configured  once the cluster is configured with either an **Ingress Controller** or the **Gateway API**.
 
 While both options are still viable, the preferred architectural choice for our infrastructure was the Kubernetes Gateway API. The Gateway API is considered as an evolution of Ingress, with improved/simplified routing, and better separation of resources.
 
