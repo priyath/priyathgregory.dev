@@ -8,9 +8,9 @@ category: { label: 'Architecture',key: architecture}
 tags: [architecture,gke,kubernetes,gcp,infra]
 ---
 
-This article outlines crucial architectural aspects pivotal for establishing a production-ready Google Kubernetes Engine (GKE) setup. Insights are derived from a recent infrastructure re-architecture within our organisation, focusing on critical domains evaluated during the GKE implementation.
+This article outlines crucial architectural elements necessary to establish a production-ready Google Kubernetes Engine (GKE) setup. Insights have been derived from recent infrastructure re-engineering efforts within our organisation, where an end-to-end GKE cluster setup was completed, with a strong emphasis on industry-standard design and security.
 
-> This is not an implementation guide, but rather a bird's eye view of key architectural components that needs to be in place for secure, production ready, GKE infrastructure.
+> This is not an implementation guide, but rather a bird's eye view of key architectural components that need to be in place for secure, production ready, GKE infrastructure.
 
 Diagrammed below is a visual representation outlining the adopted GKE architecture:
 ![image](/gke-architecture-dark.png)
@@ -48,7 +48,7 @@ It is also recommended to configure the load balancer with a static IP address, 
 > Both the Ingress Controller and the Kubernetes Gateway API serve as Kubernetes resources responsible for managing external access to services within the cluster. In the context of GKE (Google Kubernetes Engine), which is a managed Kubernetes offering by Google Cloud, Google Cloud Load Balancers are utilised within the underlying infrastructure to enhance the functionality of Ingress Controllers or potentially the Kubernetes Gateway API, efficiently routing incoming external traffic to services within the GKE cluster. While Google Cloud Load Balancers significantly complement these Kubernetes resources, their usage is not mandatory for the core functionality of Ingress Controllers or the Kubernetes Gateway API within a GKE cluster, as these resources can operate independently or in conjunction with other load balancing solutions depending on specific cluster requirements.
 
 ## NAT Gateway
-Workloads within the GKE cluster are exclusively accessible via internal IP addresses. Consequently, these workloads are restricted from communicating with resources beyond their designated subnet boundaries.
+Workloads within a private GKE cluster are exclusively accessible via internal IP addresses. Consequently, these workloads are restricted from communicating with resources beyond their designated subnet boundaries.
 
 To enable connectivity with external resources, the recommended approach involves implementing external access through the utilisation of a NAT (Network Address Translation) Gateway. A NAT gateway, being a regional resource, can be configured to facilitate communication for specific or all subnets within the given region.
 
@@ -85,6 +85,6 @@ ___
 
 I hope this article provides an insightful overview of key architectural considerations that you may want to consider for your own GKE cluster setup. While it encapsulates essential aspects, a successful implementation demands a deeper dive into each element discussed.
 
-An actual end-to-end GKE implementation involves a multifaceted array of components encompassing access control, source control, environment management, Kubernetes manifest file declaration and management, seamless integrations with the CICD pipeline, network management, resource utilisation, scalability configurations, and monitoring.
+An actual end-to-end GKE implementation involves a multifaceted array of components encompassing access control, source control, environment management, Kubernetes manifest file management, CICD integration, network management, resource utilisation, scalability configurations, optimisations and monitoring.
 
-Exploring and mastering these aspects will be instrumental in crafting a robust and optimised GKE environment. Future discussions will delve deeper into these critical components, providing an extensive guide for setting up and managing a robust end-to-end GKE infrastructure.
+Exploring and mastering these aspects will be instrumental in crafting a robust and optimised GKE environment. Future discussions will delve deeper into these critical components, providing an extensive guide for setting up and managing a resilient end-to-end GKE infrastructure.
