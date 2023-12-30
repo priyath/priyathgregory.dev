@@ -1,0 +1,89 @@
+---
+title: "Architecting a Production-Grade GKE Environment"
+publishedAt: 'Dec 30,2023'
+summary: 'Setting up a production-ready Google Kubernetes (GKE) setup.'
+coverImage: 'gke-architecture-cover-image.jpg'
+shareUrl: 'https://priyathgregory.dev/blog/architect-production-grade-gke-environment'
+category: { label: 'Architecture',key: architecture}
+tags: [architecture,gke,kubernetes,gcp,infra]
+---
+
+This article outlines crucial architectural aspects pivotal for establishing a production-ready Google Kubernetes Engine (GKE) setup. Insights are derived from a recent infrastructure re-architecture within our organisation, focusing on critical domains evaluated during the GKE implementation.
+
+> This is not an implementation guide, but rather a bird's eye view of key architectural components that needs to be in place for secure, production ready, GKE infrastructure.
+
+Diagrammed below is a visual representation outlining the adopted GKE architecture:
+![image](/gke-architecture-dark.png)
+
+The following key areas of architectural significance were identified:
+1. VPC network
+2. GKE cluster
+3. Load balancer (with the Kubernetes gateway resource)
+4. NAT gateway
+5. Bastion host
+6. CICD pipeline
+
+Let's explore each aspect in more detail.
+
+## VPC Network
+The Virtual Private Cloud (VPC) serves as the foundational infrastructure piece for the GKE cluster. The VPC network will provide an isolated network boundary for the cluster, securing it from the public internet.
+
+The creation of a custom VPC network with its own IP address range (subnet) is recommended.
+
+## GKE Cluster
+The GKE cluster itself can be configured using various configuration details, most of which would be based on your specific requirements. However, the following key recommendations are suitable for a production ready cluster setup.
+
+1. **Ensure the cluster is private** - A private cluster will assign internal IP addresses to pods and nodes within the cluster (whereas a public cluster will assign public IP addresses). This will isolate the cluster's workloads from public networks.
+2. **Disable control plane access via public endpoints** - The control plane hosts components that manage the Kubernetes cluster. Disabling control plane access via public endpoints will locks down external access to the cluster control plane. This may result in certain accessibility complexities, but is a worthwhile compromise to enhance cluster security.
+3. **Enable workload identity** - Workload Identity allows workloads within a GKE cluster to impersonate Identity and Access Management (IAM) service accounts to access Google Cloud services, without the need for service account keys etc. to be exposed within the cluster.
+
+## Load Balancer
+The load balancer will be the primary entry point that accepts and routes external traffic in to the GKE cluster. In GKE external load balancers will be automatically configured  once the cluster is configured with either an **Ingress Controller** or the **Gateway API**.
+
+While both options are still viable, the preferred architectural choice for our infrastructure was the Kubernetes Gateway API. The Gateway API is considered as an evolution of Ingress, with improved/simplified routing, and better separation of resources.
+
+It is also recommended to configure the load balancer with a static IP address, SSL configuration and a domain to enhance reliability, security, and accessibility. This is easily accomplished through the Kubernetes Gateway API yaml definition file.
+
+> Both the Ingress Controller and the Kubernetes Gateway API serve as Kubernetes resources responsible for managing external access to services within the cluster. In the context of GKE (Google Kubernetes Engine), which is a managed Kubernetes offering by Google Cloud, Google Cloud Load Balancers are utilised within the underlying infrastructure to enhance the functionality of Ingress Controllers or potentially the Kubernetes Gateway API, efficiently routing incoming external traffic to services within the GKE cluster. While Google Cloud Load Balancers significantly complement these Kubernetes resources, their usage is not mandatory for the core functionality of Ingress Controllers or the Kubernetes Gateway API within a GKE cluster, as these resources can operate independently or in conjunction with other load balancing solutions depending on specific cluster requirements.
+
+## NAT Gateway
+Workloads within the GKE cluster are exclusively accessible via internal IP addresses. Consequently, these workloads are restricted from communicating with resources beyond their designated subnet boundaries.
+
+To enable connectivity with external resources, the recommended approach involves implementing external access through the utilisation of a NAT (Network Address Translation) Gateway. A NAT gateway, being a regional resource, can be configured to facilitate communication for specific or all subnets within the given region.
+
+This setup enables seamless communication between the cluster and external entities.
+
+## Bastion Host
+One caveat of setting up a private GKE cluster is accessibility. As the cluster's control plane lacks a public IP address, direct external connections to the GKE cluster is not possible. This is where the concept of a bastion host comes into play.
+
+The Bastion host refers to a designated virtual machine instance deployed within the same subnet as the GKE cluster. Its primary function is to serve as an intermediary link, possessing controlled access to both the internal network housing the GKE cluster and the public internet.
+
+Through a combination of ssh tunneling and port forwarding, authorised users or administrators can gain remote access to the cluster's management APIs via the Bastion host. This setup enhances security by creating a controlled and monitored gateway for managing the private GKE cluster.
+
+## CICD Pipeline
+A detailed rundown of the CICD pipeline architecture to support GKE workload deployments merits its own separate article. However, here are some aspects that were factored into the setup:
+
+1. **Clear environment separation** - The pipeline encompasses distinct environments - build, staging, and production ensuring segregation for seamless workflow management.
+2. **Independent build & deployment steps** - With a clear separation between build and deployment steps, autonomy and efficiency is maintained in the workflow.
+3. **Build once, deploy anywhere** - An important principle adopted allows for a single build artifact to be deployed across varied environments, enhancing consistency and reliability.
+4. **Automated dev/staging deployments** - The setup includes automated deployments to development and staging environments, reducing manual intervention and ensuring rapid iteration.
+5. **Environment promotion support** - Capability to seamlessly promote deployments from one environment to another, ensuring smooth progression of releases.
+6. **Rollback support** - Incorporating mechanisms to revert to previous versions or states in case of issues or errors, providing robustness and resilience in deployment.
+
+With these considerations in mind, the following architecture was developed for the CICD workflow:
+![image](/gke-cicd-dark.png)
+
+1. **GitHub Actions for Build** - GitHub Actions is leveraged as the build service, resulting in the creation of an image uploaded to the Google Artifact Registry.
+2. **Google Cloud Deploy for Deployment** - The deployment step via Google Cloud Deploy is triggered after the build process completes. This step concludes the operations of the build service.
+3. **Automated Staging Deployment** - The deployment service automatically progresses to deploy the built artifact to the staging environment.
+4. **Environment Management and Rollbacks** - The deployment service is equipped to handle environment promotions and execute rollbacks whenever necessary.
+
+However, this solution introduced varying levels of complexities, particularly due to requirements for cross-project communication and access limitations inherent in private GKE clusters. A forthcoming article will delve deeper into how these challenges were addressed, offering a more comprehensive insight into the CICD solution's intricacies (stay tuned for updates!).
+
+___
+
+I hope this article provides an insightful overview of key architectural considerations that you may want to consider for your own GKE cluster setup. While it encapsulates essential aspects, a successful implementation demands a deeper dive into each element discussed.
+
+An actual end-to-end GKE implementation involves a multifaceted array of components encompassing access control, source control, environment management, Kubernetes manifest file declaration and management, seamless integrations with the CICD pipeline, network management, resource utilisation, scalability configurations, and monitoring.
+
+Exploring and mastering these aspects will be instrumental in crafting a robust and optimised GKE environment. Future discussions will delve deeper into these critical components, providing an extensive guide for setting up and managing a robust end-to-end GKE infrastructure.

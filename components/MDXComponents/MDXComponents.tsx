@@ -5,6 +5,7 @@ import BlogAnchor from './BlogAnchor';
 import BlogDivider from './BlogDivider';
 import BlogList from './BlogList';
 import BlogTypography from './BlogTypography';
+import BlogImage from './BlogImage';
 
 const MDXComponents = {
   blockquote: BlockQuote,
@@ -15,6 +16,7 @@ const MDXComponents = {
   li: BlogList.BlogListItem,
   a: BlogAnchor,
   hr: BlogDivider,
+  img: BlogImage,
 };
 
 export default MDXComponents;
