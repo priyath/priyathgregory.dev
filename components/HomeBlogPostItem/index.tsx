@@ -93,6 +93,8 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
                 cursor: 'pointer',
               }}
               component={'div'}
+              //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
               variant={'caption2'}
             >
               #{tagStr}

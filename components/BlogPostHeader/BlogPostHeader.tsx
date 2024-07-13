@@ -78,6 +78,8 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
                   cursor: 'pointer',
                 }}
                 component={'span'}
+                //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 variant={'caption2'}
               >
                 #{tagStr}

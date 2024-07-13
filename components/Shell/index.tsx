@@ -9,14 +9,14 @@ import { useColorMode } from '../../styles/ColorModeContext';
 import NextLink from 'next/link';
 
 const pages = [
-  { label: 'Home', path: '/' },
-  { label: 'Blog', path: '/blog' },
+  { label: 'Home', path: '/', newTab: false },
+  { label: 'Blog', path: '/blog', newTab: false },
   // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
 ];
 
 const pagesFlexReverse = [
-  { label: 'Blog', path: '/blog' },
-  { label: 'Home', path: '/' },
+  { label: 'Blog', path: '/blog', newTab: false },
+  { label: 'Home', path: '/', newTab: false },
   // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
 ];
 
