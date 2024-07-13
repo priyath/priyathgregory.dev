@@ -8,9 +8,6 @@ import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
   margin: 'auto',
-  maxWidth: '900px',
-  padding: 0,
-  p: { xs: 4, md: 4 },
 };
 
 export interface IBlogHome {

@@ -42,10 +42,10 @@ export default function BlogPage({ posts, tags, categories }: any) {
       >
         <CssBaseline />
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <Shell />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <BlogHome posts={posts} tags={tags} categories={categories} />
           </Grid>
         </Grid>

@@ -12,12 +12,10 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
   const { title, slug, summary, coverImage, publishedAt, tags } =
     props.frontMatter;
 
-  console.log('published at: ', publishedAt);
-
   return (
     <div>
-      <Grid container spacing={0} pb={2} pt={2}>
-        <Grid item xs={6} md={8}>
+      <Grid container spacing={0} pb={{ xs: 1, md: 2 }} pt={{ xs: 1, md: 2 }}>
+        <Grid item xs={12} md={8}>
           <NextLink href={`blog/${slug}`} passHref>
             <Link
               color={'text.primary'}
@@ -43,14 +41,19 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
             </Link>
           </NextLink>
         </Grid>
-        <Grid item xs={6} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
           <Typography
             sx={{
               width: { xs: '100%' },
               marginX: 'auto',
               fontFamily: 'monospace',
               display: 'flex',
-              justifyContent: 'right',
+              justifyContent: { xs: 'left', md: 'right' },
             }}
             component={'div'}
             variant={'caption'}
@@ -62,7 +65,7 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
           item
           xs={6}
           md={12}
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}
           gap={2}
         >
           {tags.map((tagStr, index) => (

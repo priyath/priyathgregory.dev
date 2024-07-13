@@ -88,16 +88,14 @@ export default function Blog(props: IBlogProps) {
       >
         <CssBaseline />
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <Shell />
           </Grid>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <Box
               sx={{
                 margin: 'auto',
                 padding: 0,
-                maxWidth: '900px',
-                p: { xs: 4, md: 4 },
               }}
             >
               <BlogPostHeader frontMatter={frontMatter} />

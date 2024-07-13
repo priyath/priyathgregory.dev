@@ -17,8 +17,8 @@ import { useColorMode } from '../../styles/ColorModeContext';
 import NextLink from 'next/link';
 
 const pages = [
-  // { label: 'Home', path: '/' },
   { label: 'Blog', path: '/blog' },
+  { label: 'Home', path: '/' },
   // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
 ];
 
@@ -28,7 +28,7 @@ const Shell = () => {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   return (
-    <Box sx={{ padding: 0, p: { xs: 4, md: 4 } }}>
+    <Box sx={{ padding: 0 }}>
       <CssBaseline />
       <AppBar
         position="static"
@@ -107,7 +107,7 @@ const Shell = () => {
           <Toolbar
             disableGutters
             sx={{
-              pt: 4,
+              pt: { xs: 0, md: 4 },
               display: { xs: 'flex', md: 'none' },
             }}
           >

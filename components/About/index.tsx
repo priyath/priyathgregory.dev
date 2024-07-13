@@ -13,9 +13,7 @@ import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
   margin: 'auto',
-  maxWidth: '900px',
   padding: 0,
-  p: { xs: 2, md: 2 },
 };
 
 interface IAboutWrapper {
@@ -60,8 +58,14 @@ const AboutWrapper = (props: IAboutWrapper) => {
               {/*  />*/}
               {/*</Box>*/}
             </Grid>
-            <Grid item xs={12} py={4} md={8} sx={{ textAlign: 'left' }}>
-              <Box mb={2} ml={5}>
+            <Grid
+              item
+              xs={12}
+              py={{ xs: 0, md: 4 }}
+              md={8}
+              sx={{ textAlign: 'left' }}
+            >
+              <Box mb={2} ml={{ xs: 0, md: 5 }}>
                 <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'light' }}>
                   Hi, I'm Priyath
                 </Typography>
@@ -87,7 +91,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
               </Box>
               <Box
-                ml={4}
+                ml={{ xs: 0, md: 4 }}
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -223,7 +227,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
         />
         <Grid item xs={12} sx={{ mb: { xs: 4, lg: 6 } }}>
           <Box>
-            <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
+            <Grid container sx={{ mb: { xs: 2, lg: 6 } }}>
               <Grid item xs={8}>
                 <Typography
                   variant={'h4'}

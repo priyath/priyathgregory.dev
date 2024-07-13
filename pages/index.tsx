@@ -26,10 +26,10 @@ const Home: NextPage = ({ posts }: any) => {
     >
       <CssBaseline />
       <Grid container>
-        <Grid item xs={12}>
+        <Grid item xs={12} py={{ xs: 2, md: 4 }} px={{ xs: 0, md: 4 }}>
           <Shell />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} py={{ xs: 2, md: 4 }} px={{ xs: 0, md: 4 }}>
           <AboutWrapper posts={posts} />
         </Grid>
       </Grid>

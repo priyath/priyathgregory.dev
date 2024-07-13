@@ -65,7 +65,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           justifyContent: 'space-between',
         }}
       >
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
           {frontMatter?.tags.map((tagStr, index) => {
             return (
               <Typography
