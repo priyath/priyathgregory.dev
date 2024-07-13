@@ -1,6 +1,6 @@
 import Giscus from '@giscus/react';
 
-const Comment = () => {
+const Comment = ({ mode }: { mode: string }) => {
   return (
     <Giscus
       repo="priyath/priyathgregory.dev"
@@ -10,7 +10,7 @@ const Comment = () => {
       mapping="pathname"
       reactionsEnabled="1"
       emitMetadata="0"
-      theme="dark"
+      theme={mode === 'light' ? 'light' : 'dark'}
     />
   );
 };

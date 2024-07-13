@@ -15,7 +15,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
           background: {
             paper: '#54B689',
             card: '#f8f8f8',
-            icon: '#fff',
+            icon: 'rgba(95,119,108,0.12)',
           },
           text: {
             primary: '#292929',

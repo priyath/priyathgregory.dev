@@ -7,12 +7,11 @@ import {
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import { Box, Divider, Grid } from '@mui/material';
+import { Box, Divider, Grid, useTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
 import Comment from '../../components/Comment';
-import BlogSidePanel from '../../components/BlogHome/BlogSidePanel';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -49,6 +48,7 @@ interface IBlogProps {
 export default function Blog(props: IBlogProps) {
   const { post, posts, tags, categories } = props;
   const { mdxSource, frontMatter } = post;
+  const mode = useTheme().palette.mode;
 
   return (
     <>
@@ -113,7 +113,7 @@ export default function Blog(props: IBlogProps) {
                   marginX: 'auto',
                 }}
               />
-              <Comment />
+              <Comment mode={mode} />
               <Divider
                 sx={{
                   marginBottom: {
