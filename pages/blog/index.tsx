@@ -28,10 +28,10 @@ export default function BlogPage({ posts, tags, categories }: any) {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          maxWidth: 'lg',
+          maxWidth: '900px',
           paddingX: {
             xs: 0,
-            lg: 4,
+            lg: 2,
           },
           margin: {
             lg: 'auto',

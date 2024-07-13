@@ -19,7 +19,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
           },
           text: {
             primary: '#292929',
-            secondary: '#4f4f4f',
+            secondary: '#212529',
             brand: 'rgba(255,255,255,0.8)',
           },
           sidebarTypography: {
@@ -32,7 +32,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
       : {
           // palette values for dark mode
           primary: {
-            main: '#54B689',
+            main: 'rgba(84,182,137)',
           },
           secondary: {
             main: '#fff',
@@ -51,7 +51,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
           },
           text: {
             primary: 'rgba(255,255,255,0.95)',
-            secondary: 'rgba(255,255,255,0.7)',
+            secondary: 'rgba(255,255,255,0.90)',
             brand: '#54B689',
           },
         }),

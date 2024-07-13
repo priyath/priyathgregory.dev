@@ -12,10 +12,10 @@ const Home: NextPage = ({ posts }: any) => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        maxWidth: '1000px',
+        maxWidth: '900px',
         paddingX: {
           xs: 0,
-          lg: 4,
+          lg: 2,
         },
         margin: {
           lg: 'auto',

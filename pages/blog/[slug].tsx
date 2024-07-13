@@ -74,10 +74,10 @@ export default function Blog(props: IBlogProps) {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          maxWidth: 'lg',
+          maxWidth: '900px',
           paddingX: {
             xs: 0,
-            lg: 4,
+            lg: 2,
           },
           margin: {
             lg: 'auto',
@@ -91,11 +91,13 @@ export default function Blog(props: IBlogProps) {
           <Grid item xs={12}>
             <Shell />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12}>
             <Box
               sx={{
                 margin: 'auto',
-                maxWidth: '820px',
+                padding: 0,
+                maxWidth: '900px',
+                p: { xs: 4, md: 4 },
               }}
             >
               <BlogPostHeader frontMatter={frontMatter} />
@@ -127,16 +129,16 @@ export default function Blog(props: IBlogProps) {
               />
             </Box>
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={12} md={3}>
-            <BlogSidePanel
-              posts={posts}
-              tags={tags}
-              relatedTags={post.frontMatter.tags}
-              categories={categories}
-              category={post.frontMatter.category.key}
-            />
-          </Grid>
+          {/*<Grid item xs={1}></Grid>*/}
+          {/*<Grid item xs={12} md={3}>*/}
+          {/*  <BlogSidePanel*/}
+          {/*    posts={posts}*/}
+          {/*    tags={tags}*/}
+          {/*    relatedTags={post.frontMatter.tags}*/}
+          {/*    categories={categories}*/}
+          {/*    category={post.frontMatter.category.key}*/}
+          {/*  />*/}
+          {/*</Grid>*/}
         </Grid>
       </Box>
     </>

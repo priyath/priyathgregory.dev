@@ -13,6 +13,7 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from 'next-share';
+import { Divider } from '@mui/material';
 
 interface IBlogPostHeader {
   frontMatter: IFrontMatter;
@@ -24,7 +25,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
   return (
     <Box sx={{ marginX: 0, marginTop: 0 }}>
       <Typography
-        variant={'h3'}
+        variant={'h4'}
         sx={{ py: 1, fontWeight: 'bold', textAlign: 'left' }}
       >
         {frontMatter?.title}
@@ -55,6 +56,36 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
             {frontMatter?.readingTime?.text}
           </Typography>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          mb: 2,
+          gap: 2,
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {frontMatter?.tags.map((tagStr, index) => {
+            return (
+              <Typography
+                key={index}
+                sx={{
+                  fontFamily: 'monospace',
+                  '&:hover': {
+                    color: 'primary.main',
+                    fontWeight: 'bold',
+                  },
+                  cursor: 'pointer',
+                }}
+                component={'span'}
+                variant={'caption'}
+              >
+                #{tagStr}
+              </Typography>
+            );
+          })}
+        </Box>
         <Box sx={{ px: 0 }}>
           <Box sx={{ display: 'inline-block', pr: 1 }}>
             <FacebookShareButton url={frontMatter.shareUrl}>
@@ -73,16 +104,27 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ mb: 4 }}>
-        <Image
-          width={'100%'}
-          height={55}
-          src={`/${frontMatter?.coverImage}`}
-          alt="hero image"
-          layout="responsive"
-          quality={100}
-        />
-      </Box>
+      <Divider
+        sx={{
+          marginBottom: {
+            lg: 4,
+            xs: 4,
+          },
+          color: 'primary.main',
+          width: '100%',
+          marginX: 'auto',
+        }}
+      />
+      {/*<Box sx={{ mb: 4 }}>*/}
+      {/*  <Image*/}
+      {/*    width={'100%'}*/}
+      {/*    height={55}*/}
+      {/*    src={`/${frontMatter?.coverImage}`}*/}
+      {/*    alt="hero image"*/}
+      {/*    layout="responsive"*/}
+      {/*    quality={100}*/}
+      {/*  />*/}
+      {/*</Box>*/}
     </Box>
   );
 };

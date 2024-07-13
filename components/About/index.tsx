@@ -13,9 +13,9 @@ import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
   margin: 'auto',
-  maxWidth: '1200px',
+  maxWidth: '900px',
   padding: 0,
-  p: { xs: 4, md: 4 },
+  p: { xs: 2, md: 2 },
 };
 
 interface IAboutWrapper {
