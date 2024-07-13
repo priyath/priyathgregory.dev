@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IFrontMatter } from '../../pages/blog/[slug]';
-import { Chip, Divider, Grid, Link } from '@mui/material';
+import { Divider, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import NextLink from 'next/link';
 
@@ -9,8 +9,7 @@ interface IImageMediaCardProps {
 }
 
 const HomeBlogPostItem = (props: IImageMediaCardProps) => {
-  const { title, slug, summary, coverImage, publishedAt, tags } =
-    props.frontMatter;
+  const { title, slug, publishedAt, tags } = props.frontMatter;
 
   return (
     <div>
@@ -84,6 +83,7 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
             //   }}
             // />
             <Typography
+              key={index}
               sx={{
                 fontFamily: 'monospace',
                 '&:hover': {

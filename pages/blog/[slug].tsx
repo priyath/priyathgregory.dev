@@ -46,7 +46,7 @@ interface IBlogProps {
   categories: { [key: string]: { count: number; label: string } };
 }
 export default function Blog(props: IBlogProps) {
-  const { post, posts, tags, categories } = props;
+  const { post } = props;
   const { mdxSource, frontMatter } = post;
   const mode = useTheme().palette.mode;
 

@@ -1,8 +1,6 @@
 import { Avatar, Box, Divider, Grid, Link } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { ABOUT_ME_DESCRIPTION } from '../../utils/strings';
 import * as React from 'react';
-import ImageMediaCard from '../ImageMediaCard';
 import { IFrontMatter } from '../../pages/blog/[slug]';
 import Image from 'next/image';
 import { useEffect } from 'react';
@@ -67,6 +65,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
             >
               <Box mb={2} ml={{ xs: 0, md: 5 }}>
                 <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
                   Hi, I'm Priyath
                 </Typography>
                 <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>

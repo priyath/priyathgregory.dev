@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
