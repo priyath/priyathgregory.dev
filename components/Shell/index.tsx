@@ -17,6 +17,12 @@ import { useColorMode } from '../../styles/ColorModeContext';
 import NextLink from 'next/link';
 
 const pages = [
+  { label: 'Home', path: '/' },
+  { label: 'Blog', path: '/blog' },
+  // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
+];
+
+const pagesFlexReverse = [
   { label: 'Blog', path: '/blog' },
   { label: 'Home', path: '/' },
   // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
@@ -70,7 +76,7 @@ const Shell = () => {
                 display: { xs: 'none', md: 'flex' },
               }}
             >
-              {pages.map((page, index) => (
+              {pagesFlexReverse.map((page, index) => (
                 <Button
                   key={index}
                   sx={{
