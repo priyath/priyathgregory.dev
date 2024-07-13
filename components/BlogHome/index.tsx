@@ -1,9 +1,7 @@
-import { Box, Grid, Link } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { IFrontMatter } from '../../pages/blog/[slug]';
-import NextLink from 'next/link';
-import BlogSidePanel from './BlogSidePanel';
 import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
@@ -18,7 +16,7 @@ export interface IBlogHome {
   categories: { [key: string]: { count: number; label: string } };
 }
 const BlogHome = (props: IBlogHome) => {
-  const { posts, tag, tags, categories, category } = props;
+  const { tag, categories, category } = props;
 
   return (
     <>
