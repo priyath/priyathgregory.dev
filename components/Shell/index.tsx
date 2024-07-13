@@ -17,9 +17,9 @@ import { useColorMode } from '../../styles/ColorModeContext';
 import NextLink from 'next/link';
 
 const pages = [
-  { label: 'Home', path: '/' },
+  // { label: 'Home', path: '/' },
   { label: 'Blog', path: '/blog' },
-  { label: 'Github', path: 'https://github.com/priyath', newTab: true },
+  // { label: 'Github', path: 'https://github.com/priyath', newTab: true },
 ];
 
 const Shell = () => {

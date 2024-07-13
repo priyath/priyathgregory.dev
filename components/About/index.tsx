@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
+import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
   margin: 'auto',
@@ -230,6 +231,8 @@ const AboutWrapper = (props: IAboutWrapper) => {
                     p: 0,
                     fontWeight: 300,
                     lineHeight: '54px',
+                    pl: 2,
+                    borderLeft: '5px solid #54B689',
                   }}
                 >
                   Latest Blog Posts
@@ -250,11 +253,11 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={0}>
               {props.posts.map((item: IFrontMatter, index: number) => {
                 return (
-                  <Grid key={index} item xs={12} sm={6} lg={4}>
-                    <ImageMediaCard frontMatter={item} />
+                  <Grid key={index} item xs={12}>
+                    <HomeBlogPostItem frontMatter={item} />
                   </Grid>
                 );
               })}
