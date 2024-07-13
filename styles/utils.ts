@@ -1,5 +1,5 @@
 import { PaletteMode } from '@mui/material';
-
+//<a href="https://www.freepik.com/free-vector/hand-drawn-flat-design-overwhelmed-people-illustration_24683085.htm#fromView=search&page=1&position=0&uuid=ecfa32b7-85d6-4b5a-b219-98bdb7ad0659">Image by freepik</a>
 export const getPaletteConfigs = (mode: PaletteMode) => ({
   palette: {
     mode,
@@ -10,7 +10,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
             main: '#54B689',
           },
           secondary: {
-            main: '#54B689',
+            main: '#4f4f4f',
           },
           background: {
             paper: '#54B689',

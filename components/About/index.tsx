@@ -13,6 +13,8 @@ import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
 const outterWrapperStyles = {
   margin: 'auto',
   maxWidth: '1200px',
+  padding: 0,
+  p: { xs: 4, md: 4 },
 };
 
 interface IAboutWrapper {
@@ -33,24 +35,39 @@ const AboutWrapper = (props: IAboutWrapper) => {
   return (
     <>
       <Grid container sx={outterWrapperStyles}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            marginBottom: {
-              lg: 6,
-              xs: 4,
-            },
-          }}
-        >
+        <Grid pt={{ xs: 0, md: 3 }} pb={{ xs: 2, md: 8 }} item xs={12} sx={{}}>
           <Grid container>
-            <Grid item xs={12} md={8} sx={{ textAlign: 'left' }}>
-              <Box mb={2}>
-                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
-                  Priyath Gregory
+            <Grid item xs={12} md={4}>
+              <Box
+                sx={{
+                  display: { xs: 'none', md: 'block', textAlign: 'left' },
+                }}
+              >
+                <Image
+                  src="/freepik_coffee.png"
+                  alt="Picture of the author"
+                  width={300}
+                  height={300}
+                />
+              </Box>
+              {/*<Box sx={{ display: { xs: 'block', md: 'none' } }}>*/}
+              {/*  <Image*/}
+              {/*    src="/freepik_coffee.png"*/}
+              {/*    alt="Picture of the author"*/}
+              {/*    width={200}*/}
+              {/*    height={200}*/}
+              {/*  />*/}
+              {/*</Box>*/}
+            </Grid>
+            <Grid item xs={12} py={4} md={8} sx={{ textAlign: 'left' }}>
+              <Box mb={2} ml={5}>
+                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  Hi, I'm Priyath
                 </Typography>
-                <Typography variant={'h5'} sx={{ pb: 2 }}>
-                  Full-Stack Software Engineer
+                <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  Welcome to my personal space on the web, where I share my
+                  journey and insights as a Software Engineer focused on
+                  software architecture, design, and development.
                 </Typography>
                 <Typography
                   sx={{
@@ -60,7 +77,6 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   component={'div'}
                   variant={'body1'}
                 >
-                  {ABOUT_ME_DESCRIPTION}
                   {/*{*/}
                   {/*  <NextLink href={'/blog'} passHref>*/}
                   {/*    <Link sx={{ textDecoration: 'none' }}>blog</Link>*/}
@@ -70,6 +86,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
               </Box>
               <Box
+                ml={4}
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -149,28 +166,6 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </a>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  display: { xs: 'none', md: 'block', textAlign: 'right' },
-                }}
-              >
-                <Image
-                  src="/side03.png"
-                  alt="Picture of the author"
-                  width={300}
-                  height={300}
-                />
-              </Box>
-              <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                <Image
-                  src="/side03.png"
-                  alt="Picture of the author"
-                  width={200}
-                  height={200}
-                />
-              </Box>
-            </Grid>
           </Grid>
         </Grid>
         {/*<Divider*/}
@@ -217,7 +212,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
         <Divider
           sx={{
             marginBottom: {
-              lg: 6,
+              lg: 10,
               xs: 4,
             },
             color: 'primary.main',
@@ -233,9 +228,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   variant={'h4'}
                   sx={{
                     p: 0,
-                    pl: 2,
-                    borderLeft: '5px solid #54B689',
-                    fontWeight: 'bold',
+                    fontWeight: 300,
                     lineHeight: '54px',
                   }}
                 >
