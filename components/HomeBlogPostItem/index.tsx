@@ -93,7 +93,7 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
                 cursor: 'pointer',
               }}
               component={'div'}
-              variant={'caption'}
+              variant={'caption2'}
             >
               #{tagStr}
             </Typography>

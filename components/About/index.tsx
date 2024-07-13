@@ -36,10 +36,10 @@ const AboutWrapper = (props: IAboutWrapper) => {
       <Grid container sx={outterWrapperStyles}>
         <Grid pt={{ xs: 0, md: 3 }} pb={{ xs: 2, md: 8 }} item xs={12} sx={{}}>
           <Grid container>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={6} md={4}>
               <Box
                 sx={{
-                  display: { xs: 'none', md: 'block', textAlign: 'left' },
+                  display: { xs: 'block', md: 'block', textAlign: 'left' },
                 }}
               >
                 <Image
@@ -70,9 +70,12 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   Hi, I'm Priyath
                 </Typography>
                 <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>
-                  Welcome to my personal space on the web, where I share my
-                  journey and insights as a Software Engineer focused on
-                  software architecture, design, and development.
+                  Welcome to my personal space on the web!
+                </Typography>
+                <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  I am a Software Engineer passionate about software
+                  architecture, design, and development. Here, I share insights
+                  and experiences from my journey in tech.
                 </Typography>
                 <Typography
                   sx={{

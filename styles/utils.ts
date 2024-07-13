@@ -21,6 +21,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
             primary: '#292929',
             secondary: '#212529',
             brand: 'rgba(255,255,255,0.8)',
+            caption2: '#848991',
           },
           sidebarTypography: {
             main: 'rgba(255,255,255,0.8)',
@@ -53,6 +54,7 @@ export const getPaletteConfigs = (mode: PaletteMode) => ({
             primary: 'rgba(255,255,255,0.95)',
             secondary: 'rgba(255,255,255,0.90)',
             brand: '#54B689',
+            caption2: 'rgba(255,255,255,0.7)',
           },
         }),
   },

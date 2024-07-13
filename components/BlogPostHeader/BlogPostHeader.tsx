@@ -79,7 +79,7 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
                   cursor: 'pointer',
                 }}
                 component={'span'}
-                variant={'caption'}
+                variant={'caption2'}
               >
                 #{tagStr}
               </Typography>
