@@ -7,12 +7,11 @@ import {
 import MDXComponents from '../../components/MDXComponents/MDXComponents';
 import Shell from '../../components/Shell';
 import * as React from 'react';
-import { Box, Divider, Grid } from '@mui/material';
+import { Box, Divider, Grid, useTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import BlogPostHeader from '../../components/BlogPostHeader/BlogPostHeader';
 import { NextSeo } from 'next-seo';
 import Comment from '../../components/Comment';
-import BlogSidePanel from '../../components/BlogHome/BlogSidePanel';
 
 export interface IFrontMatter {
   publishedAt: string;
@@ -49,6 +48,7 @@ interface IBlogProps {
 export default function Blog(props: IBlogProps) {
   const { post, posts, tags, categories } = props;
   const { mdxSource, frontMatter } = post;
+  const mode = useTheme().palette.mode;
 
   return (
     <>
@@ -74,10 +74,10 @@ export default function Blog(props: IBlogProps) {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          maxWidth: 'lg',
+          maxWidth: '900px',
           paddingX: {
             xs: 0,
-            lg: 4,
+            lg: 2,
           },
           margin: {
             lg: 'auto',
@@ -88,14 +88,14 @@ export default function Blog(props: IBlogProps) {
       >
         <CssBaseline />
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <Shell />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} px={{ xs: 0, md: 4 }} py={{ xs: 2, md: 4 }}>
             <Box
               sx={{
                 margin: 'auto',
-                maxWidth: '820px',
+                padding: 0,
               }}
             >
               <BlogPostHeader frontMatter={frontMatter} />
@@ -113,7 +113,7 @@ export default function Blog(props: IBlogProps) {
                   marginX: 'auto',
                 }}
               />
-              <Comment />
+              <Comment mode={mode} />
               <Divider
                 sx={{
                   marginBottom: {
@@ -127,16 +127,16 @@ export default function Blog(props: IBlogProps) {
               />
             </Box>
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={12} md={3}>
-            <BlogSidePanel
-              posts={posts}
-              tags={tags}
-              relatedTags={post.frontMatter.tags}
-              categories={categories}
-              category={post.frontMatter.category.key}
-            />
-          </Grid>
+          {/*<Grid item xs={1}></Grid>*/}
+          {/*<Grid item xs={12} md={3}>*/}
+          {/*  <BlogSidePanel*/}
+          {/*    posts={posts}*/}
+          {/*    tags={tags}*/}
+          {/*    relatedTags={post.frontMatter.tags}*/}
+          {/*    categories={categories}*/}
+          {/*    category={post.frontMatter.category.key}*/}
+          {/*  />*/}
+          {/*</Grid>*/}
         </Grid>
       </Box>
     </>

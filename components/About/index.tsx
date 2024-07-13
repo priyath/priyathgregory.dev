@@ -9,10 +9,11 @@ import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import { FaGithubAlt, FaLinkedinIn, FaMediumM } from 'react-icons/fa';
+import HomeBlogPostItem from '../HomeBlogPostItem';
 
 const outterWrapperStyles = {
   margin: 'auto',
-  maxWidth: '1200px',
+  padding: 0,
 };
 
 interface IAboutWrapper {
@@ -33,24 +34,48 @@ const AboutWrapper = (props: IAboutWrapper) => {
   return (
     <>
       <Grid container sx={outterWrapperStyles}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            marginBottom: {
-              lg: 6,
-              xs: 4,
-            },
-          }}
-        >
+        <Grid pt={{ xs: 0, md: 3 }} pb={{ xs: 2, md: 8 }} item xs={12} sx={{}}>
           <Grid container>
-            <Grid item xs={12} md={8} sx={{ textAlign: 'left' }}>
-              <Box mb={2}>
-                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'bold' }}>
-                  Priyath Gregory
+            <Grid item xs={6} md={4}>
+              <Box
+                sx={{
+                  display: { xs: 'block', md: 'block', textAlign: 'left' },
+                }}
+              >
+                <Image
+                  src="/freepik_coffee.png"
+                  alt="Picture of the author"
+                  width={300}
+                  height={300}
+                />
+              </Box>
+              {/*<Box sx={{ display: { xs: 'block', md: 'none' } }}>*/}
+              {/*  <Image*/}
+              {/*    src="/freepik_coffee.png"*/}
+              {/*    alt="Picture of the author"*/}
+              {/*    width={200}*/}
+              {/*    height={200}*/}
+              {/*  />*/}
+              {/*</Box>*/}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              py={{ xs: 0, md: 4 }}
+              md={8}
+              sx={{ textAlign: 'left' }}
+            >
+              <Box mb={2} ml={{ xs: 0, md: 5 }}>
+                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  Hi, I'm Priyath
                 </Typography>
-                <Typography variant={'h5'} sx={{ pb: 2 }}>
-                  Full-Stack Software Engineer
+                <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  Welcome to my personal space on the web!
+                </Typography>
+                <Typography variant={'h6'} sx={{ pb: 2, fontWeight: 'light' }}>
+                  I am a Software Engineer passionate about software
+                  architecture, design, and development. Here, I share insights
+                  and experiences from my journey in tech.
                 </Typography>
                 <Typography
                   sx={{
@@ -60,7 +85,6 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   component={'div'}
                   variant={'body1'}
                 >
-                  {ABOUT_ME_DESCRIPTION}
                   {/*{*/}
                   {/*  <NextLink href={'/blog'} passHref>*/}
                   {/*    <Link sx={{ textDecoration: 'none' }}>blog</Link>*/}
@@ -70,6 +94,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Typography>
               </Box>
               <Box
+                ml={{ xs: 0, md: 4 }}
                 sx={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -149,28 +174,6 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </a>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  display: { xs: 'none', md: 'block', textAlign: 'right' },
-                }}
-              >
-                <Image
-                  src="/side03.png"
-                  alt="Picture of the author"
-                  width={300}
-                  height={300}
-                />
-              </Box>
-              <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                <Image
-                  src="/side03.png"
-                  alt="Picture of the author"
-                  width={200}
-                  height={200}
-                />
-              </Box>
-            </Grid>
           </Grid>
         </Grid>
         {/*<Divider*/}
@@ -217,7 +220,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
         <Divider
           sx={{
             marginBottom: {
-              lg: 6,
+              lg: 10,
               xs: 4,
             },
             color: 'primary.main',
@@ -227,16 +230,16 @@ const AboutWrapper = (props: IAboutWrapper) => {
         />
         <Grid item xs={12} sx={{ mb: { xs: 4, lg: 6 } }}>
           <Box>
-            <Grid container sx={{ mb: { xs: 4, lg: 6 } }}>
+            <Grid container sx={{ mb: { xs: 2, lg: 6 } }}>
               <Grid item xs={8}>
                 <Typography
                   variant={'h4'}
                   sx={{
                     p: 0,
+                    fontWeight: 300,
+                    lineHeight: '54px',
                     pl: 2,
                     borderLeft: '5px solid #54B689',
-                    fontWeight: 'bold',
-                    lineHeight: '54px',
                   }}
                 >
                   Latest Blog Posts
@@ -257,11 +260,11 @@ const AboutWrapper = (props: IAboutWrapper) => {
                 </Button>
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
+            <Grid container spacing={0}>
               {props.posts.map((item: IFrontMatter, index: number) => {
                 return (
-                  <Grid key={index} item xs={12} sm={6} lg={4}>
-                    <ImageMediaCard frontMatter={item} />
+                  <Grid key={index} item xs={12}>
+                    <HomeBlogPostItem frontMatter={item} />
                   </Grid>
                 );
               })}

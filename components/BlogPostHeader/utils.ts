@@ -8,5 +8,5 @@ export const getPublishedAtString = (publishedAt: string, format = 'long') => {
 
   return format === 'short'
     ? `Published on ${month} ${day}, ${year}`
-    : `Written by Priyath Gregory on ${month} ${day}, ${year}`;
+    : `Published on ${month} ${day}, ${year}`;
 };

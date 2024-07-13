@@ -27,6 +27,10 @@ const getTheme = (mode: PaletteMode) => {
         color: themeWithPalette.palette.text.secondary,
         fontSize: '0.8rem',
       },
+      caption2: {
+        color: themeWithPalette.palette.text.caption2,
+        fontSize: '0.8rem',
+      },
     },
     components: {
       MuiTypography: {
