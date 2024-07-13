@@ -28,6 +28,8 @@ const getTheme = (mode: PaletteMode) => {
         fontSize: '0.8rem',
       },
       caption2: {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         color: themeWithPalette.palette.text.caption2,
         fontSize: '0.8rem',
       },
