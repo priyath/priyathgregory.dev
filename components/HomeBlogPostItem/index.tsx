@@ -15,7 +15,7 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
     <div>
       <Grid container spacing={0} pb={{ xs: 1, md: 2 }} pt={{ xs: 1, md: 2 }}>
         <Grid item xs={12} md={8}>
-          <NextLink href={`blog/${slug}`} passHref>
+          <NextLink href={`/blog/${slug}`} passHref>
             <Link
               color={'text.primary'}
               sx={{
