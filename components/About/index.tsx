@@ -64,7 +64,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
               sx={{ textAlign: 'left' }}
             >
               <Box mb={2} ml={{ xs: 0, md: 5 }}>
-                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 'light' }}>
+                <Typography variant={'h3'} sx={{ pb: 2, fontWeight: 500 }}>
                   {/* eslint-disable-next-line react/no-unescaped-entities */}
                   Hi, I'm Priyath
                 </Typography>
@@ -235,7 +235,7 @@ const AboutWrapper = (props: IAboutWrapper) => {
                   variant={'h4'}
                   sx={{
                     p: 0,
-                    fontWeight: 300,
+                    fontWeight: 400,
                     lineHeight: '54px',
                     pl: 2,
                     borderLeft: '5px solid #54B689',

@@ -31,7 +31,7 @@ const BlogHome = (props: IBlogHome) => {
                     p: 0,
                     pl: 2,
                     borderLeft: '5px solid #54B689',
-                    fontWeight: 'bold',
+                    fontWeight: 400,
                     lineHeight: '54px',
                   }}
                 >
