@@ -29,10 +29,10 @@ export default function Tag({ posts, tag, tags, categories }: any) {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          maxWidth: 'lg',
+          maxWidth: '900px',
           paddingX: {
             xs: 0,
-            lg: 4,
+            lg: 2,
           },
           margin: {
             lg: 'auto',
@@ -43,10 +43,10 @@ export default function Tag({ posts, tag, tags, categories }: any) {
       >
         <CssBaseline />
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} py={{ xs: 2, md: 4 }} px={{ xs: 0, md: 4 }}>
             <Shell />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} py={{ xs: 2, md: 4 }} px={{ xs: 0, md: 4 }}>
             <BlogHome
               posts={posts}
               tag={tag}

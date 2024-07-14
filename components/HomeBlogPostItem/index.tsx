@@ -82,23 +82,32 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
             //     cursor: 'pointer',
             //   }}
             // />
-            <Typography
-              key={index}
-              sx={{
-                fontFamily: 'monospace',
-                '&:hover': {
-                  color: 'primary.main',
-                  fontWeight: 'bold',
-                },
-                cursor: 'pointer',
-              }}
-              component={'div'}
-              //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              variant={'caption2'}
-            >
-              #{tagStr}
-            </Typography>
+            <NextLink href={`/tags/${tagStr}`} passHref>
+              <Link
+                color={'text.primary'}
+                sx={{
+                  textDecoration: 'none',
+                }}
+              >
+                <Typography
+                  key={index}
+                  sx={{
+                    fontFamily: 'monospace',
+                    '&:hover': {
+                      color: 'primary.main',
+                      fontWeight: 'bold',
+                    },
+                    cursor: 'pointer',
+                  }}
+                  component={'div'}
+                  //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  variant={'caption2'}
+                >
+                  #{tagStr}
+                </Typography>
+              </Link>
+            </NextLink>
           ))}
         </Grid>
       </Grid>
