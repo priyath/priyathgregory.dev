@@ -82,7 +82,7 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
             //     cursor: 'pointer',
             //   }}
             // />
-            <NextLink href={`/tags/${tagStr}`} passHref>
+            <NextLink key={index} href={`/tags/${tagStr}`} passHref>
               <Link
                 color={'text.primary'}
                 sx={{
@@ -90,7 +90,6 @@ const HomeBlogPostItem = (props: IImageMediaCardProps) => {
                 }}
               >
                 <Typography
-                  key={index}
                   sx={{
                     fontFamily: 'monospace',
                     '&:hover': {
