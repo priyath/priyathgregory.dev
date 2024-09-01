@@ -12,7 +12,8 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from 'next-share';
-import { Divider } from '@mui/material';
+// import { Divider } from '@mui/material';
+import Image from 'next/image';
 
 interface IBlogPostHeader {
   frontMatter: IFrontMatter;
@@ -105,17 +106,16 @@ const BlogPostHeader = (props: IBlogPostHeader) => {
           </Box>
         </Box>
       </Box>
-      <Divider
-        sx={{
-          marginBottom: {
-            lg: 4,
-            xs: 4,
-          },
-          color: 'primary.main',
-          width: '100%',
-          marginX: 'auto',
-        }}
-      />
+      <Box sx={{ mb: 4 }}>
+        <Image
+          width={'100%'}
+          height={55}
+          src={`/${frontMatter?.coverImage}`}
+          alt="hero image"
+          layout="responsive"
+          quality={100}
+        />
+      </Box>
       {/*<Box sx={{ mb: 4 }}>*/}
       {/*  <Image*/}
       {/*    width={'100%'}*/}
