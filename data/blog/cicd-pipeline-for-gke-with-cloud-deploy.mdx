@@ -49,6 +49,9 @@ An important point to note is that, although the worker pool is created in our G
 ![image](/cicd-for-blog-3-peering.png)
 
 This brings us to an interesting complexity in the CD system. Since the worker pool needs access to the GKE control plane to perform the deployment (which is also running in another Google-managed VPC), and since Google VPC network peering does not support transitive peering, we have no way to establish a direct connection from the worker pool to the GKE control plane.
+
+> While assigning a public IP to the cluster control plane was an option for access, we avoided this route to uphold strict cluster security.
+
 ![image](/cicd-for-blog-4-no-transitive-peering.png)
 
 Fortunately, [Google has provided a very detailed guide](https://cloud.google.com/build/docs/private-pools/accessing-private-gke-clusters-with-cloud-build-private-pools) on tackling this very use case using two VPC networks within our project, peering each of them with the Google-managed VPC networks, and finally connecting them together using Cloud VPN. This peering and connection allows each side of the VPC tunnel to advertise the private pool and GKE cluster control plane networks, completing the route between the private pool and the GKE control plane.
