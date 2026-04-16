@@ -55,32 +55,28 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
         })}
       </div>
 
-      {/* Column headers */}
+      {/* Column headers — desktop only */}
       <div
+        className="blog-listing-grid blog-listing-header"
         style={{
-          display: 'grid',
-          gridTemplateColumns: '120px 1fr 70px 80px',
           gap: '0 16px',
           padding: '0 6px 10px',
           borderBottom: '1px solid var(--color-border)',
           marginBottom: 2,
         }}
       >
-        {['category', 'title', 'read', 'published'].map((h, i) => (
-          <span
-            key={h}
-            style={{
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 10,
-              color: 'var(--color-text-5)',
-              textTransform: 'uppercase' as const,
-              letterSpacing: '0.1em',
-              textAlign: i === 3 ? 'right' as const : 'left' as const,
-            }}
-          >
-            {h}
-          </span>
-        ))}
+        <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          category
+        </span>
+        <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          title
+        </span>
+        <span className="col-read" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          read
+        </span>
+        <span className="col-date" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em', textAlign: 'right' }}>
+          published
+        </span>
       </div>
 
       {/* Post rows */}
@@ -88,9 +84,8 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
         <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
+          className="blog-listing-grid blog-listing-row"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '120px 1fr 70px 80px',
             gap: '0 16px',
             padding: '10px 6px',
             borderBottom: '1px solid var(--color-border)',
@@ -114,19 +109,20 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
             if (title) title.style.color = 'var(--color-text-2)'
           }}
         >
-          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: '#54B689', whiteSpace: 'nowrap' as const }}>
+          <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: '#54B689', whiteSpace: 'nowrap' }}>
             {post.category}/
           </span>
           <span
             data-title=""
-            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 13, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}
+            className="col-title"
+            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 13, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
             {post.slug}
           </span>
-          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-muted)' }}>
+          <span className="col-read" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-muted)' }}>
             {post.readingTime}
           </span>
-          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-muted)', textAlign: 'right' as const }}>
+          <span className="col-date" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-muted)', textAlign: 'right' }}>
             {formatDate(post.publishedAt)}
           </span>
         </Link>
@@ -149,4 +145,3 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
     </div>
   )
 }
-

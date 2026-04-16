@@ -63,19 +63,17 @@ export default async function RecentPosts() {
           href={`/blog/${post.slug}`}
           className="home-post-row"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '110px 1fr 72px',
             gap: '0 14px',
             padding: '9px 6px',
             borderBottom: i < recent.length - 1 ? '1px solid var(--color-border)' : 'none',
             cursor: 'pointer',
             textDecoration: 'none',
             color: 'inherit',
-            alignItems: 'baseline',
             borderRadius: 4,
           }}
         >
           <span
+            className="home-post-category"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
               fontSize: 12,
@@ -100,6 +98,7 @@ export default async function RecentPosts() {
             {post.slug}
           </span>
           <span
+            className="home-post-date"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
               fontSize: 11.5,

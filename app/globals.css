@@ -18,7 +18,7 @@
   --color-muted: rgba(0,0,0,0.45);
   --color-text-2: rgba(0,0,0,0.68);
   --color-text-3: rgba(0,0,0,0.55);
-  --color-text-5: rgba(0,0,0,0.18);
+  --color-text-5: rgba(0,0,0,0.38);
   --color-surface: rgba(0,0,0,0.03);
   --color-surface-2: rgba(0,0,0,0.05);
   --color-nav-bg: rgba(248,248,248,0.88);
@@ -95,11 +95,74 @@ body {
   50% { opacity: 0; }
 }
 
+/* Blog listing grid — desktop */
+.blog-listing-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr 70px 80px;
+}
+
 /* Mobile responsive overrides */
 @media (max-width: 640px) {
-  /* Blog listing rows — hide the 'read' column on mobile */
-  .file-listing-grid {
-    grid-template-columns: 100px 1fr 72px !important;
+  /* Header row: hide on mobile (stacked rows are self-explanatory) */
+  .blog-listing-header {
+    display: none;
+  }
+
+  /* Post rows: stacked layout — title on top, meta below */
+  .blog-listing-row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start !important;
+    padding: 12px 6px !important;
+  }
+
+  /* Title: full width, allow wrapping on mobile */
+  .blog-listing-row .col-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    font-size: 13.5px !important;
+  }
+
+  /* Meta row: category · date side by side below title */
+  .blog-listing-row .col-category,
+  .blog-listing-row .col-date {
+    font-size: 11.5px !important;
+  }
+
+  .blog-listing-row .col-date {
+    text-align: left !important;
+  }
+
+  /* Hide read time on mobile */
+  .blog-listing-row .col-read {
+    display: none;
+  }
+
+  /* Home page recent posts — same stacked treatment */
+  .home-post-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    padding: 12px 6px;
+  }
+
+  .home-post-row .home-post-title {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    font-size: 13.5px;
+  }
+
+  .home-post-row .home-post-category,
+  .home-post-row .home-post-date {
+    font-size: 11.5px;
+  }
+
+  .home-post-row .home-post-date {
+    text-align: left;
   }
 
   /* Nav spacing */
@@ -170,6 +233,9 @@ a[aria-label]:hover {
 
 /* Home page post rows */
 .home-post-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 72px;
+  align-items: baseline;
   transition: background 0.15s;
 }
 .home-post-row:hover {
