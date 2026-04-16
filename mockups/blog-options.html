@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog List — Options</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #131a23;
+      --card: #1e2c3a;
+      --border: rgba(255,255,255,0.07);
+      --accent: #54B689;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.42);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0d1219; color: var(--text); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
+
+    /* Layout */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      min-height: 100vh;
+    }
+    .option-pane {
+      background: var(--bg);
+      padding: 40px 36px 60px;
+      position: relative;
+    }
+    .option-pane:nth-child(odd) { border-right: 2px solid #0d1219; }
+    .option-pane:nth-child(1), .option-pane:nth-child(2) { border-bottom: 2px solid #0d1219; }
+    .option-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .option-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(84,182,137,0.2);
+    }
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--muted); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 2px 7px; display: inline-block; }
+    .tag.hi { color: var(--accent); border-color: rgba(84,182,137,0.3); background: rgba(84,182,137,0.08); }
+
+    /* ---- OPTION A: Summary Cards ---- */
+    .card-a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .card-a:hover { border-color: rgba(84,182,137,0.35); }
+    .card-a:hover .title-a { color: var(--accent); }
+    .title-a { font-size: 14.5px; font-weight: 600; margin-bottom: 6px; transition: color 0.15s; line-height: 1.4; }
+    .summary-a { font-size: 12.5px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 12px; }
+    .meta-a { display: flex; align-items: center; gap: 8px; }
+
+    /* ---- OPTION B: Big Titles ---- */
+    .row-b {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .row-b:last-child { border-bottom: none; }
+    .row-b:hover .title-b { color: var(--accent); }
+    .num-b { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(84,182,137,0.5); margin-bottom: 5px; }
+    .title-b { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; transition: color 0.15s; margin-bottom: 10px; }
+    .meta-b { display: flex; align-items: center; gap: 10px; }
+
+    /* ---- OPTION C: Featured + List ---- */
+    .featured-c {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .featured-c:hover { border-color: rgba(84,182,137,0.4); }
+    .featured-c:hover .title-c-big { color: var(--accent); }
+    .feat-img { height: 130px; background: linear-gradient(135deg, rgba(84,182,137,0.18), rgba(19,26,35,0.95)); display: flex; align-items: flex-end; padding: 14px 18px; }
+    .feat-body { padding: 16px 18px 18px; }
+    .title-c-big { font-size: 16px; font-weight: 700; margin-bottom: 6px; transition: color 0.15s; line-height: 1.35; }
+    .summary-c { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 10px; }
+    .row-c { display: flex; align-items: baseline; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); cursor: pointer; gap: 16px; }
+    .row-c:last-child { border-bottom: none; }
+    .row-c:hover .title-c { color: var(--accent); }
+    .title-c { font-size: 13.5px; font-weight: 500; transition: color 0.15s; flex: 1; line-height: 1.4; }
+    .date-c { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+    /* ---- OPTION D: Table / Index ---- */
+    .table-d { width: 100%; border-collapse: collapse; }
+    .table-d thead th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 0 0 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+    .table-d thead th:last-child { text-align: right; }
+    .table-d tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.12s; }
+    .table-d tbody tr:last-child { border-bottom: none; }
+    .table-d tbody tr:hover { background: rgba(255,255,255,0.025); }
+    .table-d tbody tr:hover .title-d { color: var(--accent); }
+    .table-d td { padding: 13px 0; vertical-align: middle; }
+    .table-d td:last-child { text-align: right; }
+    .title-d { font-size: 13.5px; font-weight: 500; transition: color 0.15s; line-height: 1.35; }
+    .cat-d { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--accent); padding-right: 20px; white-space: nowrap; }
+    .date-d { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<div class="options-grid">
+
+  <!-- ============ OPTION A: Summary Cards ============ -->
+  <div class="option-pane">
+    <div class="option-label">Option A — Summary Cards</div>
+
+    <div class="card-a">
+      <div style="display:flex;gap:5px;margin-bottom:9px;">
+        <span class="tag">gke</span><span class="tag">kubernetes</span>
+      </div>
+      <p class="title-a">Architect a Production-Grade GKE Environment</p>
+      <p class="summary-a">Node pools, VPC-native networking, workload identity, and autoscaling — what it actually takes to run Kubernetes in production.</p>
+      <div class="meta-a">
+        <span class="tag hi">DevOps</span>
+        <span class="muted mono" style="font-size:11px;margin-left:auto;">Mar 2023 · 12 min</span>
+      </div>
+    </div>
+
+    <div class="card-a">
+      <div style="display:flex;gap:5px;margin-bottom:9px;">
+        <span class="tag">cicd</span><span class="tag">gke</span>
+      </div>
+      <p class="title-a">CI/CD Pipeline for GKE with Cloud Deploy</p>
+      <p class="summary-a">End-to-end deployment automation from GitHub commits to production using Cloud Build, Artifact Registry, and Cloud Deploy.</p>
+      <div class="meta-a">
+        <span class="tag hi">DevOps</span>
+        <span class="muted mono" style="font-size:11px;margin-left:auto;">Jan 2024 · 9 min</span>
+      </div>
+    </div>
+
+    <div class="card-a">
+      <div style="display:flex;gap:5px;margin-bottom:9px;">
+        <span class="tag">couchdb</span><span class="tag">nosql</span>
+      </div>
+      <p class="title-a">CouchDB: Document Conflicts and Resolution</p>
+      <p class="summary-a">How CouchDB handles conflicts in distributed replication — revision trees, detection, and resolution strategies.</p>
+      <div class="meta-a">
+        <span class="tag hi">Databases</span>
+        <span class="muted mono" style="font-size:11px;margin-left:auto;">Nov 2020 · 7 min</span>
+      </div>
+    </div>
+
+    <div class="card-a">
+      <div style="display:flex;gap:5px;margin-bottom:9px;">
+        <span class="tag">javascript</span>
+      </div>
+      <p class="title-a">Javascript Internals: What's Under the Hood?</p>
+      <p class="summary-a">Event loop, call stack, memory management, and what V8 actually does with your JavaScript code at runtime.</p>
+      <div class="meta-a">
+        <span class="tag hi">JavaScript</span>
+        <span class="muted mono" style="font-size:11px;margin-left:auto;">Dec 2019 · 11 min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION B: Big Titles ============ -->
+  <div class="option-pane">
+    <div class="option-label">Option B — Editorial Titles</div>
+
+    <div class="row-b">
+      <p class="num-b">01 · DevOps / Infra</p>
+      <p class="title-b">Architect a Production-Grade GKE Environment</p>
+      <div class="meta-b">
+        <span class="muted mono" style="font-size:11px;">Mar 2023</span>
+        <span class="muted" style="font-size:10px;">·</span>
+        <span class="muted mono" style="font-size:11px;">12 min read</span>
+        <span style="margin-left:auto;display:flex;gap:5px;">
+          <span class="tag">gke</span><span class="tag">kubernetes</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="row-b">
+      <p class="num-b">02 · DevOps / Infra</p>
+      <p class="title-b">CI/CD Pipeline for GKE with Cloud Deploy</p>
+      <div class="meta-b">
+        <span class="muted mono" style="font-size:11px;">Jan 2024</span>
+        <span class="muted" style="font-size:10px;">·</span>
+        <span class="muted mono" style="font-size:11px;">9 min read</span>
+        <span style="margin-left:auto;display:flex;gap:5px;">
+          <span class="tag">cicd</span><span class="tag">gke</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="row-b">
+      <p class="num-b">03 · Databases</p>
+      <p class="title-b">CouchDB: Document Conflicts and Resolution</p>
+      <div class="meta-b">
+        <span class="muted mono" style="font-size:11px;">Nov 2020</span>
+        <span class="muted" style="font-size:10px;">·</span>
+        <span class="muted mono" style="font-size:11px;">7 min read</span>
+        <span style="margin-left:auto;display:flex;gap:5px;">
+          <span class="tag">couchdb</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="row-b">
+      <p class="num-b">04 · JavaScript</p>
+      <p class="title-b">Javascript Internals: What's Under the Hood?</p>
+      <div class="meta-b">
+        <span class="muted mono" style="font-size:11px;">Dec 2019</span>
+        <span class="muted" style="font-size:10px;">·</span>
+        <span class="muted mono" style="font-size:11px;">11 min read</span>
+        <span style="margin-left:auto;display:flex;gap:5px;">
+          <span class="tag">javascript</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ OPTION C: Featured + Compact List ============ -->
+  <div class="option-pane">
+    <div class="option-label">Option C — Featured + List</div>
+
+    <div class="featured-c">
+      <div class="feat-img">
+        <span class="tag hi" style="font-size:10px;">Latest</span>
+      </div>
+      <div class="feat-body">
+        <div style="display:flex;gap:5px;margin-bottom:8px;">
+          <span class="tag">cicd</span><span class="tag">gke</span>
+        </div>
+        <p class="title-c-big">CI/CD Pipeline for GKE with Cloud Deploy</p>
+        <p class="summary-c">End-to-end deployment automation from GitHub commits to production using Cloud Build, Artifact Registry, and Cloud Deploy pipelines.</p>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="tag hi">DevOps</span>
+          <span class="muted mono" style="font-size:11px;margin-left:auto;">Jan 2024 · 9 min</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-c">
+      <div>
+        <div style="display:flex;gap:5px;margin-bottom:5px;"><span class="tag">gke</span><span class="tag">kubernetes</span></div>
+        <span class="title-c">Architect a Production-Grade GKE Environment</span>
+      </div>
+      <span class="date-c">Mar '23 · 12m</span>
+    </div>
+    <div class="row-c">
+      <div>
+        <div style="display:flex;gap:5px;margin-bottom:5px;"><span class="tag">couchdb</span></div>
+        <span class="title-c">CouchDB: Document Conflicts and Resolution</span>
+      </div>
+      <span class="date-c">Nov '20 · 7m</span>
+    </div>
+    <div class="row-c">
+      <div>
+        <div style="display:flex;gap:5px;margin-bottom:5px;"><span class="tag">nextjs</span><span class="tag">mdx</span></div>
+        <span class="title-c">Building a Blog With NextJS — Part 02</span>
+      </div>
+      <span class="date-c">Jun '22 · 10m</span>
+    </div>
+    <div class="row-c">
+      <div>
+        <div style="display:flex;gap:5px;margin-bottom:5px;"><span class="tag">javascript</span></div>
+        <span class="title-c">Javascript Internals: What's Under the Hood?</span>
+      </div>
+      <span class="date-c">Dec '19 · 11m</span>
+    </div>
+  </div>
+
+  <!-- ============ OPTION D: Table / Index ============ -->
+  <div class="option-pane">
+    <div class="option-label">Option D — Index Table</div>
+
+    <table class="table-d">
+      <thead>
+        <tr>
+          <th style="width:90px;">Category</th>
+          <th>Title</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cat-d">DevOps</td>
+          <td>
+            <p class="title-d">CI/CD Pipeline for GKE with Cloud Deploy</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">cicd</span><span class="tag">gke</span></div>
+          </td>
+          <td class="date-d">Jan 2024<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">9 min</span></td>
+        </tr>
+        <tr>
+          <td class="cat-d">DevOps</td>
+          <td>
+            <p class="title-d">Architect a Production-Grade GKE Environment</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">gke</span><span class="tag">kubernetes</span></div>
+          </td>
+          <td class="date-d">Mar 2023<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">12 min</span></td>
+        </tr>
+        <tr>
+          <td class="cat-d">Databases</td>
+          <td>
+            <p class="title-d">CouchDB: Document Conflicts and Resolution</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">couchdb</span><span class="tag">nosql</span></div>
+          </td>
+          <td class="date-d">Nov 2020<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">7 min</span></td>
+        </tr>
+        <tr>
+          <td class="cat-d">Web Dev</td>
+          <td>
+            <p class="title-d">Building a Blog With NextJS — Part 02</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">nextjs</span><span class="tag">mdx</span></div>
+          </td>
+          <td class="date-d">Jun 2022<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">10 min</span></td>
+        </tr>
+        <tr>
+          <td class="cat-d">Web Dev</td>
+          <td>
+            <p class="title-d">Building a Blog With NextJS — Part 01</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">nextjs</span><span class="tag">mdx</span></div>
+          </td>
+          <td class="date-d">Jun 2022<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">8 min</span></td>
+        </tr>
+        <tr>
+          <td class="cat-d">JavaScript</td>
+          <td>
+            <p class="title-d">Javascript Internals: What's Under the Hood?</p>
+            <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag">javascript</span></div>
+          </td>
+          <td class="date-d">Dec 2019<br><span style="color:rgba(255,255,255,0.25);font-size:10px;">11 min</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

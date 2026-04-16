@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PriyathGregory.Dev — Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #131a23;
+      --card: #1e2c3a;
+      --border: rgba(255,255,255,0.07);
+      --accent: #54B689;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.42);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .logo { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--text); text-decoration: none; }
+    .nav-link { color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+    .nav-link:hover { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+    .toggle { width: 36px; height: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; position: relative; border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0; }
+    .toggle::after { content: ''; position: absolute; left: 3px; top: 2px; width: 14px; height: 14px; background: var(--accent); border-radius: 50%; }
+
+    .cat-chip { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-family: 'JetBrains Mono', monospace; cursor: pointer; border: 1px solid var(--border); color: var(--muted); transition: all 0.15s; display: inline-block; }
+    .cat-chip:hover { border-color: rgba(84,182,137,0.4); color: var(--accent); }
+    .cat-chip.active { border-color: var(--accent); color: #131a23; background: var(--accent); }
+
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 2px 7px; display: inline-block; }
+
+    .post-row { display: block; padding: 26px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; }
+    .post-row:last-child { border-bottom: none; }
+    .post-row:hover .post-title { color: var(--accent); }
+    .post-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(84,182,137,0.55); margin-bottom: 6px; }
+    .post-title { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 14px; transition: color 0.15s; }
+    .post-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position: sticky; top: 0; z-index: 50; background: rgba(19,26,35,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+  <div style="max-width: 880px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 32px;">
+    <a href="index.html" class="logo">priyathgregory.dev</a>
+    <div style="flex: 1; display: flex; gap: 28px;">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+    </div>
+    <div class="toggle"></div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section style="max-width: 760px; margin: 0 auto; padding: 60px 24px 32px;">
+  <h1 style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.025em; margin-bottom: 10px;">Writing</h1>
+  <p style="font-size: 14.5px; color: var(--muted); line-height: 1.65; max-width: 440px;">
+    Deep dives on cloud infrastructure, distributed systems, backend architecture, and the web.
+  </p>
+</section>
+
+<!-- FILTERS -->
+<section style="max-width: 760px; margin: 0 auto; padding: 0 24px 28px;">
+  <div style="display: flex; gap: 7px; flex-wrap: wrap;">
+    <span class="cat-chip active">All</span>
+    <span class="cat-chip">DevOps</span>
+    <span class="cat-chip">Databases</span>
+    <span class="cat-chip">Web Dev</span>
+    <span class="cat-chip">JavaScript</span>
+  </div>
+</section>
+
+<div style="max-width: 760px; margin: 0 auto; height: 1px; background: var(--border);"></div>
+
+<!-- POST LIST -->
+<section style="max-width: 760px; margin: 0 auto; padding: 0 24px 96px;">
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">01 · DevOps / Infra</p>
+    <p class="post-title">CI/CD Pipeline for GKE with Cloud Deploy</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Jan 2024</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">9 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">cicd</span><span class="tag">gke</span><span class="tag">devops</span>
+      </span>
+    </div>
+  </a>
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">02 · DevOps / Infra</p>
+    <p class="post-title">Architect a Production-Grade GKE Environment</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Mar 2023</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">12 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">gke</span><span class="tag">kubernetes</span><span class="tag">architecture</span>
+      </span>
+    </div>
+  </a>
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">03 · Web Dev</p>
+    <p class="post-title">Building a Blog With NextJS — Part 02</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Jun 2022</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">10 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">nextjs</span><span class="tag">mdx</span>
+      </span>
+    </div>
+  </a>
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">04 · Web Dev</p>
+    <p class="post-title">Building a Blog With NextJS — Part 01</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Jun 2022</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">8 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">nextjs</span><span class="tag">mdx</span><span class="tag">mui5</span>
+      </span>
+    </div>
+  </a>
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">05 · Databases</p>
+    <p class="post-title">CouchDB: Document Conflicts and Resolution</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Nov 2020</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">7 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">databases</span><span class="tag">couchdb</span><span class="tag">nosql</span>
+      </span>
+    </div>
+  </a>
+
+  <a href="post.html" class="post-row">
+    <p class="post-num">06 · JavaScript</p>
+    <p class="post-title">Javascript Internals: What's Under the Hood?</p>
+    <div class="post-meta">
+      <span class="mono" style="font-size: 11px; color: var(--muted);">Dec 2019</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span class="mono" style="font-size: 11px; color: var(--muted);">11 min read</span>
+      <span style="margin-left: auto; display: flex; gap: 5px;">
+        <span class="tag">javascript</span>
+      </span>
+    </div>
+  </a>
+
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid var(--border); padding: 28px 24px; max-width: 760px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+  <span class="mono" style="font-size: 12px; color: var(--muted);">© 2024 Priyath Gregory</span>
+  <span class="mono" style="font-size: 12px; color: var(--muted);">Next.js · Tailwind CSS</span>
+</footer>
+
+</body>
+</html>

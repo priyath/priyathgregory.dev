@@ -1,0 +1,324 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-accent: #54B689;
+}
+
+/* Light mode tokens */
+:root {
+  --color-bg: #f8f8f8;
+  --color-bg-card: #ffffff;
+  --color-border: rgba(0,0,0,0.08);
+  --color-text: #111111;
+  --color-muted: rgba(0,0,0,0.62);
+  --color-text-2: rgba(0,0,0,0.82);
+  --color-text-3: rgba(0,0,0,0.70);
+  --color-text-5: rgba(0,0,0,0.50);
+  --color-surface: rgba(0,0,0,0.03);
+  --color-surface-2: rgba(0,0,0,0.05);
+  --color-nav-bg: rgba(248,248,248,0.88);
+  --color-toggle-bg: rgba(0,0,0,0.1);
+  --color-toggle-border: rgba(0,0,0,0.12);
+  --color-icon-bg: rgba(0,0,0,0.05);
+  --color-icon-border: rgba(0,0,0,0.08);
+}
+
+/* Dark mode tokens */
+.dark {
+  --color-bg: #131a23;
+  --color-bg-card: #1e2c3a;
+  --color-border: rgba(255,255,255,0.07);
+  --color-text: rgba(255,255,255,0.95);
+  --color-muted: rgba(255,255,255,0.62);
+  --color-text-2: rgba(255,255,255,0.82);
+  --color-text-3: rgba(255,255,255,0.70);
+  --color-text-5: rgba(255,255,255,0.38);
+  --color-surface: rgba(255,255,255,0.03);
+  --color-surface-2: rgba(255,255,255,0.05);
+  --color-nav-bg: rgba(19,26,35,0.88);
+  --color-toggle-bg: rgba(255,255,255,0.1);
+  --color-toggle-border: rgba(255,255,255,0.12);
+  --color-icon-bg: rgba(255,255,255,0.05);
+  --color-icon-border: rgba(255,255,255,0.08);
+}
+
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > main {
+  flex: 1;
+}
+
+
+/* Prose overrides */
+.prose h2 {
+  padding-left: 14px;
+  border-left: 3px solid #54B689;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.prose p, .prose li {
+  color: var(--color-text-2);
+}
+
+.prose strong {
+  color: var(--color-text);
+}
+
+.prose blockquote {
+  border-left-color: #54B689;
+  background: rgba(84, 182, 137, 0.05);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 20px;
+  margin: 1.8rem 0;
+}
+
+.prose blockquote p {
+  color: var(--color-text-3);
+  font-style: italic;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* About page timeline */
+@media (max-width: 640px) {
+  .about-timeline {
+    padding: 0 4px;
+  }
+}
+
+/* Blog listing grid — desktop */
+.blog-listing-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr 70px 80px;
+}
+
+/* Mobile responsive overrides */
+@media (max-width: 640px) {
+  /* Header row: hide on mobile (stacked rows are self-explanatory) */
+  .blog-listing-header {
+    display: none;
+  }
+
+  /* Post rows: stacked layout — title on top, meta below */
+  .blog-listing-row {
+    display: flex !important;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start !important;
+    padding: 12px 6px !important;
+  }
+
+  /* Title: full width, allow wrapping on mobile */
+  .blog-listing-row .col-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    font-size: 13px !important;
+  }
+
+  /* Meta row: category · date side by side below title */
+  .blog-listing-row .col-category,
+  .blog-listing-row .col-date {
+    font-size: 11.5px !important;
+  }
+
+  .blog-listing-row .col-date {
+    text-align: left !important;
+  }
+
+  /* Hide read time on mobile */
+  .blog-listing-row .col-read {
+    display: none;
+  }
+
+  /* Hide tag chips on mobile */
+  .blog-tag-row {
+    display: none !important;
+  }
+
+/* Home page recent posts — same stacked treatment */
+  .home-post-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    align-items: flex-start !important;
+    padding: 12px 6px !important;
+  }
+
+  .home-post-row .home-post-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    font-size: 13px !important;
+  }
+
+  .home-post-row .home-post-category,
+  .home-post-row .home-post-date {
+    font-size: 11.5px !important;
+  }
+
+  .home-post-row .home-post-date {
+    text-align: left !important;
+  }
+
+  /* Tighten vertical spacing on mobile */
+  .page-top-block {
+    padding-top: 40px !important;
+    padding-bottom: 32px !important;
+  }
+
+  .page-section {
+    margin-top: 0 !important;
+    padding-top: 32px !important;
+    padding-bottom: 64px !important;
+  }
+
+  /* Nav spacing */
+  nav > div {
+    gap: 16px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Hide logo on mobile */
+  .nav-logo {
+    display: none;
+  }
+
+  /* Article padding */
+  article {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Section padding */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero h1 — already uses clamp, so no override needed */
+
+  /* Post header — stack meta items */
+  .post-meta-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Category filter chips — allow wrapping (already flex-wrap: wrap) */
+
+  /* Blog listing: hide 'read' column on very small screens */
+}
+
+/* Smooth hover transitions for social icons */
+a[aria-label]:hover {
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  color: #54B689 !important;
+}
+
+/* Prose images */
+.prose img {
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+/* Prose code inside paragraphs (inline code override from typography) */
+.prose :not(pre) > code {
+  background: var(--color-surface-2) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  color: #54B689 !important;
+  font-size: 0.875em !important;
+  font-weight: 400 !important;
+}
+
+/* Remove prose's default code backtick quotes */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none !important;
+}
+
+/* Ordered and unordered list colors in prose */
+.prose ol > li::marker,
+.prose ul > li::marker {
+  color: #54B689;
+}
+
+/* Home page post rows */
+.home-post-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 72px;
+  align-items: baseline;
+  transition: background 0.15s;
+}
+.home-post-row:hover {
+  background: var(--color-surface);
+}
+.home-post-row:hover .home-post-title {
+  color: #54B689 !important;
+}
+
+/* "view all →" link */
+.view-all-link:hover {
+  color: #54B689 !important;
+  text-shadow: 0 0 12px rgba(84, 182, 137, 0.5);
+}
+
+/* Blog post row hover */
+.nav-link-hover:hover {
+  color: var(--color-text) !important;
+}
+
+/* Tag chips */
+.tag-chip {
+  transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.tag-chip:hover {
+  color: #54B689 !important;
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  box-shadow: 0 0 10px rgba(84, 182, 137, 0.18);
+}
+
+/* Breadcrumb links */
+.breadcrumb-link {
+  transition: color 0.15s, text-shadow 0.15s;
+}
+.breadcrumb-link:hover {
+  color: #54B689 !important;
+  text-shadow: 0 0 12px rgba(84, 182, 137, 0.45);
+}
+
+/* Social icons in Hero */
+a[aria-label]:hover {
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  color: #54B689 !important;
+  box-shadow: 0 0 14px rgba(84, 182, 137, 0.2);
+}
+
+@keyframes bootFadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
