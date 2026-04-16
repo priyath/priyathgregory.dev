@@ -85,6 +85,7 @@ function TimelineItem({
   const ref = useRef<HTMLDivElement>(null)
   const isHovered = hoveredIndex === index
   const isDimmed  = hoveredIndex !== null && !isHovered
+  const isLast    = index === ENTRIES.length - 1
 
   useEffect(() => {
     const el = ref.current
@@ -97,7 +98,7 @@ function TimelineItem({
           observer.disconnect()
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -108,34 +109,49 @@ function TimelineItem({
       ref={ref}
       style={{
         display: 'flex',
-        gap: 20,
+        gap: 0,
         opacity: 0,
-        transform: 'translateY(20px)',
-        transition: `opacity 0.5s ease ${index * 0.08}s, transform 0.5s ease ${index * 0.08}s`,
-        cursor: 'default',
+        transform: 'translateY(16px)',
+        transition: `opacity 0.45s ease ${index * 0.07}s, transform 0.45s ease ${index * 0.07}s`,
       }}
     >
-      {/* Spine */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+      {/* Git graph column */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        flexShrink: 0,
+        width: 32,
+        fontFamily: 'var(--font-jetbrains-mono), monospace',
+      }}>
+        {/* Node */}
         <div style={{
-          width: isHovered ? 10 : 7,
-          height: isHovered ? 10 : 7,
-          borderRadius: '50%',
-          background: entry.current || isHovered ? '#54B689' : 'var(--color-bg)',
-          border: `2px solid ${entry.current || isHovered ? '#54B689' : 'var(--color-text-5)'}`,
-          marginTop: 3, flexShrink: 0,
-          boxShadow: entry.current || isHovered ? '0 0 8px rgba(84,182,137,0.5)' : 'none',
-          transition: 'all 0.25s ease',
-        }} />
-        {index < ENTRIES.length - 1 && (
+          fontSize: 16,
+          lineHeight: 1,
+          color: entry.current || isHovered ? '#54B689' : 'var(--color-text-5)',
+          textShadow: entry.current || isHovered ? '0 0 8px rgba(84,182,137,0.6)' : 'none',
+          transition: 'color 0.2s ease, text-shadow 0.2s ease',
+          marginTop: 2,
+          userSelect: 'none',
+        }}>
+          ◆
+        </div>
+        {/* Connecting line */}
+        {!isLast && (
           <div style={{
-            width: 1, flex: 1, minHeight: 28,
-            background: isHovered
-              ? 'linear-gradient(to bottom, #54B689, rgba(84,182,137,0.15))'
-              : 'var(--color-border)',
-            marginTop: 5,
-            transition: 'background 0.25s ease',
-          }} />
+            fontFamily: 'var(--font-jetbrains-mono), monospace',
+            fontSize: 13,
+            color: isHovered ? 'rgba(84,182,137,0.5)' : 'var(--color-border)',
+            lineHeight: 1.4,
+            userSelect: 'none',
+            transition: 'color 0.2s ease',
+            letterSpacing: 0,
+            marginTop: 2,
+          }}>
+            {Array.from({ length: isHovered ? 5 : 3 }).map((_, i) => (
+              <div key={i}>│</div>
+            ))}
+          </div>
         )}
       </div>
 
@@ -144,57 +160,69 @@ function TimelineItem({
         onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
         style={{
-          paddingBottom: index < ENTRIES.length - 1 ? (isHovered ? 28 : 16) : 0,
-          opacity: isDimmed ? 0.3 : 1,
-          transition: 'opacity 0.25s ease, padding 0.25s ease',
+          flex: 1,
+          paddingBottom: !isLast ? (isHovered ? 8 : 0) : 0,
+          paddingLeft: 12,
+          opacity: isDimmed ? 0.25 : 1,
+          transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+          transformOrigin: 'left center',
+          transition: 'opacity 0.2s ease, transform 0.2s ease, padding 0.2s ease',
+          cursor: 'default',
         }}
       >
-        {/* Period above title */}
-        <p style={{
-          fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: isHovered ? 10.5 : 9.5,
-          color: entry.current ? '#54B689' : isHovered ? '#54B689' : 'var(--color-text-5)',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          marginBottom: 4,
-          transition: 'all 0.25s ease',
-        }}>
-          {entry.period}
+        {/* commit hash style period */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 3 }}>
+          <span style={{
+            fontFamily: 'var(--font-jetbrains-mono), monospace',
+            fontSize: 10,
+            color: isHovered ? 'rgba(84,182,137,0.8)' : 'var(--color-text-5)',
+            letterSpacing: '0.05em',
+            transition: 'color 0.2s ease',
+          }}>
+            {entry.period}
+          </span>
           {entry.current && (
             <span style={{
-              marginLeft: 8,
+              fontFamily: 'var(--font-jetbrains-mono), monospace',
+              fontSize: 8.5,
               background: 'rgba(84,182,137,0.12)',
               border: '1px solid rgba(84,182,137,0.3)',
-              borderRadius: 4, padding: '1px 6px',
-              fontSize: 9, textTransform: 'uppercase',
-            }}>current</span>
+              borderRadius: 4,
+              padding: '1px 6px',
+              color: '#54B689',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            }}>HEAD</span>
           )}
-        </p>
+        </div>
 
         <h3 style={{
-          fontSize: isHovered ? '0.95rem' : '0.8rem',
-          fontWeight: 700, marginBottom: 2,
+          fontSize: isHovered ? '0.92rem' : '0.8rem',
+          fontWeight: 700,
+          marginBottom: 1,
           letterSpacing: '-0.01em',
-          transition: 'font-size 0.25s ease',
+          color: isHovered ? 'var(--color-text)' : 'var(--color-text-2)',
+          transition: 'all 0.2s ease',
         }}>
           {entry.role}
         </h3>
 
         <p style={{
           fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: isHovered ? 12 : 10.5,
+          fontSize: isHovered ? 11.5 : 10.5,
           color: '#54B689',
           marginBottom: isHovered ? 10 : 0,
-          transition: 'all 0.25s ease',
+          transition: 'all 0.2s ease',
         }}>
           {entry.company}
         </p>
 
         {entry.description && (
           <p style={{
-            fontSize: 13, color: 'var(--color-text-3)',
+            fontSize: 12.5,
+            color: 'var(--color-text-3)',
             lineHeight: 1.65,
-            maxHeight: isHovered ? 150 : 0,
+            maxHeight: isHovered ? 200 : 0,
             overflow: 'hidden',
             opacity: isHovered ? 1 : 0,
             marginBottom: isHovered ? 10 : 0,
@@ -215,9 +243,11 @@ function TimelineItem({
             {entry.tags.map(tag => (
               <span key={tag} style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
-                fontSize: 11, color: 'var(--color-muted)',
+                fontSize: 11,
+                color: 'var(--color-muted)',
                 border: '1px solid var(--color-border)',
-                borderRadius: 4, padding: '2px 7px',
+                borderRadius: 4,
+                padding: '2px 7px',
               }}>
                 {tag}
               </span>
@@ -233,7 +263,7 @@ export default function Timeline() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="about-timeline" style={{ marginTop: 40 }}>
+    <div style={{ marginTop: 40 }}>
       {ENTRIES.map((entry, i) => (
         <TimelineItem
           key={i}
