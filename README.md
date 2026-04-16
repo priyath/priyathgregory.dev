@@ -1,25 +1,22 @@
-## My Personal developer website
-The website is hosted at https://www.priyathgregory.dev
+## priyathgregory.dev
 
-## Technical Stack
+Personal site and blog. Hosted at [priyathgregory.dev](https://www.priyathgregory.dev).
 
-The project is built using the NextJS framework and Material UI. A detailed breakdown of the tech stack
-is given below.
+## Stack
 
-Frontend framework
-* NextJS
-* Material UI
+Previously hand-crafted with Next.js 12 and MUI — every pixel placed with care, every component a small act of suffering.
 
-Blog
-* MDX
-* [giscus](https://giscus.app/) based comment system
+The v2 redesign was supposed to be the same. Then Claude got involved and finished it in a weekend. I'm still not sure how to feel about that.
 
-Analytics
-* Google Analytics
+At this point Claude has taken over all development activities for this repo. I just review the PRs and try to look busy.
 
-Deployment
-* Vercel
+- **Framework** — Next.js 15 (App Router)
+- **Styling** — Tailwind CSS v4
+- **CMS** — Keystatic (writes directly to GitHub)
+- **Blog** — MDX via next-mdx-remote, syntax highlighting with rehype-pretty-code
+- **Analytics** — Google Analytics
+- **Deployment** — Vercel
 
 ## License
 
-The source code is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+MIT
