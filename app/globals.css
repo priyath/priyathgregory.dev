@@ -192,6 +192,7 @@ body > main {
 
   .page-section {
     margin-top: 24px !important;
+    padding-top: 0 !important;
     padding-bottom: 48px !important;
   }
 
