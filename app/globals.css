@@ -1,0 +1,210 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-accent: #54B689;
+}
+
+/* Light mode tokens */
+:root {
+  --color-bg: #f8f8f8;
+  --color-bg-card: #ffffff;
+  --color-border: rgba(0,0,0,0.08);
+  --color-text: #1a1a1a;
+  --color-muted: rgba(0,0,0,0.45);
+  --color-text-2: rgba(0,0,0,0.68);
+  --color-text-3: rgba(0,0,0,0.55);
+  --color-text-5: rgba(0,0,0,0.18);
+  --color-surface: rgba(0,0,0,0.03);
+  --color-surface-2: rgba(0,0,0,0.05);
+  --color-nav-bg: rgba(248,248,248,0.88);
+  --color-toggle-bg: rgba(0,0,0,0.1);
+  --color-toggle-border: rgba(0,0,0,0.12);
+  --color-icon-bg: rgba(0,0,0,0.05);
+  --color-icon-border: rgba(0,0,0,0.08);
+}
+
+/* Dark mode tokens */
+.dark {
+  --color-bg: #131a23;
+  --color-bg-card: #1e2c3a;
+  --color-border: rgba(255,255,255,0.07);
+  --color-text: rgba(255,255,255,0.92);
+  --color-muted: rgba(255,255,255,0.38);
+  --color-text-2: rgba(255,255,255,0.68);
+  --color-text-3: rgba(255,255,255,0.55);
+  --color-text-5: rgba(255,255,255,0.18);
+  --color-surface: rgba(255,255,255,0.03);
+  --color-surface-2: rgba(255,255,255,0.05);
+  --color-nav-bg: rgba(19,26,35,0.88);
+  --color-toggle-bg: rgba(255,255,255,0.1);
+  --color-toggle-border: rgba(255,255,255,0.12);
+  --color-icon-bg: rgba(255,255,255,0.05);
+  --color-icon-border: rgba(255,255,255,0.08);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* Shiki CSS Variables theme — syntax highlighting colors */
+:root {
+  --shiki-color-text: #24292e;
+  --shiki-color-background: transparent;
+  --shiki-token-constant: #005cc5;
+  --shiki-token-string: #032f62;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-keyword: #d73a49;
+  --shiki-token-parameter: #24292e;
+  --shiki-token-function: #6f42c1;
+  --shiki-token-string-expression: #032f62;
+  --shiki-token-punctuation: #24292e;
+  --shiki-token-link: #032f62;
+}
+
+.dark {
+  --shiki-color-text: #e1e4e8;
+  --shiki-color-background: transparent;
+  --shiki-token-constant: #79b8ff;
+  --shiki-token-string: #9ecbff;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-keyword: #f97583;
+  --shiki-token-parameter: #e1e4e8;
+  --shiki-token-function: #b392f0;
+  --shiki-token-string-expression: #9ecbff;
+  --shiki-token-punctuation: #e1e4e8;
+  --shiki-token-link: #9ecbff;
+}
+
+/* Prose overrides */
+.prose h2 {
+  padding-left: 14px;
+  border-left: 3px solid #54B689;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.prose p, .prose li {
+  color: var(--color-text-2);
+}
+
+.prose strong {
+  color: var(--color-text);
+}
+
+.prose blockquote {
+  border-left-color: #54B689;
+  background: rgba(84, 182, 137, 0.05);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 20px;
+  margin: 1.8rem 0;
+}
+
+.prose blockquote p {
+  color: var(--color-text-3);
+  font-style: italic;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Mobile responsive overrides */
+@media (max-width: 640px) {
+  /* Blog listing rows — hide the 'read' column on mobile */
+  .file-listing-grid {
+    grid-template-columns: 100px 1fr 72px !important;
+  }
+
+  /* Nav spacing */
+  nav > div {
+    gap: 16px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Article padding */
+  article {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Section padding */
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero h1 — already uses clamp, so no override needed */
+
+  /* Post header — stack meta items */
+  .post-meta-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Category filter chips — allow wrapping (already flex-wrap: wrap) */
+
+  /* Blog listing: hide 'read' column on very small screens */
+}
+
+/* Smooth hover transitions for social icons */
+a[aria-label]:hover {
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  color: #54B689 !important;
+}
+
+/* Prose images */
+.prose img {
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+/* Prose code inside paragraphs (inline code override from typography) */
+.prose :not(pre) > code {
+  background: var(--color-surface-2) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  color: #54B689 !important;
+  font-size: 0.875em !important;
+  font-weight: 400 !important;
+}
+
+/* Remove prose's default code backtick quotes */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none !important;
+}
+
+/* Ordered and unordered list colors in prose */
+.prose ol > li::marker,
+.prose ul > li::marker {
+  color: #54B689;
+}
+
+/* Home page post rows */
+.home-post-row:hover {
+  background: var(--color-surface);
+}
+.home-post-row:hover .home-post-title {
+  color: #54B689 !important;
+}
+
+/* "view all →" link */
+.view-all-link:hover {
+  color: #54B689 !important;
+}
+
+/* Blog post row hover (used in /blog listing via CategoryFilter client component — already has JS hover, but CSS fallback) */
+.nav-link-hover:hover {
+  color: var(--color-text) !important;
+}

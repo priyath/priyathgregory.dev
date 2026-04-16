@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architect a Production-Grade GKE Environment — Priyath Gregory</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #131a23;
+      --card: #1e2c3a;
+      --border: rgba(255,255,255,0.07);
+      --accent: #54B689;
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.42);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .logo { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--text); text-decoration: none; }
+    .nav-link { color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+    .toggle { width: 36px; height: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; position: relative; border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0; }
+    .toggle::after { content: ''; position: absolute; left: 3px; top: 2px; width: 14px; height: 14px; background: var(--accent); border-radius: 50%; }
+
+    .tag { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted); border: 1px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 3px 9px; display: inline-block; }
+
+    /* Article prose */
+    .prose { font-size: 16.5px; line-height: 1.8; color: rgba(255,255,255,0.75); }
+    .prose p { margin: 0 0 1.5rem; }
+    .prose h2 { font-size: 1.3rem; font-weight: 700; color: var(--text); letter-spacing: -0.015em; margin: 2.5rem 0 1rem; padding-left: 14px; border-left: 3px solid var(--accent); }
+    .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .prose code { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; background: rgba(255,255,255,0.07); padding: 2px 6px; border-radius: 4px; color: rgba(255,255,255,0.88); }
+    .prose blockquote { border-left: 3px solid var(--accent); margin: 1.8rem 0; padding: 12px 20px; background: rgba(84,182,137,0.05); border-radius: 0 6px 6px 0; font-style: italic; color: rgba(255,255,255,0.6); }
+
+    /* Code block */
+    .code-wrap { background: #0d1117; border: 1px solid rgba(255,255,255,0.08); border-radius: 9px; margin: 1.8rem 0; overflow: hidden; }
+    .code-header { background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-title { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: rgba(255,255,255,0.4); }
+    .code-lang { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); }
+    .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.75; overflow-x: auto; margin: 0; }
+
+    /* Share buttons */
+    .share-btn { border: 1px solid rgba(255,255,255,0.09); border-radius: 6px; padding: 7px 14px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--muted); cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; background: transparent; }
+    .share-btn:hover { border-color: rgba(84,182,137,0.4); color: var(--accent); }
+
+    /* Comments placeholder */
+    .comments-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 36px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position: sticky; top: 0; z-index: 50; background: rgba(19,26,35,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);">
+  <div style="max-width: 880px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 32px;">
+    <a href="index.html" class="logo">priyathgregory.dev</a>
+    <div style="flex: 1; display: flex; gap: 28px;">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="blog.html" class="nav-link active">Blog</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+    </div>
+    <div class="toggle"></div>
+  </div>
+</nav>
+
+<article style="max-width: 720px; margin: 0 auto; padding: 0 24px;">
+
+  <!-- BREADCRUMB -->
+  <div style="padding: 28px 0 0; display: flex; align-items: center; gap: 8px;">
+    <a href="blog.html" style="font-size: 12.5px; font-family: 'JetBrains Mono', monospace; color: var(--muted); text-decoration: none; transition: color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Writing</a>
+    <span style="color: var(--muted); font-size: 11px;">/</span>
+    <span style="font-size: 12.5px; font-family: 'JetBrains Mono', monospace; color: var(--accent);">DevOps / Infra</span>
+  </div>
+
+  <!-- POST HEADER -->
+  <header style="padding: 28px 0 36px; border-bottom: 1px solid var(--border);">
+    <h1 style="font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 16px;">
+      Architect a Production-Grade GKE Environment
+    </h1>
+    <p style="font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.65; margin-bottom: 24px; max-width: 580px;">
+      Node pools, VPC-native networking, workload identity, and autoscaling — what it actually takes to run Kubernetes in production on Google Cloud.
+    </p>
+    <!-- Meta row -->
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <div style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #2a7a55); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #131a23; flex-shrink: 0;">PG</div>
+        <span style="font-size: 14px; font-weight: 500;">Priyath Gregory</span>
+      </div>
+      <span style="color: var(--muted); font-size: 11px; font-family: 'JetBrains Mono', monospace;">Mar 2023</span>
+      <span style="color: var(--muted); font-size: 10px;">·</span>
+      <span style="color: var(--muted); font-size: 11px; font-family: 'JetBrains Mono', monospace;">12 min read</span>
+    </div>
+    <!-- Tags -->
+    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+      <span class="tag">gke</span>
+      <span class="tag">kubernetes</span>
+      <span class="tag">architecture</span>
+    </div>
+  </header>
+
+  <!-- ARTICLE BODY -->
+  <div class="prose" style="padding: 40px 0 0;">
+
+    <p>Building a production-ready Kubernetes cluster on Google Kubernetes Engine involves far more than running <code>gcloud container clusters create</code>. This post walks through the architectural decisions, configuration choices, and operational concerns that separate a toy cluster from one you'd trust with real traffic.</p>
+
+    <h2>Why GKE Over Self-Managed Kubernetes?</h2>
+
+    <p>The control plane is a significant operational burden — etcd management, API server upgrades, certificate rotation. GKE handles all of this, letting you focus on the workload layer. But "managed" doesn't mean "hands-off" — you still own node configuration, networking, autoscaling, and security posture.</p>
+
+    <blockquote>
+      The hardest part of Kubernetes is not the initial setup — it's the operational discipline required to keep a cluster healthy at scale over time.
+    </blockquote>
+
+    <h2>Node Pool Strategy</h2>
+
+    <p>A production cluster should separate workloads by node pool. A common pattern is three pools: one for system components (with a <code>NoSchedule</code> taint), one for general application workloads, and optionally a third for GPU or high-memory workloads.</p>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="code-dots">
+            <span style="background: #ff5f57;"></span>
+            <span style="background: #ffbd2e;"></span>
+            <span style="background: #28ca41;"></span>
+          </div>
+          <span class="code-title">node-pools.tf</span>
+        </div>
+        <span class="code-lang">terraform</span>
+      </div>
+      <pre class="code-body" style="color: #e6edf3;"><span style="color:#ff7b72;">resource</span> <span style="color:#a5d6ff;">"google_container_node_pool"</span> <span style="color:#a5d6ff;">"system"</span> {
+  name       = <span style="color:#a5d6ff;">"system-pool"</span>
+  cluster    = google_container_cluster.primary.id
+  node_count = <span style="color:#79c0ff;">2</span>
+
+  node_config {
+    machine_type = <span style="color:#a5d6ff;">"e2-standard-4"</span>
+    taint {
+      key    = <span style="color:#a5d6ff;">"node-role"</span>
+      value  = <span style="color:#a5d6ff;">"system"</span>
+      effect = <span style="color:#a5d6ff;">"NO_SCHEDULE"</span>
+    }
+  }
+}</pre>
+    </div>
+
+    <h2>VPC-Native Networking</h2>
+
+    <p>Always use VPC-native clusters (alias IP ranges) over routes-based clusters. Pod IPs are directly routable within your VPC, you get better Cloud Load Balancing integration, and a smaller blast radius for IP exhaustion. The key: specify secondary IP ranges at creation time — they <em>cannot</em> be changed without recreating the cluster.</p>
+
+    <h2>Workload Identity</h2>
+
+    <p>Never use node-level service account keys. Workload Identity binds a Kubernetes service account to a Google service account via OIDC federation — each workload gets scoped GCP credentials without key files in your containers or Secrets.</p>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="code-dots">
+            <span style="background: #ff5f57;"></span>
+            <span style="background: #ffbd2e;"></span>
+            <span style="background: #28ca41;"></span>
+          </div>
+          <span class="code-title">workload-identity.tf</span>
+        </div>
+        <span class="code-lang">terraform</span>
+      </div>
+      <pre class="code-body" style="color: #e6edf3;"><span style="color:#8b949e;"># Bind the k8s service account to a GCP service account</span>
+<span style="color:#ff7b72;">resource</span> <span style="color:#a5d6ff;">"google_service_account_iam_member"</span> <span style="color:#a5d6ff;">"workload_identity"</span> {
+  service_account_id = google_service_account.app.name
+  role               = <span style="color:#a5d6ff;">"roles/iam.workloadIdentityUser"</span>
+  member = <span style="color:#a5d6ff;">"serviceAccount:${var.project}.svc.id.goog[${var.namespace}/${var.ksa_name}]"</span>
+}</pre>
+    </div>
+
+  </div>
+
+  <!-- POST FOOTER -->
+  <div style="margin: 52px 0 0; padding: 28px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <span class="tag">gke</span><span class="tag">kubernetes</span><span class="tag">architecture</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="share-btn">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share
+        </button>
+        <button class="share-btn">
+          <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div style="margin: 40px 0 80px;">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--accent); letter-spacing: 0.13em; text-transform: uppercase; margin-bottom: 18px;">// discussion</p>
+    <div class="comments-box">
+      <div style="width: 38px; height: 38px; border-radius: 50%; background: rgba(84,182,137,0.1); border: 1px solid rgba(84,182,137,0.2); margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      </div>
+      <p style="font-size: 13.5px; color: rgba(255,255,255,0.5); margin-bottom: 5px;">Comments powered by Giscus</p>
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted);">Sign in with GitHub to join the discussion</p>
+    </div>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid var(--border); padding: 28px 24px; max-width: 880px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+  <span class="mono" style="font-size: 12px; color: var(--muted);">© 2024 Priyath Gregory</span>
+  <span class="mono" style="font-size: 12px; color: var(--muted);">Next.js · Tailwind CSS</span>
+</footer>
+
+</body>
+</html>
