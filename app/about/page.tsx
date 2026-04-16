@@ -31,14 +31,9 @@ export default function AboutPage() {
 
       {/* Career timeline */}
       <section className="page-section" style={{ maxWidth: 820, margin: '0 auto', padding: '0 24px 96px' }}>
-        <p style={{
-          fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: 12,
-          color: '#54B689',
-          marginBottom: 0,
-        }}>
-          $ career --log
-        </p>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.015em', marginBottom: 0 }}>
+          Career
+        </h2>
         <Timeline />
       </section>
     </>

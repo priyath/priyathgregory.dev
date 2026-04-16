@@ -434,7 +434,7 @@ export default function Timeline() {
             transition: 'color 0.2s ease, border-color 0.2s ease, background 0.2s ease',
           }}
         >
-          {expanded ? '▼ --expanded' : '▶ --collapsed'}
+          {expanded ? '▼ collapse' : '▶ expand all'}
         </button>
       </div>
 
