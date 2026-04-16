@@ -30,7 +30,7 @@ export default function Header() {
           className="nav-logo"
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 15,
+            fontSize: 14,
             fontWeight: 500,
             color: 'var(--color-text)',
             textDecoration: 'none',

@@ -21,7 +21,7 @@ export default async function RecentPosts() {
           <p
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 10.5,
+              fontSize: 10,
               color: '#54B689',
               letterSpacing: '0.13em',
               textTransform: 'uppercase',
@@ -87,7 +87,7 @@ export default async function RecentPosts() {
             className="home-post-title"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 12.5,
+              fontSize: 14,
               color: 'var(--color-text-2)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -101,7 +101,7 @@ export default async function RecentPosts() {
             className="home-post-date"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 11.5,
+              fontSize: 12,
               color: 'var(--color-muted)',
               textAlign: 'right',
             }}
@@ -116,7 +116,7 @@ export default async function RecentPosts() {
         <span
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 11.5,
+            fontSize: 12,
             color: 'var(--color-text-5)',
           }}
         >

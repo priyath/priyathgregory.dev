@@ -166,7 +166,7 @@ function RoleItem({
           </span>
         </div>
         <p style={{
-          fontSize: isHovered ? '0.78rem' : '0.73rem',
+          fontSize: isHovered ? '0.75rem' : '0.75rem',
           fontWeight: 500,
           color: isHovered ? 'var(--color-text-2)' : 'var(--color-muted)',
           marginBottom: 0,
@@ -203,7 +203,7 @@ function RoleItem({
             {role.tags.map(tag => (
               <span key={tag} style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
-                fontSize: 10.5,
+                fontSize: 10,
                 color: 'var(--color-muted)',
                 border: '1px solid var(--color-border)',
                 borderRadius: 4,
@@ -350,7 +350,7 @@ function CompanyItem({
           </span>
 
           <h3 style={{
-            fontSize: isHovered ? '0.92rem' : '0.85rem',
+            fontSize: isHovered ? '0.875rem' : '0.875rem',
             fontWeight: 700,
             color: isHovered ? '#54B689' : 'var(--color-text-2)',
             letterSpacing: '-0.01em',

@@ -86,7 +86,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
                 onClick={() => handleTagClick(tag)}
                 style={{
                   fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: 11,
+                  fontSize: 12,
                   padding: '3px 10px',
                   borderRadius: 4,
                   cursor: 'pointer',
@@ -113,16 +113,16 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
           marginBottom: 2,
         }}
       >
-        <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 10, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
           category
         </span>
-        <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 10, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
           title
         </span>
-        <span className="col-read" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <span className="col-read" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 10, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
           read
         </span>
-        <span className="col-date" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em', textAlign: 'right' }}>
+        <span className="col-date" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 10, color: 'var(--color-text-5)', textTransform: 'uppercase', letterSpacing: '0.08em', textAlign: 'right' }}>
           published
         </span>
       </div>
@@ -157,13 +157,13 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
             if (title) title.style.color = 'var(--color-text-2)'
           }}
         >
-          <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: '#54B689', whiteSpace: 'nowrap' }}>
+          <span className="col-category" style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: '#54B689', whiteSpace: 'nowrap' }}>
             {post.category}/
           </span>
           <span
             data-title=""
             className="col-title"
-            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 13, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 14, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
             {post.slug}
           </span>
@@ -181,7 +181,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
       )}
 
       {/* Footer */}
-      <p style={{ padding: '16px 6px 0', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11.5, color: 'var(--color-text-5)' }}>
+      <p style={{ padding: '16px 6px 0', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-text-5)' }}>
         <span style={{ color: 'rgba(84,182,137,0.75)' }}>{filtered.length}</span>
         {' '}posts
         {activeCategory === 'all' && !activeTag && (

@@ -6,7 +6,7 @@ export default function Hero() {
       <p
         style={{
           fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: 10.5,
+          fontSize: 10,
           color: '#54B689',
           letterSpacing: '0.13em',
           textTransform: 'uppercase',
@@ -58,7 +58,7 @@ export default function Hero() {
         <SocialIcon
           href="https://priyathgregory.medium.com/"
           label="Medium"
-          style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11, fontWeight: 600, width: 'auto', padding: '0 10px' }}
+          style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 10px' }}
         >
           M
         </SocialIcon>
