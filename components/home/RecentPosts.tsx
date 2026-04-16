@@ -7,7 +7,7 @@ export default async function RecentPosts() {
   const total = allPosts.length
 
   return (
-    <section style={{ maxWidth: 880, margin: '0 auto', padding: '52px 24px 96px' }}>
+    <section className="page-section" style={{ maxWidth: 880, margin: '0 auto', padding: '52px 24px 96px' }}>
       {/* Section heading */}
       <div
         style={{

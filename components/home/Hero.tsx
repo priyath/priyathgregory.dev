@@ -2,7 +2,7 @@ import TypedTagline from './TypedTagline'
 
 export default function Hero() {
   return (
-    <section style={{ maxWidth: 880, margin: '0 auto', padding: '80px 24px 72px' }}>
+    <section className="page-top-block" style={{ maxWidth: 880, margin: '0 auto', padding: '80px 24px 72px' }}>
       <p
         style={{
           fontFamily: 'var(--font-jetbrains-mono), monospace',

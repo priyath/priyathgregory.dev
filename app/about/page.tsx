@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Metadata } from 'next'
 import Timeline from '@/components/about/Timeline'
 
@@ -7,50 +6,31 @@ export const metadata: Metadata = {
   description: 'Software engineer with 10+ years in distributed systems, platform engineering, and cloud infrastructure.',
 }
 
-const WHOAMI = [
-  { key: 'name',       value: 'Priyath Gregory' },
-  { key: 'role',       value: 'Staff Software Engineer @ ExpressVPN' },
-  { key: 'location',   value: 'Singapore' },
-  { key: 'experience', value: '10+ years in software engineering' },
-  { key: 'focus',      value: 'Distributed Systems · Platform Engineering · Cloud Infrastructure' },
-]
-
 export default function AboutPage() {
   return (
-    <main style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
-
-      {/* whoami block */}
-      <div style={{ padding: '64px 0 0' }}>
+    <>
+      {/* Page header */}
+      <section className="page-top-block" style={{ maxWidth: 820, margin: '0 auto', padding: '60px 24px 32px' }}>
         <p style={{
           fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: 12,
+          fontSize: 10.5,
           color: '#54B689',
-          marginBottom: 16,
+          letterSpacing: '0.13em',
+          textTransform: 'uppercase',
+          marginBottom: 6,
         }}>
-          $ whoami
+          // the journey so far
         </p>
-        <div style={{
-          fontFamily: 'var(--font-jetbrains-mono), monospace',
-          fontSize: 13,
-          paddingLeft: 16,
-          borderLeft: '2px solid rgba(84,182,137,0.25)',
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
-          columnGap: 20,
-          rowGap: 6,
-          alignItems: 'baseline',
-        }}>
-          {WHOAMI.map(({ key, value }) => (
-            <React.Fragment key={key}>
-              <span style={{ color: 'var(--color-text-5)', whiteSpace: 'nowrap' }}>{key}:</span>
-              <span style={{ color: 'var(--color-text-2)' }}>{value}</span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
+          About
+        </h1>
+        <p style={{ fontSize: 14.5, color: 'var(--color-muted)', lineHeight: 1.65, maxWidth: 440, margin: 0 }}>
+          10+ years building distributed systems, platform infrastructure, and scalable backend architecture.
+        </p>
+      </section>
 
       {/* Career timeline */}
-      <section style={{ paddingBottom: 96, marginTop: 64 }}>
+      <section className="page-section" style={{ maxWidth: 820, margin: '0 auto', padding: '0 24px 96px' }}>
         <p style={{
           fontFamily: 'var(--font-jetbrains-mono), monospace',
           fontSize: 12,
@@ -61,7 +41,6 @@ export default function AboutPage() {
         </p>
         <Timeline />
       </section>
-
-    </main>
+    </>
   )
 }

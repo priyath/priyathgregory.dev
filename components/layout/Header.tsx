@@ -27,6 +27,7 @@ export default function Header() {
       >
         <Link
           href="/"
+          className="nav-logo"
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: 15,

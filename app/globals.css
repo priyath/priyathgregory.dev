@@ -56,6 +56,13 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body > main {
+  flex: 1;
 }
 
 
@@ -149,33 +156,49 @@ body {
 
   /* Home page recent posts — same stacked treatment */
   .home-post-row {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: flex-start;
-    padding: 12px 6px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    align-items: flex-start !important;
+    padding: 12px 6px !important;
   }
 
   .home-post-row .home-post-title {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
-    font-size: 13.5px;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    font-size: 13.5px !important;
   }
 
   .home-post-row .home-post-category,
   .home-post-row .home-post-date {
-    font-size: 11.5px;
+    font-size: 11.5px !important;
   }
 
   .home-post-row .home-post-date {
-    text-align: left;
+    text-align: left !important;
+  }
+
+  /* Tighten vertical spacing on mobile */
+  .page-top-block {
+    padding-top: 24px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .page-section {
+    margin-top: 32px !important;
+    padding-bottom: 56px !important;
   }
 
   /* Nav spacing */
   nav > div {
     gap: 16px !important;
     padding: 0 16px !important;
+  }
+
+  /* Hide logo on mobile */
+  .nav-logo {
+    display: none;
   }
 
   /* Article padding */
