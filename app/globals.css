@@ -14,11 +14,11 @@
   --color-bg: #f8f8f8;
   --color-bg-card: #ffffff;
   --color-border: rgba(0,0,0,0.08);
-  --color-text: #1a1a1a;
-  --color-muted: rgba(0,0,0,0.45);
-  --color-text-2: rgba(0,0,0,0.68);
-  --color-text-3: rgba(0,0,0,0.55);
-  --color-text-5: rgba(0,0,0,0.38);
+  --color-text: #111111;
+  --color-muted: rgba(0,0,0,0.62);
+  --color-text-2: rgba(0,0,0,0.82);
+  --color-text-3: rgba(0,0,0,0.70);
+  --color-text-5: rgba(0,0,0,0.50);
   --color-surface: rgba(0,0,0,0.03);
   --color-surface-2: rgba(0,0,0,0.05);
   --color-nav-bg: rgba(248,248,248,0.88);
