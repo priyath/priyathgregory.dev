@@ -186,14 +186,14 @@ body > main {
 
   /* Tighten vertical spacing on mobile */
   .page-top-block {
-    padding-top: 36px !important;
-    padding-bottom: 24px !important;
+    padding-top: 40px !important;
+    padding-bottom: 32px !important;
   }
 
   .page-section {
-    margin-top: 24px !important;
-    padding-top: 0 !important;
-    padding-bottom: 48px !important;
+    margin-top: 0 !important;
+    padding-top: 32px !important;
+    padding-bottom: 64px !important;
   }
 
   /* Nav spacing */
