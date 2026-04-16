@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Metadata } from 'next'
 import Timeline from '@/components/about/Timeline'
 
@@ -40,10 +41,10 @@ export default function AboutPage() {
           alignItems: 'baseline',
         }}>
           {WHOAMI.map(({ key, value }) => (
-            <>
-              <span key={`k-${key}`} style={{ color: 'var(--color-text-5)', whiteSpace: 'nowrap' }}>{key}</span>
-              <span key={`v-${key}`} style={{ color: 'var(--color-text-2)' }}>{value}</span>
-            </>
+            <React.Fragment key={key}>
+              <span style={{ color: 'var(--color-text-5)', whiteSpace: 'nowrap' }}>{key}:</span>
+              <span style={{ color: 'var(--color-text-2)' }}>{value}</span>
+            </React.Fragment>
           ))}
         </div>
       </div>
