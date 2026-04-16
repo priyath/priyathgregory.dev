@@ -163,7 +163,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
           <span
             data-title=""
             className="col-title"
-            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 14, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 13, color: 'var(--color-text-2)', transition: 'color 0.15s', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
             {post.slug}
           </span>

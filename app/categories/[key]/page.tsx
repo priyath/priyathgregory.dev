@@ -32,7 +32,7 @@ export default async function CategoryPage({ params }: Props) {
         <p style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 10.5, color: '#54B689', letterSpacing: '0.13em', textTransform: 'uppercase', marginBottom: 6 }}>
           // category
         </p>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
           {label}
         </h1>
       </section>

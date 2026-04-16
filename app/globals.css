@@ -136,7 +136,7 @@ body > main {
     white-space: normal !important;
     overflow: visible !important;
     text-overflow: unset !important;
-    font-size: 13.5px !important;
+    font-size: 13px !important;
   }
 
   /* Meta row: category · date side by side below title */
@@ -172,7 +172,7 @@ body > main {
     white-space: normal !important;
     overflow: visible !important;
     text-overflow: unset !important;
-    font-size: 13.5px !important;
+    font-size: 13px !important;
   }
 
   .home-post-row .home-post-category,

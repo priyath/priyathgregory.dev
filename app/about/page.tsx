@@ -21,7 +21,7 @@ export default function AboutPage() {
         }}>
           // the journey so far
         </p>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
           About
         </h1>
         <p style={{ fontSize: 14, color: 'var(--color-muted)', lineHeight: 1.65, maxWidth: 440, margin: 0 }}>

@@ -33,7 +33,7 @@ export default function Hero() {
       </h1>
       <p
         style={{
-          fontSize: '1.1rem',
+          fontSize: 15,
           color: 'var(--color-text-3)',
           maxWidth: 500,
           lineHeight: 1.7,

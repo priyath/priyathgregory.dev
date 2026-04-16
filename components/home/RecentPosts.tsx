@@ -18,21 +18,9 @@ export default async function RecentPosts() {
         }}
       >
         <div>
-          <p
-            style={{
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 10,
-              color: '#54B689',
-              letterSpacing: '0.13em',
-              textTransform: 'uppercase',
-              marginBottom: 6,
-            }}
-          >
-            // latest writing
-          </p>
           <h2
             style={{
-              fontSize: '1.25rem',
+              fontSize: '1.5rem',
               fontWeight: 700,
               letterSpacing: '-0.015em',
               margin: 0,
@@ -87,7 +75,7 @@ export default async function RecentPosts() {
             className="home-post-title"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 14,
+              fontSize: 13,
               color: 'var(--color-text-2)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
