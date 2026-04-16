@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import { Suspense } from 'react'
+import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
@@ -32,14 +33,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head suppressHydrationWarning>
-        <script
+      <head suppressHydrationWarning />
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var m=localStorage.getItem('pg-dev-portfolio-color-mode');if(m==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}})()`,
           }}
         />
-      </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         <BootSequence />
         <Terminal />
         <Suspense fallback={null}>
