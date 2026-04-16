@@ -33,11 +33,11 @@
   --color-bg: #131a23;
   --color-bg-card: #1e2c3a;
   --color-border: rgba(255,255,255,0.07);
-  --color-text: rgba(255,255,255,0.92);
-  --color-muted: rgba(255,255,255,0.38);
-  --color-text-2: rgba(255,255,255,0.68);
-  --color-text-3: rgba(255,255,255,0.55);
-  --color-text-5: rgba(255,255,255,0.18);
+  --color-text: rgba(255,255,255,0.95);
+  --color-muted: rgba(255,255,255,0.62);
+  --color-text-2: rgba(255,255,255,0.82);
+  --color-text-3: rgba(255,255,255,0.70);
+  --color-text-5: rgba(255,255,255,0.38);
   --color-surface: rgba(255,255,255,0.03);
   --color-surface-2: rgba(255,255,255,0.05);
   --color-nav-bg: rgba(19,26,35,0.88);
@@ -47,40 +47,17 @@
   --color-icon-border: rgba(255,255,255,0.08);
 }
 
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
 }
 
-/* Shiki CSS Variables theme — syntax highlighting colors */
-:root {
-  --shiki-color-text: #24292e;
-  --shiki-color-background: transparent;
-  --shiki-token-constant: #005cc5;
-  --shiki-token-string: #032f62;
-  --shiki-token-comment: #6a737d;
-  --shiki-token-keyword: #d73a49;
-  --shiki-token-parameter: #24292e;
-  --shiki-token-function: #6f42c1;
-  --shiki-token-string-expression: #032f62;
-  --shiki-token-punctuation: #24292e;
-  --shiki-token-link: #032f62;
-}
-
-.dark {
-  --shiki-color-text: #e1e4e8;
-  --shiki-color-background: transparent;
-  --shiki-token-constant: #79b8ff;
-  --shiki-token-string: #9ecbff;
-  --shiki-token-comment: #6a737d;
-  --shiki-token-keyword: #f97583;
-  --shiki-token-parameter: #e1e4e8;
-  --shiki-token-function: #b392f0;
-  --shiki-token-string-expression: #9ecbff;
-  --shiki-token-punctuation: #e1e4e8;
-  --shiki-token-link: #9ecbff;
-}
 
 /* Prose overrides */
 .prose h2 {
@@ -192,6 +169,9 @@ a[aria-label]:hover {
 }
 
 /* Home page post rows */
+.home-post-row {
+  transition: background 0.15s;
+}
 .home-post-row:hover {
   background: var(--color-surface);
 }
@@ -202,9 +182,41 @@ a[aria-label]:hover {
 /* "view all →" link */
 .view-all-link:hover {
   color: #54B689 !important;
+  text-shadow: 0 0 12px rgba(84, 182, 137, 0.5);
 }
 
-/* Blog post row hover (used in /blog listing via CategoryFilter client component — already has JS hover, but CSS fallback) */
+/* Blog post row hover */
 .nav-link-hover:hover {
   color: var(--color-text) !important;
+}
+
+/* Tag chips */
+.tag-chip {
+  transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.tag-chip:hover {
+  color: #54B689 !important;
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  box-shadow: 0 0 10px rgba(84, 182, 137, 0.18);
+}
+
+/* Breadcrumb links */
+.breadcrumb-link {
+  transition: color 0.15s, text-shadow 0.15s;
+}
+.breadcrumb-link:hover {
+  color: #54B689 !important;
+  text-shadow: 0 0 12px rgba(84, 182, 137, 0.45);
+}
+
+/* Social icons in Hero */
+a[aria-label]:hover {
+  border-color: rgba(84, 182, 137, 0.5) !important;
+  color: #54B689 !important;
+  box-shadow: 0 0 14px rgba(84, 182, 137, 0.2);
+}
+
+@keyframes bootFadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

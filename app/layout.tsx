@@ -5,6 +5,8 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics'
+import BootSequence from '@/components/BootSequence'
+import Terminal from '@/components/Terminal'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,6 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
+        <BootSequence />
+        <Terminal />
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>

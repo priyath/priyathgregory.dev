@@ -102,17 +102,19 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
             transition: 'background 0.12s',
           }}
           onMouseEnter={e => {
-            ;(e.currentTarget as HTMLElement).style.background = 'var(--color-surface)'
-            const title = (e.currentTarget as HTMLElement).querySelector('[data-title]') as HTMLElement
+            const el = e.currentTarget as HTMLElement
+            el.style.background = 'var(--color-surface)'
+            const title = el.querySelector('[data-title]') as HTMLElement
             if (title) title.style.color = '#54B689'
           }}
           onMouseLeave={e => {
-            ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-            const title = (e.currentTarget as HTMLElement).querySelector('[data-title]') as HTMLElement
+            const el = e.currentTarget as HTMLElement
+            el.style.background = 'transparent'
+            const title = el.querySelector('[data-title]') as HTMLElement
             if (title) title.style.color = 'var(--color-text-2)'
           }}
         >
-          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: 'rgba(84,182,137,0.65)', whiteSpace: 'nowrap' as const }}>
+          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: '#54B689', whiteSpace: 'nowrap' as const }}>
             {post.category}/
           </span>
           <span
@@ -132,12 +134,12 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
 
       {/* Footer */}
       <p style={{ padding: '16px 6px 0', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11.5, color: 'var(--color-text-5)' }}>
-        <span style={{ color: 'rgba(84,182,137,0.5)' }}>{filtered.length}</span>
+        <span style={{ color: 'rgba(84,182,137,0.75)' }}>{filtered.length}</span>
         {' '}posts
         {active === 'all' && (
           <>
             {' '}·{' '}
-            <span style={{ color: 'rgba(84,182,137,0.5)' }}>
+            <span style={{ color: 'rgba(84,182,137,0.75)' }}>
               {posts.reduce((sum, p) => sum + parseInt(p.readingTime), 0)}
             </span>
             {' '}min total

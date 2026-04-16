@@ -47,7 +47,7 @@ export default async function RecentPosts() {
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: 12,
-            color: 'rgba(84,182,137,0.55)',
+            color: '#54B689',
             textDecoration: 'none',
             transition: 'color 0.15s',
           }}
@@ -79,7 +79,7 @@ export default async function RecentPosts() {
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
               fontSize: 12,
-              color: 'rgba(84,182,137,0.6)',
+              color: '#54B689',
               whiteSpace: 'nowrap',
             }}
           >

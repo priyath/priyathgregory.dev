@@ -50,7 +50,7 @@ export default async function TagPage({ params }: Props) {
               alignItems: 'baseline',
             }}
           >
-            <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: 'rgba(84,182,137,0.65)' }}>
+            <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12.5, color: '#54B689' }}>
               {post.category}/
             </span>
             <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 13, color: 'var(--color-text-2)' }}>

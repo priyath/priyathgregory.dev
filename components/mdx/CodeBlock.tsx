@@ -55,7 +55,7 @@ export default function CodeBlock({ children, 'data-title': title, 'data-collaps
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
                 fontSize: 10.5,
-                color: 'rgba(84,182,137,0.6)',
+                color: '#54B689',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
               }}
@@ -89,7 +89,7 @@ export default function CodeBlock({ children, 'data-title': title, 'data-collaps
             cursor: 'pointer',
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: 12.5,
-            color: 'rgba(84,182,137,0.7)',
+            color: '#54B689',
             padding: '6px 0',
             userSelect: 'none',
           }}

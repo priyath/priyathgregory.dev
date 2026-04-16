@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 interface Props {
   src: string
@@ -9,8 +10,13 @@ interface Props {
   height?: number
 }
 
-export default function BlogImage({ src, alt = '', width, height }: Props) {
+export default function BlogImage({ src, alt = '' }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <>
@@ -24,30 +30,35 @@ export default function BlogImage({ src, alt = '', width, height }: Props) {
           style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid var(--color-border)' }}
         />
       </span>
-      <dialog
-        ref={dialogRef}
-        onClick={() => dialogRef.current?.close()}
-        style={{
-          background: 'rgba(0,0,0,0.92)',
-          border: 'none',
-          borderRadius: 0,
-          padding: '1rem',
-          maxWidth: '95vw',
-          maxHeight: '95vh',
-          cursor: 'zoom-out',
-        }}
-      >
-        <img
-          src={src}
-          alt={alt}
+
+      {/* Portal the dialog to <body> so it never nests inside a <p> */}
+      {mounted && createPortal(
+        <dialog
+          ref={dialogRef}
+          onClick={() => dialogRef.current?.close()}
           style={{
-            maxWidth: '90vw',
-            maxHeight: '90vh',
-            objectFit: 'contain',
-            display: 'block',
+            background: 'rgba(0,0,0,0.92)',
+            border: 'none',
+            borderRadius: 0,
+            padding: '1rem',
+            maxWidth: '95vw',
+            maxHeight: '95vh',
+            cursor: 'zoom-out',
           }}
-        />
-      </dialog>
+        >
+          <img
+            src={src}
+            alt={alt}
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        </dialog>,
+        document.body
+      )}
     </>
   )
 }

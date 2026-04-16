@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 const prettyCodeOptions: PrettyCodeOptions = {
-  theme: 'css-variables' as any,
+  theme: 'github-dark-dimmed',
 }
 
 interface Props {
@@ -61,25 +61,29 @@ export default async function PostPage({ params }: Props) {
       <div style={{ padding: '28px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
         <Link
           href="/blog"
+          className="breadcrumb-link"
           style={{
             fontSize: 12.5,
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             color: 'var(--color-muted)',
             textDecoration: 'none',
+            transition: 'color 0.15s',
           }}
         >
           ← Writing
         </Link>
         <span style={{ color: 'var(--color-muted)', fontSize: 11 }}>/</span>
-        <span
+        <Link
+          href={`/categories/${post.category}`}
           style={{
             fontSize: 12.5,
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             color: '#54B689',
+            textDecoration: 'none',
           }}
         >
           {categoryLabel}
-        </span>
+        </Link>
       </div>
 
       {/* Post header */}
@@ -97,11 +101,12 @@ export default async function PostPage({ params }: Props) {
         </h1>
         <p
           style={{
-            fontSize: 16,
+            fontSize: 15,
             color: 'var(--color-text-3)',
-            lineHeight: 1.65,
+            lineHeight: 1.7,
             marginBottom: 24,
             maxWidth: 580,
+            fontWeight: 400,
           }}
         >
           {post.summary}
@@ -139,8 +144,10 @@ export default async function PostPage({ params }: Props) {
         {/* Tags */}
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {post.tags.map(tag => (
-            <span
+            <Link
               key={tag}
+              href={`/tags/${tag}`}
+              className="tag-chip"
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
                 fontSize: 11.5,
@@ -149,10 +156,12 @@ export default async function PostPage({ params }: Props) {
                 borderRadius: 4,
                 padding: '3px 9px',
                 display: 'inline-block',
+                textDecoration: 'none',
+                transition: 'color 0.15s, border-color 0.15s',
               }}
             >
               {tag}
-            </span>
+            </Link>
           ))}
         </div>
       </header>
@@ -174,8 +183,10 @@ export default async function PostPage({ params }: Props) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {post.tags.map(tag => (
-              <span
+              <Link
                 key={tag}
+                href={`/tags/${tag}`}
+                className="tag-chip"
                 style={{
                   fontFamily: 'var(--font-jetbrains-mono), monospace',
                   fontSize: 11.5,
@@ -184,10 +195,12 @@ export default async function PostPage({ params }: Props) {
                   borderRadius: 4,
                   padding: '3px 9px',
                   display: 'inline-block',
+                  textDecoration: 'none',
+                  transition: 'color 0.15s, border-color 0.15s',
                 }}
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
