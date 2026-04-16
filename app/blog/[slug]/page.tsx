@@ -4,7 +4,6 @@ import rehypePrettyCode from 'rehype-pretty-code'
 import type { Options as PrettyCodeOptions } from 'rehype-pretty-code'
 import { rehypeCodeMeta } from '@/components/mdx/rehype-code-meta'
 import { getMDXComponents } from '@/components/mdx/MDXComponents'
-import Comments from '@/components/blog/Comments'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -250,8 +249,6 @@ export default async function PostPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Comments */}
-      <Comments />
     </article>
   )
 }
