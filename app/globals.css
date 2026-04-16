@@ -95,6 +95,13 @@ body {
   50% { opacity: 0; }
 }
 
+/* About page timeline */
+@media (max-width: 640px) {
+  .about-timeline {
+    padding: 0 4px;
+  }
+}
+
 /* Blog listing grid — desktop */
 .blog-listing-grid {
   display: grid;
