@@ -77,7 +77,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
 
       {/* Tag chips */}
       {allTags.length > 0 && (
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 28 }}>
+        <div className="blog-tag-row" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 28 }}>
           {allTags.map(tag => {
             const isActive = activeTag === tag
             return (
