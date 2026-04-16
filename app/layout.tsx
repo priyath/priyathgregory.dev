@@ -6,7 +6,6 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics'
-import BootSequence from '@/components/BootSequence'
 import Terminal from '@/components/Terminal'
 
 const inter = Inter({
@@ -42,7 +41,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var m=localStorage.getItem('pg-dev-portfolio-color-mode');if(m==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}})()`,
           }}
         />
-        <BootSequence />
         <Terminal />
         <Suspense fallback={null}>
           <GoogleAnalytics />

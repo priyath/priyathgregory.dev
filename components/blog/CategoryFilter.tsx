@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import type { PostMeta } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 
-const FILTERS = [
+const CATEGORY_FILTERS = [
   { key: 'all', label: 'all' },
   { key: 'devops', label: 'devops' },
   { key: 'databases', label: 'databases' },
@@ -19,20 +19,40 @@ interface Props {
 }
 
 export default function CategoryFilter({ posts, initialCategory = 'all' }: Props) {
-  const [active, setActive] = useState(initialCategory)
+  const [activeCategory, setActiveCategory] = useState(initialCategory)
+  const [activeTag, setActiveTag] = useState<string | null>(null)
 
-  const filtered = active === 'all' ? posts : posts.filter(p => p.category === active)
+  // Derive unique tags from all posts
+  const allTags = useMemo(() => {
+    const tagSet = new Set<string>()
+    posts.forEach(p => p.tags?.forEach(t => tagSet.add(t)))
+    return Array.from(tagSet).sort()
+  }, [posts])
+
+  const filtered = posts.filter(p => {
+    const categoryMatch = activeCategory === 'all' || p.category === activeCategory
+    const tagMatch = activeTag === null || p.tags?.includes(activeTag)
+    return categoryMatch && tagMatch
+  })
+
+  const handleCategoryClick = (key: string) => {
+    setActiveCategory(key)
+  }
+
+  const handleTagClick = (tag: string) => {
+    setActiveTag(prev => prev === tag ? null : tag)
+  }
 
   return (
     <div>
-      {/* Filter chips */}
-      <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 32 }}>
-        {FILTERS.map(({ key, label }) => {
-          const isActive = active === key
+      {/* Category chips */}
+      <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 10 }}>
+        {CATEGORY_FILTERS.map(({ key, label }) => {
+          const isActive = activeCategory === key
           return (
             <button
               key={key}
-              onClick={() => setActive(key)}
+              onClick={() => handleCategoryClick(key)}
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
                 fontSize: 12,
@@ -54,6 +74,34 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
           )
         })}
       </div>
+
+      {/* Tag chips */}
+      {allTags.length > 0 && (
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 28 }}>
+          {allTags.map(tag => {
+            const isActive = activeTag === tag
+            return (
+              <button
+                key={tag}
+                onClick={() => handleTagClick(tag)}
+                style={{
+                  fontFamily: 'var(--font-jetbrains-mono), monospace',
+                  fontSize: 11,
+                  padding: '3px 10px',
+                  borderRadius: 4,
+                  cursor: 'pointer',
+                  border: `1px solid ${isActive ? 'rgba(84,182,137,0.45)' : 'var(--color-border)'}`,
+                  color: isActive ? '#54B689' : 'var(--color-text-5)',
+                  background: isActive ? 'rgba(84,182,137,0.07)' : 'transparent',
+                  transition: 'all 0.15s',
+                }}
+              >
+                #{tag}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       {/* Column headers — desktop only */}
       <div
@@ -80,7 +128,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
       </div>
 
       {/* Post rows */}
-      {filtered.map((post) => (
+      {filtered.length > 0 ? filtered.map((post) => (
         <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
@@ -126,19 +174,29 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
             {formatDate(post.publishedAt)}
           </span>
         </Link>
-      ))}
+      )) : (
+        <p style={{ padding: '24px 6px', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 12, color: 'var(--color-text-5)' }}>
+          no posts found
+        </p>
+      )}
 
       {/* Footer */}
       <p style={{ padding: '16px 6px 0', fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 11.5, color: 'var(--color-text-5)' }}>
         <span style={{ color: 'rgba(84,182,137,0.75)' }}>{filtered.length}</span>
         {' '}posts
-        {active === 'all' && (
+        {activeCategory === 'all' && !activeTag && (
           <>
             {' '}·{' '}
             <span style={{ color: 'rgba(84,182,137,0.75)' }}>
               {posts.reduce((sum, p) => sum + parseInt(p.readingTime), 0)}
             </span>
             {' '}min total
+          </>
+        )}
+        {activeTag && (
+          <>
+            {' '}tagged{' '}
+            <span style={{ color: 'rgba(84,182,137,0.75)' }}>#{activeTag}</span>
           </>
         )}
       </p>
