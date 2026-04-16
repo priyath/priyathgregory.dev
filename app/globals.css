@@ -181,13 +181,13 @@ body > main {
 
   /* Tighten vertical spacing on mobile */
   .page-top-block {
-    padding-top: 24px !important;
-    padding-bottom: 20px !important;
+    padding-top: 36px !important;
+    padding-bottom: 24px !important;
   }
 
   .page-section {
-    margin-top: 32px !important;
-    padding-bottom: 56px !important;
+    margin-top: 24px !important;
+    padding-bottom: 48px !important;
   }
 
   /* Nav spacing */
