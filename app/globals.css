@@ -115,11 +115,27 @@ body > main {
   grid-template-columns: 120px 1fr 70px 80px;
 }
 
+.blog-listing-row {
+  display: grid;
+  transition: background 0.15s;
+}
+.blog-listing-row .col-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.blog-listing-row:hover {
+  background: var(--color-surface);
+}
+.blog-listing-row:hover .blog-post-title {
+  color: #54B689 !important;
+}
+
 /* Mobile responsive overrides */
 @media (max-width: 640px) {
   /* Header row: hide on mobile (stacked rows are self-explanatory) */
   .blog-listing-header {
-    display: none;
+    display: none !important;
   }
 
   /* Post rows: stacked layout — title on top, meta below */
@@ -136,7 +152,7 @@ body > main {
     white-space: normal !important;
     overflow: visible !important;
     text-overflow: unset !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
   }
 
   /* Meta row: category · date side by side below title */
@@ -277,6 +293,10 @@ a[aria-label]:hover {
 .home-post-row:hover {
   background: var(--color-surface);
 }
+.recent-post-row:hover .recent-post-title {
+  color: #54B689 !important;
+}
+
 .home-post-row:hover .home-post-title {
   color: #54B689 !important;
 }

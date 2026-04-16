@@ -7,7 +7,7 @@ export default async function RecentPosts() {
   const total = allPosts.length
 
   return (
-    <section className="page-section" style={{ maxWidth: 880, margin: '0 auto', padding: '52px 24px 96px' }}>
+    <section style={{ maxWidth: 880, margin: '0 auto', padding: '52px 24px 96px' }}>
       {/* Section heading */}
       <div
         style={{
@@ -20,7 +20,7 @@ export default async function RecentPosts() {
         <div>
           <h2
             style={{
-              fontSize: '1.5rem',
+              fontSize: '1.25rem',
               fontWeight: 700,
               letterSpacing: '-0.015em',
               margin: 0,
@@ -35,7 +35,7 @@ export default async function RecentPosts() {
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: 12,
-            color: '#54B689',
+            color: 'rgba(84,182,137,0.55)',
             textDecoration: 'none',
             transition: 'color 0.15s',
           }}
@@ -51,21 +51,23 @@ export default async function RecentPosts() {
           href={`/blog/${post.slug}`}
           className="home-post-row"
           style={{
+            display: 'grid',
+            gridTemplateColumns: '110px 1fr 72px',
             gap: '0 14px',
             padding: '9px 6px',
             borderBottom: i < recent.length - 1 ? '1px solid var(--color-border)' : 'none',
             cursor: 'pointer',
             textDecoration: 'none',
             color: 'inherit',
+            alignItems: 'baseline',
             borderRadius: 4,
           }}
         >
           <span
-            className="home-post-category"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
               fontSize: 12,
-              color: '#54B689',
+              color: 'rgba(84,182,137,0.6)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -75,7 +77,7 @@ export default async function RecentPosts() {
             className="home-post-title"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 13,
+              fontSize: 14,
               color: 'var(--color-text-2)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -86,10 +88,9 @@ export default async function RecentPosts() {
             {post.slug}
           </span>
           <span
-            className="home-post-date"
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 12,
+              fontSize: 11.5,
               color: 'var(--color-muted)',
               textAlign: 'right',
             }}
@@ -104,7 +105,7 @@ export default async function RecentPosts() {
         <span
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 12,
+            fontSize: 11.5,
             color: 'var(--color-text-5)',
           }}
         >

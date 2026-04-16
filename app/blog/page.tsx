@@ -27,7 +27,7 @@ export default async function BlogPage() {
         <h1 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.025em', marginBottom: 10 }}>
           Writing
         </h1>
-        <p style={{ fontSize: 14, color: 'var(--color-muted)', lineHeight: 1.65, maxWidth: 440, margin: 0 }}>
+        <p style={{ fontSize: 15, color: 'var(--color-muted)', lineHeight: 1.65, maxWidth: 440, margin: 0 }}>
           Deep dives on cloud infrastructure, distributed systems, backend architecture, and the web.
         </p>
       </section>
