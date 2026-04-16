@@ -20,7 +20,7 @@ export default async function RecentPosts() {
         <div>
           <h2
             style={{
-              fontSize: '1.25rem',
+              fontSize: '1.5rem',
               fontWeight: 700,
               letterSpacing: '-0.015em',
               margin: 0,
