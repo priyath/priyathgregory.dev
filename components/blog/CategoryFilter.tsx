@@ -22,7 +22,6 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
   const [activeCategory, setActiveCategory] = useState(initialCategory)
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
-  // Derive unique tags from all posts
   const allTags = useMemo(() => {
     const tagSet = new Set<string>()
     posts.forEach(p => p.tags?.forEach(t => tagSet.add(t)))
@@ -34,10 +33,6 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
     const tagMatch = activeTag === null || p.tags?.includes(activeTag)
     return categoryMatch && tagMatch
   })
-
-  const handleCategoryClick = (key: string) => {
-    setActiveCategory(key)
-  }
 
   const handleTagClick = (tag: string) => {
     setActiveTag(prev => prev === tag ? null : tag)
@@ -52,7 +47,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
           return (
             <button
               key={key}
-              onClick={() => handleCategoryClick(key)}
+              onClick={() => setActiveCategory(key)}
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
                 fontSize: 12,
@@ -75,7 +70,7 @@ export default function CategoryFilter({ posts, initialCategory = 'all' }: Props
         })}
       </div>
 
-      {/* Tag chips */}
+      {/* Tag chips — desktop only */}
       {allTags.length > 0 && (
         <div className="blog-tag-row" style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 28 }}>
           {allTags.map(tag => {

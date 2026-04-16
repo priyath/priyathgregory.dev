@@ -154,12 +154,12 @@ body > main {
     display: none;
   }
 
-  /* Hide tag row on mobile */
+  /* Hide tag chips on mobile */
   .blog-tag-row {
     display: none !important;
   }
 
-  /* Home page recent posts — same stacked treatment */
+/* Home page recent posts — same stacked treatment */
   .home-post-row {
     display: flex !important;
     flex-direction: column !important;
